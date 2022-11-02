@@ -1,26 +1,24 @@
 require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
-const server = express();
-const router = require('./api');
 const cors = require('cors');
 
+const app = express();
+const router = require('./api');
 const PORT = 3001;
 
-server.use(morgan('dev')); 
-server.use(express.json());
-server.use(cors());
+app.use(morgan("dev")); 
+app.use(express.json());
+app.use(cors());
+app.use('/api', router);
 
-server.use('/api', router);
-
-server.listen(PORT, () => {
-    Cconsole.log(`server is up and running on port ${PORT}`)
-})
-
-server.use((req, res, next)=> {
+app.use((req, res, next)=> {
     console.log('Hitting Server')
     next();
 })
 
+app.listen(PORT, () => {
+    console.log(`server is up and running on port ${PORT}`)
+})
 
-module.exports = server;
+module.exports = app;
