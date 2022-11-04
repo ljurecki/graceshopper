@@ -1,9 +1,7 @@
 module.exports = {
-    ProductExistsError: (name) => `An activity with name ${name} already exists`,
+    ProductExistsError: (title) => `A Product with title ${title} already exists`,
     ProductNotFoundError: (id) => `Activity ${id} not found`,
     UnauthorizedError: () => "You must be logged in to perform this action",
-    // DuplicateRoutineActivityError: (routineId, activityId) =>
-    //   `Activity ID ${activityId} already exists in Routine ID ${routineId}`,
     UserDoesNotExistError: (name) => `User ${name} does not exist`,
     PasswordTooShortError: () => `Password Too Short!`,
     UserTakenError: name => `User ${name} is already taken.`
