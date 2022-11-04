@@ -7,4 +7,9 @@ const client = new Client({
 });
 
 
-module.exports = { client };
+module.exports = {
+    client,
+    ...require('./users'),
+    ...require('./products'),
+    ...require('./audiobooks'),
+};
