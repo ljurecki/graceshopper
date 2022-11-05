@@ -1,48 +1,24 @@
-//getallproducts
-//getProductsByPrice
-//getProductsByGenre
-//getProductsByAuthor
-//createProducts (Admin only)
+const { client } = require("./client");
 
-//const {client} = require("./client");
 async function createProduct({ title, description }) {
-    try {
-        const { rows: [product] } = await client.query(`
-      INSERT INTO products (title, price, author, description)
+  try {
+    const { rows: [product] } = await client.query(`
+      INSERT INTO products (title, "imageURL", description, price, author, genre, )
       VALUES ($1, $2, $3, $4, $5)
       ON CONFLICT (title) DO NOTHING
       RETURNING *;
-    `, [title, price, author, description])
-        return product;
-    }
-    catch (ex) {
-        console.log('error in createProduct adapter function')
-    }
-}
-const { client } = require("./client");
-async function createProduct({ name, description, price, imageURL }) {
-  try {
-    const {
-      rows: [product],
-    } = await client.query(
-      `
-      INSERT INTO products (name, description, price, "imageURL")
-      VALUES ($1, $2, $3, $4)
-      RETURNING *;
-    `,
-      [name, description, price, imageURL]
-    );
+    `, [title, imageURL, description, price, author, genre])
     return product;
   } catch (error) {
-    throw error;
-  }
+  throw error;
 }
+}
+
 async function getAllProducts() {
   try {
     const { rows: products } = await client.query(
       `
-      SELECT *
-      FROM products;
+      SELECT * FROM products;
       `
     );
     return products;
@@ -67,28 +43,28 @@ async function getProductById(productId) {
     throw error;
   }
 }
-async function updateProduct(updateProduct) {
+async function updateProducts({ id, ...fields }) {
   try {
-    const updateStr = Object.keys(updateData)
-      .filter((key) => key !== "id")
-      .map((key, index) => `"${key}" = $${index + 2}`)
-      .join(", ");
+    const indexString = Object.keys(fields).map((key, index) => {
+      return `"${key}"=$${index + 1}`;
+    });
     const {
-      rows: [product],
+      rows: [products],
     } = await client.query(
       `
       UPDATE products
-      SET ${updateStr}
-      WHERE id = $1
-      RETURNING *;
-      `,
-      Object.values(updateData)
+      SET ${indexString}
+      WHERE id=${id}
+      RETURNING *;`,
+      Object.values(fields)
     );
-    return product;
-  } catch (error) {
-    throw error;
+    return products;
+  } catch (err) {
+    console.error(err);
+    throw err;
   }
 }
+
 async function deleteProduct(productId) {
   try {
     const {
@@ -110,7 +86,7 @@ module.exports = {
   createProduct,
   getAllProducts,
   getProductById,
-  updateProduct,
+  updateProducts,
   deleteProduct,
 };
 // module.exports = {
