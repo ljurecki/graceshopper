@@ -8,7 +8,6 @@ function requireUser(req, res, next) {
       message: UnauthorizedError(),
     });
   }
-
   next();
 }
 
