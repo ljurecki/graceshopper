@@ -6,21 +6,18 @@ const router = express.Router();
 const {
   getAllProducts,
   createProduct,
-  getProductByName,
+  getProductByTitle,
   getProductById,
-  getProductByAuthor,
-  getProductByGenre,
-  getProductByPrice,
+  // getProductByAuthor,
+  // getProductByGenre,
+  // getProductByPrice,
   updateProduct,
-  viewSingleProduct,
-  addProductToCart,
-  deleteProduct,
-  productAvailability,
+  // addProductToCart,
+  // productAvailability,
 } = require(`../db`);
 
-// Do we have these available somewhere for access?
 const { ProductExistsError, ProductNotFoundError } = require(`../errors`);
-const {requireUser} = require(`./utils`);
+const { requireUser } = require(`./utils`);
 
 // GET /api/products
 router.get('/', async (req, res) => {
@@ -33,90 +30,98 @@ router.get('/', async (req, res) => {
 productsRouter.get('/', async (req, res, next) => {
   const { productId } = req.params;
   const _product = await getProductById(productId);
-  
+
   if (!_product) {
     res.send({
       error: 'ProductDoesNotExists',
-      name: 'Product does not exists',
+      title: 'Product does not exists',
       message: ProductNotFoundError(productId),
     });
   } else {
     res.send('LIST OF PRODUCTS')
-  } 
+  }
 });
 
 // POST /api/products
-// Do we need to include products after the slash?
 router.post('/', requireUser, async (req, res) => {
-  const { name, description, price, image } = req.body;
-  const _name = await getProductByName(name);
-  const newProduct = await createProduct({ name, description, price, image });
+  const { title, description, price, imageURL } = req.body;
+  const _title = await getProductBytitle(title);
+  const newProduct = await createProduct({ title, imageURL, description, price, author, genre });
 
-  if (_name) {
+  if (_title) {
     res.send({
       error: 'ProductAlreadyExists',
-      name: 'Product already exists',
-      message: ProductExistsError(_name.name),
+      title: 'Product already exists',
+      message: ProductExistsError(_title.title),
     });
   } else {
     res.send(newProduct);
   }
 });
 
-// PATCH /api/products
-router.patch('/products', requireUser, async (req, res, next) => {
+// PATCH /api/productId
+router.patch('/:productId', requireUser, async (req, res, next) => {
   const { productId } = req.params;
- 
- try {
-  const { name, description, price, image } = req.body;
 
-  const updateFields = {};
+  try {
+    const { title, imageURL, description, price, author, genre } = req.body;
 
-  if (productId) {
-    updateFields.id = productId;
+    const updateFields = {};
+
+    if (productId) {
+      updateFields.id = productId;
+    }
+
+    if (title) {
+      updateFields.title = title;
+    }
+
+    if (imageURL) {
+      updateFields.imageURL = imageURL;
+    }
+
+    if (description) {
+      updateFields.description = description;
+    }
+
+    if (price) {
+      updateFields.price = price;
+    }
+
+
+    if (author) {
+      updateFields.author = author;
+    }
+
+    if (genre) {
+      updateFields.genre = genre;
+    }
+
+
+    const _product = await getProductById(productId);
+    const _title = await getProductByTitle(title);
+
+    if (!_product) {
+      res.send({
+        error: 'ProductDoesNotExists',
+        title: 'Product does not exists',
+        message: ProductNotFoundError(productId),
+      });
+    } else if (_title) {
+      res.send({
+        error: 'ProductAlreadyExists',
+        title: 'Product already exists',
+        message: ProductExistsError(_title.title),
+      });
+    } else {
+      const allCanUpdateProduct = await updateProduct(updateFields);
+      res.send(allCanUpdateProduct);
+    }
+  } catch ({ title, message }) {
+    next({ title, message });
   }
-
-  if (name) {
-    updateFields.name = name;
-  }
-
-  if (description) {
-    updateFields.description = description;
-  }
-
-  if (price) {
-    updateFields.price = price;
-  }
-
-  if (image) {
-    updateFields.image = image;
-  }
-
-  const _product = await getProductById(productId);
-  const _name = await getProductByName(name);
-
-  if (!_product) {
-    res.send({
-      error: 'ProductDoesNotExists',
-      name: 'Product does not exists',
-      message: ProductNotFoundError(productId),
-    });
-  } else if (_name) {
-    res.send({
-      error: 'ProductAlreadyExists',
-      name: 'Product already exists',
-      message: ProductExistsError(_name.name),
-    });
-  } else {
-    const allCanUpdateProduct = await updateProduct(updateFields);
-    res.send(allCanUpdateProduct);
-  }
-} catch ({ name, message }) {
-  next({ name, message });
-}
 
 });
 
 
 module.exports = productsRouter;
-
