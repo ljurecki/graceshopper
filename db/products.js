@@ -1,4 +1,4 @@
-const { client } = require("./client");
+const { client } = require("./");
 
 async function createProduct({ title, description }) {
   try {

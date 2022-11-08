@@ -1,11 +1,11 @@
-equire('dotenv').config();
+require('dotenv').config();
 
 const express = require('express');
 const usersRouter = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { requireUser } = require('./utils')
-const { getAllRoutinesByUser } = require('../db/routines')
+const { getAllProductsByUser } = require('../db/products')
 const { createUser, getUserByUsername } = require('../db/users');
 
 
