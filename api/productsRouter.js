@@ -45,8 +45,8 @@ productsRouter.get('/', async (req, res, next) => {
 // POST /api/products
 router.post('/', requireUser, async (req, res) => {
   const { title, description, price, imageURL } = req.body;
-  const _title = await getProductBytitle(title);
-  const newProduct = await createProduct({ title, imageURL, description, price, author, genre });
+  const _title = await getProductByTitle(title);
+  const newProduct = await createProduct({ title, description, price, author, genre, imageURL });
 
   if (_title) {
     res.send({
@@ -64,7 +64,7 @@ router.patch('/:productId', requireUser, async (req, res, next) => {
   const { productId } = req.params;
 
   try {
-    const { title, imageURL, description, price, author, genre } = req.body;
+    const { title, description, price, author, genre, imageURL } = req.body;
 
     const updateFields = {};
 
@@ -74,10 +74,6 @@ router.patch('/:productId', requireUser, async (req, res, next) => {
 
     if (title) {
       updateFields.title = title;
-    }
-
-    if (imageURL) {
-      updateFields.imageURL = imageURL;
     }
 
     if (description) {
@@ -95,6 +91,10 @@ router.patch('/:productId', requireUser, async (req, res, next) => {
 
     if (genre) {
       updateFields.genre = genre;
+    }
+
+    if (imageURL) {
+      updateFields.imageURL = imageURL;
     }
 
 
