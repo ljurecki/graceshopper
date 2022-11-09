@@ -1,19 +1,24 @@
 require('dotenv').config();
 
 const express = require('express');
-const usersRouter = express.Router();
+const router = express.Router();
 const jwt = require('jsonwebtoken');
 const { requireUser } = require('./utils')
-const { 
+const {
   createUser,
   getUserByUsername,
   getUser,
   getAllProductsByUser
 } = require('../db/')
 
+const {
+  UserDoesNotExistError,
+  PasswordTooShortError,
+  UserTakenError,
+} = require('../errors');
 
 // POST /api/users/login
-usersRouter.post('/login', async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
@@ -49,7 +54,7 @@ usersRouter.post('/login', async (req, res, next) => {
 
 // POST /api/users/register
 
-usersRouter.post('/register', async (req, res, next) => {
+router.post('/register', async (req, res, next) => {
   const { username, password } = req.body;
 
   try {
@@ -91,19 +96,16 @@ usersRouter.post('/register', async (req, res, next) => {
   }
 });
 
-usersRouter.get('/me', requireUser, async (req, res) => {
+router.get('/me', requireUser, async (req, res) => {
   res.send(req.user);
 });
 
-usersRouter.get('/:username/products', async (req, res, next) => {
+router.get('/:username/products', async (req, res, next) => {
   try {
     const { username } = req.params;
     if (req.user && req.user.username === username) {
       const userProducts = await getAllProductsByUser({ username });
       res.send(userProducts);
-    } else {
-      const userPublicProducts = await getPublicProductsByUser({ username });
-      res.send(userPublicProducts);
     }
   } catch ({ name, message }) {
     next({ name, message });
@@ -111,4 +113,4 @@ usersRouter.get('/:username/products', async (req, res, next) => {
 });
 
 
-module.exports = usersRouter;
+module.exports = router;

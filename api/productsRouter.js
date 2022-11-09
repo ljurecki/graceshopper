@@ -1,6 +1,4 @@
 const express = require('express');
-const productsRouter = express.Router();
-
 const router = express.Router();
 // These are all of the items listed in the project description that will need to be built out.
 const {
@@ -24,7 +22,7 @@ router.get('/', async (req, res) => {
 });
 
 // GET /api/products/productId
-productsRouter.get('/', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   const { productId } = req.params;
   const _product = await getProductById(productId);
 
@@ -39,11 +37,11 @@ productsRouter.get('/', async (req, res, next) => {
   }
 });
 
-// POST /api/products
-productsRouter.post('/', requireUser, async (req, res) => {
+// POST /api/products  
+router.post('/', requireUser, async (req, res) => {
   const { title, description, price, imageURL } = req.body;
   const _title = await getProductByTitle(title);
-  const newProduct = await createProduct({ title, imageURL, description, price, author, genre});
+  const newProduct = await createProduct({ title, imageURL, description, price, author, genre });
 
   if (_title) {
     res.send({
@@ -57,16 +55,20 @@ productsRouter.post('/', requireUser, async (req, res) => {
 });
 
 // PATCH /api/productId
-productsRouter.patch('/:productId', requireUser, async (req, res, next) => {
+router.patch('/:productId', requireUser, async (req, res, next) => {
   const { productId } = req.params;
 
   try {
-    const { title, description, price, author, genre, imageURL } = req.body;
+    const { title, imageURL, description, price, author, genre } = req.body;
 
     const updateFields = {};
 
     if (productId) {
       updateFields.id = productId;
+    }
+
+    if (imageURL) {
+      updateFields.imageURL = imageURL;
     }
 
     if (title) {
@@ -90,11 +92,6 @@ productsRouter.patch('/:productId', requireUser, async (req, res, next) => {
       updateFields.genre = genre;
     }
 
-    if (imageURL) {
-      updateFields.imageURL = imageURL;
-    }
-
-
     const _product = await getProductById(productId);
     const _title = await getProductByTitle(title);
 
@@ -111,8 +108,8 @@ productsRouter.patch('/:productId', requireUser, async (req, res, next) => {
         message: ProductExistsError(_title.title),
       });
     } else {
-      const allCanUpdateProduct = await updateProduct(updateFields);
-      res.send(allCanUpdateProduct);
+      const adminUpdateProduct = await updateProduct(updateFields);
+      res.send(adminUpdateProduct);
     }
   } catch ({ title, message }) {
     next({ title, message });
@@ -121,4 +118,4 @@ productsRouter.patch('/:productId', requireUser, async (req, res, next) => {
 });
 
 
-module.exports = productsRouter;
+module.exports = router;
