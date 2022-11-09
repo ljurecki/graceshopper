@@ -8,12 +8,9 @@ const {
   createProduct,
   getProductByTitle,
   getProductById,
-  getProductByAuthor,
-  getProductByGenre,
-  getProductByPrice,
   updateProduct,
-  addProductToCart,
-  productAvailability,
+  // addProductToCart,
+  // productAvailability,
 } = require(`../db`);
 
 const { ProductExistsError, ProductNotFoundError } = require(`../errors`);
@@ -46,7 +43,7 @@ productsRouter.get('/', async (req, res, next) => {
 router.post('/', requireUser, async (req, res) => {
   const { title, description, price, imageURL } = req.body;
   const _title = await getProductByTitle(title);
-  const newProduct = await createProduct({ title, description, price, author, genre, imageURL });
+  const newProduct = await createProduct({ title, imageURL, description, price, author, genre});
 
   if (_title) {
     res.send({
