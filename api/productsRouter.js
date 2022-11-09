@@ -8,12 +8,12 @@ const {
   createProduct,
   getProductByTitle,
   getProductById,
-  // getProductByAuthor,
-  // getProductByGenre,
-  // getProductByPrice,
+  getProductByAuthor,
+  getProductByGenre,
+  getProductByPrice,
   updateProduct,
-  // addProductToCart,
-  // productAvailability,
+  addProductToCart,
+  productAvailability,
 } = require(`../db`);
 
 const { ProductExistsError, ProductNotFoundError } = require(`../errors`);
