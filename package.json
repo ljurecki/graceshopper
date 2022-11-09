@@ -2,14 +2,21 @@
   "name": "grace_shopper",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-server": "nodemon index.js",
-    "start": "node index.js",
+    "start-server": "nodemon server.js",
+    "start": "node server.js",
+    "seed": "node ./db/seed.js",
     "seed:dev": "nodemon ./db/seed.js"
   },
-  "keywords": [],
+  "keywords": [
+    "node",
+    "express",
+    "postgresql",
+    "jquery",
+    "javascript"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
