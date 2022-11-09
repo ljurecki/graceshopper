@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect} from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 //how to use bootstrap
@@ -25,6 +26,22 @@ import {
     addProductToCart,
     productAvailability,
 } from '../api';
+=======
+const { client } = require("./");
+
+async function createProduct({ title, description }) {
+  try {
+    const { rows: [product] } = await client.query(`
+      INSERT INTO products (title, "imageURL", description, price, author, genre,)
+      VALUES ($1, $2, $3, $4, $5)
+      ON CONFLICT (title) DO NOTHING
+      RETURNING *;
+    `, [title, imageURL, description, price, author, genre])
+    return product;
+  } catch (error) {
+  throw error;
+}
+}
 
 async function getAllProducts() {
     try {
@@ -208,6 +225,3 @@ module.exports = {
   productAvailability,
   deleteProduct
 };
-// module.exports = {
-//     createProduct
-// }
