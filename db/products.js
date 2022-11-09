@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
-//use bootstrap
+//how to use bootstrap
 import {
     Card,
     ListGroup,
