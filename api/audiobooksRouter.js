@@ -1,69 +1,75 @@
 // const express = require('express');
-// const audiobooksRouter = express.Router();
-// const router = express.Router();
+// const audioBooksRouter = express.Router();
 
+// const router = express.Router();
+// // These are all of the items listed in the project description that will need to be built out.
 // const {
-//   getAllAudiobooks,
-//   createAudiobook,
-//   getAudiobookByTitle,
-//   getAudiobookById,
-//   updateAudiobook,
+//   getAllAudioBooks,
+//   createAudioBook,
+//   getAudioBookByTitle,
+//   getAudioBookById,
+//   // getAudioBookByAuthor,
+//   // getAudioBookByGenre,
+//   // getAudioBookByPrice,
+//   updateAudioBook,
+//   // addAudioBookToCart,
+//   // audioBookAvailability,
 // } = require(`../db`);
 
-// const { AudiobookExistsError, AudiobookNotFoundError } = require(`../errors`);
+// const { ProductExistsError, ProductNotFoundError } = require(`../errors`);
 // const { requireUser } = require(`./utils`);
 
-// // GET /api/audiobooks
+// // GET /api/products
 // router.get('/', async (req, res) => {
-//   const allAudiobooks = await getAllAudiobooks();
+//   const allProducts = await getAllAudioBooks();
 
-//   res.send(allAudiobooks);
+//   res.send(allProducts);
 // });
 
-// // GET /api/audiobooks/audiobookId
-// audiobooksRouter.get('/:audiobookId', async (req, res) => {
-//   const { audiobookId } = req.params;
-//   const _audiobook = await getAudiobookById(audiobookId);
+// // GET /api/products/productId
+// productsRouter.get('/', async (req, res, next) => {
+//   const { productId } = req.params;
+//   const _product = await getAudioBookById(audioBookId);
 
-//   if (!_audiobook) {
+//   if (!_audioBook) {
 //     res.send({
-//       error: 'AudiobookDoesNotExists',
-//       title: 'Audiobook does not exists',
-//       message: AudiobookNotFoundError(audiobookId),
+//       error: 'AudioBookDoesNotExists',
+//       title: 'AudioBook does not exists',
+//       message: AudioBookNotFoundError(audioBookId),
 //     });
 //   } else {
-//     res.send('LIST OF AUDIOBOOKS')
+//     res.send('LIST OF AudioBooks')
 //   }
 // });
 
-// // POST /api/audiobook
-// router.audiobook('/', requireUser, async (req, res) => {
-//   const { title, description, price } = req.body;
-//   const _title = await getAudiobookByTitle(title);
-//   const newAudiobook = await createAudiobook({ title, imageURL, description, price, author, genre });
+// // POST /api/products
+// router.post('/', requireUser, async (req, res) => {
+//   const { title, description, price, imageURL } = req.body;
+//   const _title = await getAudioBookBytitle(title);
+//   const newProduct = await createAudioBook({ title, imageURL, description, price, author, genre });
 
 //   if (_title) {
 //     res.send({
-//       error: 'AudiobookAlreadyExists',
-//       title: 'Audiobook already exists',
-//       message: AudiobookExistsError(_title.title),
+//       error: 'AudioBookAlreadyExists',
+//       title: 'AudioBook already exists',
+//       message: AudioBookExistsError(_title.title),
 //     });
 //   } else {
-//     res.send(newAudiobook);
+//     res.send(newAudioBook);
 //   }
 // });
 
-// // PATCH /api/audiobookId
-// router.patch('/:audiobookId', requireUser, async (req, res, next) => {
-//   const { audiobookId } = req.params;
+// // PATCH /api/productId
+// router.patch('/:productId', requireUser, async (req, res, next) => {
+//   const { audioBookId } = req.params;
 
 //   try {
 //     const { title, imageURL, description, price, author, genre } = req.body;
 
 //     const updateFields = {};
 
-//     if (audiobookId) {
-//       updateFields.id = audiobookId;
+//     if (audioBookId) {
+//       updateFields.id = audioBookId;
 //     }
 
 //     if (title) {
@@ -82,6 +88,7 @@
 //       updateFields.price = price;
 //     }
 
+
 //     if (author) {
 //       updateFields.author = author;
 //     }
@@ -90,24 +97,25 @@
 //       updateFields.genre = genre;
 //     }
 
-//     const _audiobook = await getAudiobookById(audiobookId);
-//     const _title = await getAudiobookByTitle(title);
 
-//     if (!_audiobook) {
+//     const _product = await getAudioBookById(audioBookId);
+//     const _title = await getAudioBookByTitle(title);
+
+//     if (!_product) {
 //       res.send({
-//         error: 'AudiobookDoesNotExists',
-//         title: 'Audiobook does not exists',
-//         message: AudiobookNotFoundError(audiobookId),
+//         error: 'Audio BookDoesNotExists',
+//         title: 'AudioBook does not exists',
+//         message: AudioBookNotFoundError(audioBookId),
 //       });
 //     } else if (_title) {
 //       res.send({
-//         error: 'AudiobookAlreadyExists',
-//         title: 'Audiobook already exists',
-//         message: AudiobookExistsError(_title.title),
+//         error: 'AudioBookAlreadyExists',
+//         title: 'AudioBook already exists',
+//         message: AudioBookExistsError(_title.title),
 //       });
 //     } else {
-//       const allCanUpdateAudiobook = await updateAudiobook(updateFields);
-//       res.send(allCanUpdateAudiobook);
+//       const allCanUpdateAudioBook = await updateAudioBook(updateFields);
+//       res.send(allCanUpdateAudioBook);
 //     }
 //   } catch ({ title, message }) {
 //     next({ title, message });
@@ -116,4 +124,4 @@
 // });
 
 
-// module.exports = audiobooksRouter;
+// module.exports = audioBooksRouter;
