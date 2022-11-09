@@ -3,7 +3,6 @@ require('dotenv').config();
 const express = require('express');
 const usersRouter = express.Router();
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 const { requireUser } = require('./utils')
 const { 
   createUser,
@@ -14,7 +13,7 @@ const {
 
 
 // POST /api/users/login
-router.post('/login', async (req, res, next) => {
+usersRouter.post('/login', async (req, res, next) => {
   try {
     const { username, password } = req.body;
 
@@ -50,7 +49,7 @@ router.post('/login', async (req, res, next) => {
 
 // POST /api/users/register
 
-router.post('/register', async (req, res, next) => {
+usersRouter.post('/register', async (req, res, next) => {
   const { username, password } = req.body;
 
   try {
@@ -92,11 +91,11 @@ router.post('/register', async (req, res, next) => {
   }
 });
 
-router.get('/me', requireUser, async (req, res) => {
+usersRouter.get('/me', requireUser, async (req, res) => {
   res.send(req.user);
 });
 
-router.get('/:username/products', async (req, res, next) => {
+usersRouter.get('/:username/products', async (req, res, next) => {
   try {
     const { username } = req.params;
     if (req.user && req.user.username === username) {

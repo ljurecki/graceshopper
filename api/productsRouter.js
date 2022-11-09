@@ -40,7 +40,7 @@ productsRouter.get('/', async (req, res, next) => {
 });
 
 // POST /api/products
-router.post('/', requireUser, async (req, res) => {
+productsRouter.post('/', requireUser, async (req, res) => {
   const { title, description, price, imageURL } = req.body;
   const _title = await getProductByTitle(title);
   const newProduct = await createProduct({ title, imageURL, description, price, author, genre});
@@ -57,7 +57,7 @@ router.post('/', requireUser, async (req, res) => {
 });
 
 // PATCH /api/productId
-router.patch('/:productId', requireUser, async (req, res, next) => {
+productsRouter.patch('/:productId', requireUser, async (req, res, next) => {
   const { productId } = req.params;
 
   try {
