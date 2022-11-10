@@ -1,8 +1,8 @@
 const express = require('express');
-const audioBooksRouter = express.Router();
+const audiobooksRouter = express.Router();
 
 const router = express.Router();
-// These are all of the items listed in the project description that will need to be built out.
+
 const {
   getAllAudioBooks,
   createAudioBook,
@@ -26,27 +26,27 @@ router.get('/', async (req, res) => {
   res.send(allProducts);
 });
 
-// GET /api/products/productId
-productsRouter.get('/', async (req, res, next) => {
-  const { productId } = req.params;
-  const _product = await getAudioBookById(audioBookId);
+// GET /api/audiobooks/audiobookId
+audiobooksRouter.get('/', async (req, res, next) => {
+  const { audiobookId } = req.params;
+  const _audiobook = await getAudiobookById(productId);
 
-  if (!_audioBook) {
+  if (!_product) {
     res.send({
-      error: 'AudioBookDoesNotExists',
-      title: 'AudioBook does not exists',
-      message: AudioBookNotFoundError(audioBookId),
+      error: 'ProductDoesNotExists',
+      title: 'Product does not exists',
+      message: AudiobookNotFoundError(audiobookId),
     });
   } else {
     res.send('LIST OF AudioBooks')
   }
 });
 
-// POST /api/products
-router.post('/', requireUser, async (req, res) => {
-  const { title, description, price, imageURL } = req.body;
-  const _title = await getAudioBookBytitle(title);
-  const newProduct = await createAudioBook({ title, imageURL, description, price, author, genre });
+// POST /api/audiobook
+router.audiobook('/', requireUser, async (req, res) => {
+  const { title, description, price } = req.body;
+  const _title = await getAudiobookByTitle(title);
+  const newProduct = await createAudiobook({ title, description, price, author, genre });
 
   if (_title) {
     res.send({
@@ -64,7 +64,7 @@ router.patch('/:productId', requireUser, async (req, res, next) => {
   const { audioBookId } = req.params;
 
   try {
-    const { title, imageURL, description, price, author, genre } = req.body;
+    const { title, description, price, author, genre } = req.body;
 
     const updateFields = {};
 
@@ -74,10 +74,6 @@ router.patch('/:productId', requireUser, async (req, res, next) => {
 
     if (title) {
       updateFields.title = title;
-    }
-
-    if (imageURL) {
-      updateFields.imageURL = imageURL;
     }
 
     if (description) {

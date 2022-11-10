@@ -1,32 +1,3 @@
-
-import React, { useState, useEffect} from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
-//how to use bootstrap
-import {
-    Card,
-    ListGroup,
-    Row,
-    Col,
-    Button,
-    Form,
-    FloatingLabel,
-    Alert,
-  } from 'react-bootstrap';
-const { client } = require("./client");
-//import from api
-import { 
-    getAllProducts,
-    createProduct,
-    getProductByTitle,
-    getProductByID,
-    getProductByAuthor,
-    getProductByGenre,
-    getProductByPrice,
-    updateProduct,
-    addProductToCart,
-    productAvailability,
-} from '../api';
-=======
 const { client } = require("./");
 
 async function createProduct({ title, description }) {
@@ -39,64 +10,61 @@ async function createProduct({ title, description }) {
     `, [title, imageURL, description, price, author, genre])
     return product;
   } catch (error) {
-  throw error;
-}
+    throw error;
+  }
 }
 
 async function getAllProducts() {
-    try {
-      const { rows: products } = await client.query(
-        `
-        SELECT * FROM products;
-        `
-      );
-      return products;
-    } catch (error) {
-      throw error;
-    }
+  try {
+    const { rows: products } = await client.query(
+      `SELECT * FROM products;`);
+    return products;
+  } catch (error) {
+    throw error;
   }
+}
 
-  async function createProduct() {
-    const newActivity = {
-      name,
-      description,
-      title,
-      genre,
-      price
-    };
-    const result = await createProduct(jwt, user, newActivity);
-    if (result.error) {
-      console.error(result.error);
-      setErrorMessage(result.error);
-    } else {
-      setSuccessMessage('Product Created!');
-      setErrorMessage('');
-      setTimeout(() => {
-        handleClose();
-      }, 1000);
-    }
-  }
 
-async function getProductByTitle(productTitle) {
-    try {
-      const {
-        rows: [product],
-      } = await client.query(
-        `
+async function getProductByTitle(title) {
+  try {
+    const {
+      rows: [product],
+    } = await client.query(
+      `
         SELECT *
         FROM products
         WHERE id = $1;
         `,
-        [productTitle]
-      );
-      return product;
-    } catch (error) {
-      throw error;
-    }
+      [title]
+    );
+    return product;
+  } catch (error) {
+    throw error;
   }
+}
+
+async function getAllProductsByUser({ username }) {
+  try {
+    const { rows: products } = await client.query(
+      `
+        SELECT products.*, users.username AS "creatorName"
+        FROM products
+        JOIN users ON products."creatorId"=users.id
+        WHERE users.username=$1;`,
+      [username]
+    );
+
+    const result = await attachActivitiesToRoutines(products);
+
+    return result;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
 
 
-async function getProductById(productId) {
+async function getProductById(id) {
   try {
     const {
       rows: [product],
@@ -106,7 +74,7 @@ async function getProductById(productId) {
       FROM products
       WHERE id = $1;
       `,
-      [productId]
+      [id]
     );
     return product;
   } catch (error) {
@@ -114,60 +82,60 @@ async function getProductById(productId) {
   }
 }
 
-async function getProductByAuthor(productAuthor) {
-    try {
-      const {
-        rows: [product],
-      } = await client.query(
-        `
+async function getProductByAuthor(author) {
+  try {
+    const {
+      rows: [product],
+    } = await client.query(
+      `
         SELECT *
         FROM products
         WHERE id = $1;
         `,
-        [productAuthor]
-      );
-      return product;
-    } catch (error) {
-      throw error;
-    }
+      [author]
+    );
+    return product;
+  } catch (error) {
+    throw error;
   }
+}
 
 
-  async function getProductByGenre(productGenre) {
-    try {
-      const {
-        rows: [product],
-      } = await client.query(
-        `
+async function getProductByGenre(genre) {
+  try {
+    const {
+      rows: [product],
+    } = await client.query(
+      `
         SELECT *
         FROM products
         WHERE id = $1;
         `,
-        [productGenre]
-      );
-      return product;
-    } catch (error) {
-      throw error;
-    }
+      [genre]
+    );
+    return product;
+  } catch (error) {
+    throw error;
   }
+}
 
-  async function getProductByPrice(productPrice) {
-    try {
-      const {
-        rows: [product],
-      } = await client.query(
-        `
+async function getProductByPrice(price) {
+  try {
+    const {
+      rows: [product],
+    } = await client.query(
+      `
         SELECT *
         FROM products
         WHERE id = $1;
         `,
-        [productPrice]
-      );
-      return product;
-    } catch (error) {
-      throw error;
-    }
+      [price]
+    );
+    return product;
+  } catch (error) {
+    throw error;
   }
+}
 
 
 async function updateProduct({ id, ...fields }) {
@@ -192,7 +160,7 @@ async function updateProduct({ id, ...fields }) {
   }
 }
 
-async function deleteProduct(productId) {
+async function deleteProduct(id) {
   try {
     const {
       rows: [product],
@@ -202,26 +170,25 @@ async function deleteProduct(productId) {
       WHERE id = $1
       RETURNING *;
       `,
-      [productId]
+      [id]
     );
     return product;
   } catch (error) {
     throw error;
   }
 }
+
 module.exports = {
-  
-  
   getAllProducts,
   createProduct,
- getProductByTitle,
+  getProductByTitle,
   getProductById,
   getProductByAuthor,
   getProductByGenre,
   getProductByPrice,
-
   updateProduct,
-  addProductToCart,
-  productAvailability,
+  getAllProductsByUser,
+  // addProductToCart,
+  // productAvailability,
   deleteProduct
 };
