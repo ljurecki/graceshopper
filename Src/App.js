@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import React /*{ useState, useEffect }*/ from 'react';
+import { Route, Routes, /*useNavigate*/ } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { Navbar } from './components';
 import {
@@ -12,47 +12,47 @@ import {
 
 
   const App = () => {
-    const [jwt, setJwt] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    // const [user, setUser] = useState({});
-    const navigate = useNavigate();
+    // const [jwt, setJwt] = useState('');
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // // const [user, setUser] = useState({});
+    // const navigate = useNavigate();
   
-    function logOut() {
-      window.localStorage.removeItem('jwt');
-      setJwt('');
-      setUser({});
-      setIsLoggedIn(false);
-    }
+    // function logOut() {
+    //   window.localStorage.removeItem('jwt');
+    //   setJwt('');
+    //   setUser({});
+    //   setIsLoggedIn(false);
+    // }
   
-    async function persistLogin() {
-      if (window.localStorage.getItem('jwt')) {
-        setJwt(window.localStorage.getItem('jwt'));
-      }
-      if (jwt) {
-        setIsLoggedIn(true);
-        const response = await getUserData(jwt);
-        if (!response.error) {
-          setUser(response);
-        } else {
-          console.error(response.error);
-        }
-      }
-    }
+    // async function persistLogin() {
+    //   if (window.localStorage.getItem('jwt')) {
+    //     setJwt(window.localStorage.getItem('jwt'));
+    //   }
+    //   if (jwt) {
+    //     setIsLoggedIn(true);
+    //     const response = await getUserData(jwt);
+    //     if (!response.error) {
+    //       setUser(response);
+    //     } else {
+    //       console.error(response.error);
+    //     }
+    //   }
+    // }
   
-    useEffect(() => {
-      persistLogin();
-    }, [jwt]);
+    // useEffect(() => {
+    //   persistLogin();
+    // }, [jwt]);
   
     return (
       <>
         <div className='sticky-top'>
-          <Navbar isLoggedIn={isLoggedIn} logOut={logOut} navigate={navigate} />
+          <Navbar />
         </div>
         <Container className='px-0' fluid id='main-app'>
           <Routes>
             <Route
               path='/'
-              element={<Home id='Home' />}
+              element={<Home/>}
             />
             <Route
               path='/products'
@@ -60,11 +60,11 @@ import {
             />
             <Route
               path='/register'
-              element={<Register navigate={navigate} />}
+              element={<Register /*navigate={navigate}*/ />}
             />
             <Route
               path='/login'
-              element={<Login setJwt={setJwt} navigate={navigate} />}
+              element={<Login /*setJwt={setJwt} navigate={navigate}*/ />}
             />
           </Routes>
         </Container>

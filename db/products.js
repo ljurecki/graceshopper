@@ -1,36 +1,5 @@
-<<<<<<< HEAD
-import {React, useState, useEffect} from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
-//how to use bootstrap
-import {
-    Card,
-    ListGroup,
-    Row,
-    Col,
-    Button,
-    Form,
-    FloatingLabel,
-    Alert,
-  } from 'react-bootstrap';
-const { client } = require("./client");
-//import from api
-import { 
-    getAllProducts,
-    createProduct,
-    getProductByTitle,
-    getProductByID,
-    getProductByAuthor,
-    getProductByGenre,
-    getProductByPrice,
-    updateProduct,
-    addProductToCart,
-    productAvailability,
-} from '../api';
+const client = require("./client");
 
-const { client } = require("./");
-=======
-const { client } = require("./client");
->>>>>>> 7c96a657b128434a6642a3bac13a7fa6c1a9a4e8
 
 async function getAllProducts() {
   try {
@@ -207,11 +176,7 @@ async function deleteProduct(id) {
 
 
 module.exports = {
-<<<<<<< HEAD
-   getAllProducts,
-=======
   getAllProducts,
->>>>>>> 7c96a657b128434a6642a3bac13a7fa6c1a9a4e8
   createProduct,
   getProductByTitle,
   getProductById,
