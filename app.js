@@ -16,6 +16,7 @@ app.use('/api', router);
 const client = require('./db/client');
 client.connect();
 
+
 module.exports = app;
 
 // app.use((req, res, next)=> {
