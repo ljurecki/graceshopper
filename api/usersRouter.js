@@ -1,7 +1,7 @@
 const express = require('express');
 const usersRouter = express.Router();
 const jwt = require('jsonwebtoken');
-// const { requireUser } = require('./utils')
+const { requireUser } = require('./utils')
 const {
   createUser,
   getUserByUsername,
@@ -53,7 +53,7 @@ usersRouter.post('/login', async (req, res, next) => {
 // POST /api/users/register
 
 usersRouter.post('/register', async (req, res, next) => {
-  const { username, password } = req.body;
+  const { username, password, isAdmin } = req.body;
 
   try {
     if (!username || !password) {
@@ -77,7 +77,7 @@ usersRouter.post('/register', async (req, res, next) => {
           message: UserTakenError(_user.username),
         });
       } else {
-        const user = await createUser({ username, password });
+        const user = await createUser({ username, password, isAdmin });
         if (user) {
           const token = jwt.sign(user, JWT_SECRET);
           res.send({
