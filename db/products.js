@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect} from 'react';
+import {React, useState, useEffect} from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 //how to use bootstrap
 import {
@@ -26,7 +25,7 @@ import {
     addProductToCart,
     productAvailability,
 } from '../api';
-=======
+
 const { client } = require("./");
 
 async function createProduct({ title, description }) {
@@ -210,16 +209,13 @@ async function deleteProduct(productId) {
   }
 }
 module.exports = {
-  
-  
-  getAllProducts,
+   getAllProducts,
   createProduct,
  getProductByTitle,
   getProductById,
   getProductByAuthor,
   getProductByGenre,
   getProductByPrice,
-
   updateProduct,
   addProductToCart,
   productAvailability,
