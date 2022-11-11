@@ -3,7 +3,6 @@ const {
   createUser,
   createProduct,
   // createAudiobook,
-  getAllProducts,
 } = require('./');
 
 
@@ -24,7 +23,7 @@ async function dropTables() {
 
 async function createTables() {
   try {
-    console.log('Starting to build tables...')
+    console.log('Starting to build tables...');
     await client.query(`
     CREATE TABLE users(
       id SERIAL PRIMARY KEY,
@@ -32,7 +31,7 @@ async function createTables() {
       password varchar(255) NOT NULL,
       isAdmin BOOLEAN DEFAULT false
     );
-      CREATE TABLE products (
+      CREATE TABLE products(
         id SERIAL PRIMARY KEY,
         "creatorId" INTEGER REFERENCES users(id)
         title VARCHAR(255) UNIQUE NOT NULL,
@@ -42,17 +41,17 @@ async function createTables() {
         author TEXT NOT NULL,
         genre TEXT NOT NULL
       );
-      CREATE TABLE audiobooks (
-        id SERIAL PRIMARY KEY,
-        "creatorId" INTEGER REFERENCES users(id)
-        title VARCHAR(255) UNIQUE NOT NULL,
-        "imageURL" VARCHAR(255) NOT NULL,
-        description VARCHAR(255) TEXT NOT NULL,
-        price TEXT NOT NULL,
-        author TEXT NOT NULL,
-        genre TEXT NOT NULL
+      // CREATE TABLE audiobooks(
+      //   id SERIAL PRIMARY KEY,
+      //   "creatorId" INTEGER REFERENCES users(id)
+      //   title VARCHAR(255) UNIQUE NOT NULL,
+      //   "imageURL" VARCHAR(255) NOT NULL,
+      //   description VARCHAR(255) TEXT NOT NULL,
+      //   price TEXT NOT NULL,
+      //   author TEXT NOT NULL,
+      //   genre TEXT NOT NULL
+      // );`
       );
-    `)
 
     console.log('Finished Creating Tables')
   }
@@ -71,7 +70,7 @@ async function createInitialUsers() {
       { username: 'tyler', password: 'tyler123', isAdmin: true },
       { username: 'libette', password: 'libette123', isAdmin: true },
       { username: 'adam', password: 'adam123', isAdmin: true },
-      { username: 'shaun', password: 'shaun123', },
+      { username: 'shaun', password: 'shaun123' },
     ];
     const users = await Promise.all(usersToCreate.map(createUser));
 

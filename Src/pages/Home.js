@@ -1,7 +1,14 @@
+import React from 'react';
 
 const Home = () => {
     return (
-        console.log('home page')
+        <>
+            <div >
+                <h1>
+                    Shop Until You Drop!
+                </h1>
+            </div>
+        </>
     )
 };
 

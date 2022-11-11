@@ -1,4 +1,4 @@
-const BASE_URL = '../api';
+const BASE_URL = 'http://localhost:5432/api';
 
 const createHeaders = jwt => {
     return jwt
@@ -105,7 +105,7 @@ export const createProducts = async (jwt, /*user*/ { name, imageURL, description
 export const updateProduct = async (updatedProduct, jwt) => {
     try {
         const headers = createHeaders(jwt);
-        return await fetch(`${BASE_URL}/prodcuts/${id}`, {
+        return await fetch(`${BASE_URL}/products/${id}`, {
             method: 'PATCH',
             headers,
             body: JSON.stringify(updatedProduct),
@@ -118,7 +118,7 @@ export const updateProduct = async (updatedProduct, jwt) => {
 export const deleteProduct = async (product, jwt) => {
     try {
         const headers = createHeaders(jwt);
-        return await fetch(`${BASE_URL}/oroduct/${product.id}`, {
+        return await fetch(`${BASE_URL}/oroducts/${product.id}`, {
             method: 'DELETE',
             headers,
         }).then(response => response.json());
