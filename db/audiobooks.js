@@ -1,6 +1,7 @@
 
 const { client } = require("./client");
 
+
 async function createAudiobook({ title, description }) {
   try {
     const { rows: [audiobook] } = await client.query(`
@@ -108,6 +109,3 @@ module.exports = {
   deleteAudiobook,
   getAudiobookByTitle
 };
-// module.exports = {
-//     createProduct
-// }
