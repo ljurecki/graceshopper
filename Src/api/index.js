@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5432/api';
+const BASE_URL = 'https://localhost:5432/api';
 
 const createHeaders = jwt => {
     return jwt
@@ -82,7 +82,7 @@ export const getProductsByUsername = async (user, jwt) => {
     }
 };
 
-export const createProducts = async (jwt, /*user*/ { name, imageURL, description, price, author, genre }) => {
+export const createProducts = async (jwt, /*user*/ { name, imageurl, description, price, author, genre }) => {
     try {
         const headers = createHeaders(jwt);
         return await fetch(`${BASE_URL}/products`, {
@@ -90,7 +90,7 @@ export const createProducts = async (jwt, /*user*/ { name, imageURL, description
             headers,
             body: JSON.stringify({
                 name: name,
-                imageURL,
+                imageurl: imageurl,
                 description: description,
                 price: price,
                 author: author,

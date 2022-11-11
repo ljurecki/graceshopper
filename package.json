@@ -2,11 +2,11 @@
   "name": "grace_shopper",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-server": "nodemon server.js",
-    "start": "node server.js",
+    "start-server": "nodemon app.js",
+    "start": "node app.js",
     "seed": "node ./db/seed.js",
     "seed:dev": "nodemon ./db/seed.js"
   },
