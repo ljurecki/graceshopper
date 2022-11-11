@@ -1,17 +1,21 @@
 require('dotenv').config();
 
 const express = require('express');
-const usersRouter = express.Router();
+const router = express.Router();
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 const { requireUser } = require('./utils')
-const { 
+const {
   createUser,
   getUserByUsername,
   getUser,
   getAllProductsByUser
 } = require('../db/')
 
+const {
+  UserDoesNotExistError,
+  PasswordTooShortError,
+  UserTakenError,
+} = require('../errors');
 
 // POST /api/users/login
 router.post('/login', async (req, res, next) => {
@@ -102,14 +106,10 @@ router.get('/:username/products', async (req, res, next) => {
     if (req.user && req.user.username === username) {
       const userProducts = await getAllProductsByUser({ username });
       res.send(userProducts);
-    } else {
-      const userPublicProducts = await getPublicProductsByUser({ username });
-      res.send(userPublicProducts);
     }
   } catch ({ name, message }) {
     next({ name, message });
   }
 });
-
-
+//test
 module.exports = usersRouter;

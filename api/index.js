@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-
 const { JWT_SECRET } = process.env;
 const { getUserById } = require('../db/users');
 
@@ -41,22 +40,22 @@ router.get('/health', async (req, res) => {
 const usersRouter = require('./usersRouter');
 router.use('/users', usersRouter);
 
-const productsRouter = require ('./productsRouter');
+const productsRouter = require('./productsRouter');
 router.use('/products', productsRouter);
 
-const audiobooksRouter = require ('./audiobooksRouter');
-router.use('/audiobooks', audiobooksRouter);
+// const audiobooksRouter = require ('./audiobooksRouter');
+// router.use('/audiobooks', audiobooksRouter);
 
 router.get('*', (req, res) => {
-    res.status(404).send({
-      message: 'Page not found',
-    });
+  res.status(404).send({
+    message: 'Page not found',
   });
+});
 
-  router.use((err, req, res) => {
-    res.send({
-      message: err,
-    });
+router.use((err, req, res) => {
+  res.send({
+    message: err,
   });
+});
 
 module.exports = router;
