@@ -35,10 +35,7 @@
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
-<<<<<<< HEAD
-=======
     "react-router-dom": "^6.4.2",
->>>>>>> 9abe92d0091c3e4cc4992cddc6313cf03046832b
     "react-script": "^2.0.5",
     "router": "^1.3.7"
   },
