@@ -29,7 +29,8 @@ async function createTables() {
     CREATE TABLE users(
       id SERIAL PRIMARY KEY,
       username VARCHAR(255) UNIQUE NOT NULL,
-      password VARCHAR(255) NOT NULL
+      password VARCHAR(255) NOT NULL,
+      "isAdmin" BOOLEAN DEFAULT false
     );`)
 
     await client.query(`
@@ -42,6 +43,14 @@ async function createTables() {
       author TEXT NOT NULL,
       genre TEXT NOT NULL
     );`)
+
+    await client.query(`
+    CREATE TABLE cart(
+      id SERIAL PRIMARY KEY,
+      "userId" INTEGER REFERENCES users(id),
+      "productId" INTEGER REFERENCES products(id)
+    );`)
+
     console.log('Finished Creating Tables')
   }
   catch (ex) {
@@ -54,12 +63,12 @@ async function createInitialUsers() {
   console.log('Starting to create users...');
   try {
     const usersToCreate = [
-      { username: 'david', password: 'david123' },
-      { username: 'mandy', password: 'mandy123' },
-      { username: 'tyler', password: 'tyler123' },
-      { username: 'libette', password: 'libette123' },
-      { username: 'adam', password: 'adam123' },
-      { username: 'shaun', password: 'shaun123' },
+      { username: 'david', password: 'david1234!', isAdmin: true },
+      { username: 'mandy', password: 'mandy1234!', isAdmin: true },
+      { username: 'tyler', password: 'tyler1234!', isAdmin: true },
+      { username: 'libette', password: 'libette1234!', isAdmin: true },
+      { username: 'adam', password: 'adam1234!', isAdmin: true },
+      { username: 'shaun', password: 'shaun1234!', isAdmin: false },
     ];
     const users = await Promise.all(usersToCreate.map(createUser));
 

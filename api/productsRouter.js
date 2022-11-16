@@ -10,6 +10,7 @@ const {
   // addProductToCart,
   // productAvailability,
 } = require(`../db`);
+const {requireUser} = require(`./utils`);
 
 const { ProductExistsError, ProductNotFoundError } = require(`../errors`);
 // const { requireUser } = require(`./utils`);
@@ -21,21 +22,6 @@ productsRouter.get('/', async (req, res) => {
   res.send(allProducts);
 });
 
-// GET /api/products/productId
-productsRouter.get('/', async (req, res, next) => {
-  const { productId } = req.params;
-  const _product = await getProductById(productId);
-
-  if (!_product) {
-    res.send({
-      error: 'ProductDoesNotExists',
-      title: 'Product does not exists',
-      message: ProductNotFoundError(productId),
-    });
-  } else {
-    res.send('LIST OF PRODUCTS')
-  }
-});
 
 // POST /api/products  
 productsRouter.post('/', async (req, res) => {
@@ -55,7 +41,7 @@ productsRouter.post('/', async (req, res) => {
 });
 
 // PATCH /api/productId
-productsRouter.patch('/:productId', async (req, res, next) => {
+productsRouter.patch('/:productId', requireUser, async (req, res, next) => {
   const { productId } = req.params;
 
   try {
@@ -82,7 +68,6 @@ productsRouter.patch('/:productId', async (req, res, next) => {
     if (price) {
       updateFields.price = price;
     }
-
 
     if (author) {
       updateFields.author = author;
