@@ -1,12 +1,10 @@
 import React /*{ useState, useEffect }*/ from 'react';
 import { Route, Routes, /*useNavigate*/ } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import { Navbar } from './components';
+import { Navbar, LoginForm, RegisterForm } from './components';
 import {
-    // Cart,
+ // Cart,
     Home,
-    Login,
-    Register,
     Products
   } from './pages';
 
@@ -59,11 +57,11 @@ import {
               element={<Products /*user={user} jwt={jwt} isLoggedIn={isLoggedIn}*/ />}
             />
             <Route
-              path='/register'
+              path='/registerForm'
               element={<Register /*navigate={navigate}*/ />}
             />
             <Route
-              path='/login'
+              path='/loginForm'
               element={<Login /*setJwt={setJwt} navigate={navigate}*/ />}
             />
           </Routes>
