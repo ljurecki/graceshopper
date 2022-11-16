@@ -1,33 +1,7 @@
 
-import React, { useState, useEffect} from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
-//how to use bootstrap
-import {
-    Card,
-    ListGroup,
-    Row,
-    Col,
-    Button,
-    Form,
-    FloatingLabel,
-    Alert,
-  } from 'react-bootstrap';
 const { client } = require("./client");
-//import from api
-import { 
-    getAllProducts,
-    createProduct,
-    getProductByTitle,
-    getProductByID,
-    getProductByAuthor,
-    getProductByGenre,
-    getProductByPrice,
-    updateProduct,
-    addProductToCart,
-    productAvailability,
-} from '../api';
-=======
-const { client } = require("./");
+
+
 
 async function createProduct({ title, description }) {
   try {
@@ -56,28 +30,10 @@ async function getAllProducts() {
     }
   }
 
-  async function createProduct() {
-    const newActivity = {
-      name,
-      description,
-      title,
-      genre,
-      price
-    };
-    const result = await createProduct(jwt, user, newActivity);
-    if (result.error) {
-      console.error(result.error);
-      setErrorMessage(result.error);
-    } else {
-      setSuccessMessage('Product Created!');
-      setErrorMessage('');
-      setTimeout(() => {
-        handleClose();
-      }, 1000);
-    }
-  }
 
-async function getProductByTitle(productTitle) {
+  
+
+async function getProductByTitle(Title) {
     try {
       const {
         rows: [product],
@@ -87,7 +43,7 @@ async function getProductByTitle(productTitle) {
         FROM products
         WHERE id = $1;
         `,
-        [productTitle]
+        [Title]
       );
       return product;
     } catch (error) {
@@ -96,7 +52,7 @@ async function getProductByTitle(productTitle) {
   }
 
 
-async function getProductById(productId) {
+async function getProductById(Id) {
   try {
     const {
       rows: [product],
@@ -106,7 +62,7 @@ async function getProductById(productId) {
       FROM products
       WHERE id = $1;
       `,
-      [productId]
+      [Id]
     );
     return product;
   } catch (error) {
@@ -114,7 +70,7 @@ async function getProductById(productId) {
   }
 }
 
-async function getProductByAuthor(productAuthor) {
+async function getProductByAuthor(Author) {
     try {
       const {
         rows: [product],
@@ -124,7 +80,7 @@ async function getProductByAuthor(productAuthor) {
         FROM products
         WHERE id = $1;
         `,
-        [productAuthor]
+        [Author]
       );
       return product;
     } catch (error) {
@@ -133,7 +89,7 @@ async function getProductByAuthor(productAuthor) {
   }
 
 
-  async function getProductByGenre(productGenre) {
+  async function getProductByGenre(Genre) {
     try {
       const {
         rows: [product],
@@ -143,7 +99,7 @@ async function getProductByAuthor(productAuthor) {
         FROM products
         WHERE id = $1;
         `,
-        [productGenre]
+        [Genre]
       );
       return product;
     } catch (error) {
@@ -151,7 +107,7 @@ async function getProductByAuthor(productAuthor) {
     }
   }
 
-  async function getProductByPrice(productPrice) {
+  async function getProductByPrice(Price) {
     try {
       const {
         rows: [product],
@@ -161,7 +117,7 @@ async function getProductByAuthor(productAuthor) {
         FROM products
         WHERE id = $1;
         `,
-        [productPrice]
+        [Price]
       );
       return product;
     } catch (error) {
@@ -192,7 +148,7 @@ async function updateProduct({ id, ...fields }) {
   }
 }
 
-async function deleteProduct(productId) {
+async function deleteProduct(Id) {
   try {
     const {
       rows: [product],
@@ -202,7 +158,7 @@ async function deleteProduct(productId) {
       WHERE id = $1
       RETURNING *;
       `,
-      [productId]
+      [Id]
     );
     return product;
   } catch (error) {

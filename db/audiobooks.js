@@ -44,6 +44,7 @@ async function getAudioBookById(audioBookId) {
     throw error;
   }
 }
+
 async function updateAudioBooks({ id, ...fields }) {
   try {
     const indexString = Object.keys(fields).map((key, index) => {
