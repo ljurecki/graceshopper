@@ -8,7 +8,8 @@
     "start-server": "nodemon app.js",
     "start": "node app.js",
     "seed": "node ./db/seed.js",
-    "seed:dev": "nodemon ./db/seed.js"
+    "seed:dev": "nodemon ./db/seed.js",
+    "client-start": "react-scripts start"
   },
   "keywords": [
     "node",
@@ -37,6 +38,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
     "react-script": "^2.0.5",
+    "react-scripts": "^5.0.1",
     "router": "^1.3.7"
   },
   "devDependencies": {

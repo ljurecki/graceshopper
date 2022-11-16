@@ -5,7 +5,6 @@ const morgan = require('morgan');
 const router = require('./api');
 const cors = require('cors');
 
-
 app.use(cors());
 app.use(morgan("dev")); 
 app.use(express.json());

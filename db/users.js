@@ -65,7 +65,7 @@ async function createUser({ username, password, isAdmin}) {
         rows: [user],
       } = await client.query(`
         SELECT * FROM users
-        WHERE username=$1 AND "isAdmin"='false';`,
+        WHERE username=$1;`,
         [userName]
       );
       if (user) {
