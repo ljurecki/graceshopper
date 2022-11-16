@@ -12,36 +12,36 @@ import {
 
 
   const App = () => {
-    // const [jwt, setJwt] = useState('');
-    // const [isLoggedIn, setIsLoggedIn] = useState(false);
-    // // const [user, setUser] = useState({});
-    // const navigate = useNavigate();
+    const [jwt, setJwt] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // const [user, setUser] = useState({});
+    const navigate = useNavigate();
   
-    // function logOut() {
-    //   window.localStorage.removeItem('jwt');
-    //   setJwt('');
-    //   setUser({});
-    //   setIsLoggedIn(false);
-    // }
+    function logOut() {
+      window.localStorage.removeItem('jwt');
+      setJwt('');
+      setUser({});
+      setIsLoggedIn(false);
+    }
   
-    // async function persistLogin() {
-    //   if (window.localStorage.getItem('jwt')) {
-    //     setJwt(window.localStorage.getItem('jwt'));
-    //   }
-    //   if (jwt) {
-    //     setIsLoggedIn(true);
-    //     const response = await getUserData(jwt);
-    //     if (!response.error) {
-    //       setUser(response);
-    //     } else {
-    //       console.error(response.error);
-    //     }
-    //   }
-    // }
+    async function persistLogin() {
+      if (window.localStorage.getItem('jwt')) {
+        setJwt(window.localStorage.getItem('jwt'));
+      }
+      if (jwt) {
+        setIsLoggedIn(true);
+        const response = await getUserData(jwt);
+        if (!response.error) {
+          setUser(response);
+        } else {
+          console.error(response.error);
+        }
+      }
+    }
   
-    // useEffect(() => {
-    //   persistLogin();
-    // }, [jwt]);
+    useEffect(() => {
+      persistLogin();
+    }, [jwt]);
   
     return (
       <>

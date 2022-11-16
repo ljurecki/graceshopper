@@ -49,9 +49,9 @@ async function getAllProductsByUser({ username }) {
     const {
       rows: products
     } = await client.query(`
-        SELECT products.*, users.username AS "creatorName"
+        SELECT products.*, users.username
         FROM products
-        JOIN users ON products."creatorId"=users.id
+        JOIN users ON products.users.id
         WHERE users.username=$1;`,
       [username]
     );
@@ -63,16 +63,16 @@ async function getAllProductsByUser({ username }) {
   }
 }
 
-async function createProduct({ title, imageURL, description, price, author, genre }) {
+async function createProduct({ title, imageurl, description, price, author, genre }) {
   try {
     const {
       rows: [product]
     } = await client.query(`
-      INSERT INTO products (title, "imageURL", description, price, author, genre)
+      INSERT INTO products (title, imageurl, description, price, author, genre)
       VALUES ($1, $2, $3, $4, $5, $6)
       ON CONFLICT (title) DO NOTHING
       RETURNING *;
-    `, [title, imageURL, description, price, author, genre]
+    `, [title, imageurl, description, price, author, genre]
     );
     return product;
   } catch (err) {
@@ -88,7 +88,7 @@ async function getProductByAuthor(author) {
     } = await client.query(`
         SELECT *
         FROM products
-        WHERE author= $1;`,
+        WHERE author=$1;`,
       [author]
     );
     return product;
