@@ -48,9 +48,9 @@ async function getAllProductsByUser({ username }) {
     const {
       rows: products
     } = await client.query(`
-        SELECT products.*, users.username AS "creatorName"
+        SELECT products.*, users.username
         FROM products
-        JOIN users ON products."creatorId"=users.id
+        JOIN users ON products.users.id
         WHERE users.username=$1;`,
       [username]
     );
@@ -87,7 +87,7 @@ async function getProductByAuthor(author) {
     } = await client.query(`
         SELECT *
         FROM products
-        WHERE author= $1;`,
+        WHERE author=$1;`,
       [author]
     );
     return product;
