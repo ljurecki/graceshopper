@@ -1,30 +1,37 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-const Navbar = ({ logout, token }) => {
-    return (
-        <header>
-            <nav className='navLinks'>
-                <h3 className='navLinks3'>FitnessTracker</h3>
+const Navbar = ({ user, setUser }) => {
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem("token");
+  };
+  return (
+    <>
+      <Link to="/">Productly</Link>
+      <Link to="/products/categories/all">Products</Link>
+      <Link to="/cart">Cart</Link>
+      {!user && (
+        <>
+          <Link to="/register">Register</Link>
+          <Link to="/login">Login</Link>
+        </>
+      )}
+      {user && (
+        <>
+          <span>Welcome {user.email}!</span>
+          {user.is_admin && (
+            <>
+              <Link to="/admin/products">Admin-Products</Link>
+              <Link to="/admin/users">Admin-Users</Link>
+            </>
+          )}
+          <Link onClick={handleLogout} to="/">
+            Logout
+          </Link>
+        </>
+      )}
+    </>
+  );
+};
 
-                {
-                    token ? (
-                        <>
-                            <Link to='/home' className='navLinks2'>Home</Link>
-                            <Link to='/cart' className='navLinks2'>Cart</Link>
-                            <Link to='/login' className='navLinks2'>Login</Link>
-                            <Link to='/products' className='navLinks2'>Products</Link>
-                            <Link to='/register' className='navLinks2'>Register</Link>
-                            <Link to='/createAudioBooks' className='navLinks2'>CreateAudioBooks</Link>
-                            <Link to='/createProducts' className='navLinks2'>CreateProducts</Link>
-                            <Link to='/editAudioBook' className='navLinks2'>EditAudioBook</Link>
-                            <Link to='/editProduct' className='navLinks2'>EditProduct</Link>
-                         </>
-                    ) : 
-                 
-                    
-                
-            </nav>
-        </header>
-    )
-}
+export default Navbar;
