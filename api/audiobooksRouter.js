@@ -1,7 +1,6 @@
 const express = require('express');
-const audioBooksRouter = express.Router();
+const audiobooksRouter = express.Router();
 
-const router = express.Router();
 // These are all of the items listed in the project description that will need to be built out.
 const {
   getAllAudiobooks,
@@ -26,27 +25,7 @@ audiobooksRouter.get('/', async (req, res) => {
   res.send(allProducts);
 });
 
-// GET /api/products/productId
-audiobooksRouter.get('/', async (req, res, next) => {
-  const { audiobookId } = req.params;
-  const _audiobook = await getAudiobookById(audiobookId);
 
-  if (!_audiobook) {
-    res.send({
-      error: 'AudioBookDoesNotExists',
-      title: 'AudioBook does not exists',
-      message: AudiobookNotFoundError(audiobookId),
-    });
-  } else {
-    res.send('LIST OF Audiobooks')
-  }
-});
-
-// POST /api/products
-router.post('/', requireUser, async (req, res) => {
-  const { title, description, price, imageURL } = req.body;
-  const _title = await getAudioBookBytitle(title);
-  const newProduct = await createAudioBook({ title, imageURL, description, price, author, genre });
 // POST /api/audiobook
 audiobooksRouter.post('/', async (req, res) => {
   const { title, description, price, imageURL } = req.body;
@@ -65,8 +44,6 @@ audiobooksRouter.post('/', async (req, res) => {
 });
 
 // PATCH /api/productId
-router.patch('/:productId', requireUser, async (req, res, next) => {
-  const { audioBookId } = req.params;
 audiobooksRouter.patch('/:audiobookId', requireUser, async (req, res, next) => {
   const { audiobookId } = req.params;
 
@@ -75,8 +52,6 @@ audiobooksRouter.patch('/:audiobookId', requireUser, async (req, res, next) => {
 
     const updateFields = {};
 
-    if (audioBookId) {
-      updateFields.id = audioBookId;
     if (audiobookId) {
       updateFields.id = audiobookId;
     }
@@ -106,7 +81,7 @@ audiobooksRouter.patch('/:audiobookId', requireUser, async (req, res, next) => {
     }
 
 
-    const _product = await getAudiobookById(audiobookId);
+    const _audiobook = await getAudiobookById(audiobookId);
     const _title = await getAudiobookByTitle(title);
 
     if (!_audiobook) {
@@ -119,11 +94,6 @@ audiobooksRouter.patch('/:audiobookId', requireUser, async (req, res, next) => {
       res.send({
         error: 'AudioBookAlreadyExists',
         title: 'AudioBook already exists',
-        message: AudioBookExistsError(_title.title),
-      });
-    } else {
-      const allCanUpdateAudioBook = await updateAudioBook(updateFields);
-      res.send(allCanUpdateAudioBook);
         message: AudiobookExistsError(_title.title),
       });
     } else {
@@ -137,5 +107,4 @@ audiobooksRouter.patch('/:audiobookId', requireUser, async (req, res, next) => {
 });
 
 
-module.exports = audioBooksRouter;
 module.exports = audiobooksRouter;
