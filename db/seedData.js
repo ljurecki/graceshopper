@@ -3,18 +3,16 @@ const client = require('./client');
 const {
   createUser,
   createProduct,
-  createAudiobook,
 } = require('./');
 
 
 async function dropTables() {
   try {
-    console.log('Dropping All Tables... baby!!!')
+    console.log('Dropping All Tables... baby!!!');
     await client.query(`
     DROP TABLE IF EXISTS users;
       DROP TABLE IF EXISTS products;
-      DROP TABLE IF EXISTS audiobook;
-    `)
+    `);
     console.log('Finished Dropping Tables')
   }
   catch (ex) {
@@ -42,13 +40,6 @@ async function createTables() {
       price TEXT NOT NULL,
       author TEXT NOT NULL,
       genre TEXT NOT NULL
-    );`)
-
-    await client.query(`
-    CREATE TABLE cart(
-      id SERIAL PRIMARY KEY,
-      "userId" INTEGER REFERENCES users(id),
-      "productId" INTEGER REFERENCES products(id)
     );`)
 
     console.log('Finished Creating Tables')
@@ -220,7 +211,6 @@ async function rebuildDB() {
     await createTables();
     await createInitialUsers();
     await createInitialProducts();
-    // await createInitialAudiobooks();
   }
   catch (error) {
     console.log('Error during rebuildDB')

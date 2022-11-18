@@ -11,9 +11,7 @@ const {
   // productAvailability,
 } = require(`../db`);
 const {requireUser} = require(`./utils`);
-
 const { ProductExistsError, ProductNotFoundError } = require(`../errors`);
-// const { requireUser } = require(`./utils`);
 
 // GET /api/products
 productsRouter.get('/', async (req, res) => {

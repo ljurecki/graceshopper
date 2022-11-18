@@ -37,7 +37,7 @@ async function addProductToCart({
             cost,]
       );
   
-      return cart_products;
+      return cart_product;
     } catch (err) {
       console.error(err);
       throw err;
