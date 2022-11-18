@@ -11,7 +11,6 @@ root.render(
 );
 
 
-
 // // require("./config/mongoose.js")(app);
 // // require('./app/routeHandler')(app)
 // // const bodyParser = require('body-parser');

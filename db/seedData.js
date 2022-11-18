@@ -10,7 +10,7 @@ async function dropTables() {
   try {
     console.log('Dropping All Tables... baby!!!');
     await client.query(`
-    DROP TABLE IF EXISTS users;
+      DROP TABLE IF EXISTS users;
       DROP TABLE IF EXISTS products;
     `);
     console.log('Finished Dropping Tables')
@@ -29,7 +29,7 @@ async function createTables() {
       username VARCHAR(255) UNIQUE NOT NULL,
       password VARCHAR(255) NOT NULL,
       "isAdmin" BOOLEAN DEFAULT false
-    );`)
+    );`);
 
     await client.query(`
     CREATE TABLE products(
@@ -40,7 +40,7 @@ async function createTables() {
       price TEXT NOT NULL,
       author TEXT NOT NULL,
       genre TEXT NOT NULL
-    );`)
+    );`);
 
     console.log('Finished Creating Tables')
   }
@@ -54,12 +54,12 @@ async function createInitialUsers() {
   console.log('Starting to create users...');
   try {
     const usersToCreate = [
-      { username: 'david', password: 'david1234!', isAdmin: true },
-      { username: 'mandy', password: 'mandy1234!', isAdmin: true },
-      { username: 'tyler', password: 'tyler1234!', isAdmin: true },
-      { username: 'libette', password: 'libette1234!', isAdmin: true },
-      { username: 'adam', password: 'adam1234!', isAdmin: true },
-      { username: 'shaun', password: 'shaun1234!', isAdmin: false },
+      { username: 'david', password: 'david1234', isAdmin: true },
+      { username: 'mandy', password: 'mandy1234', isAdmin: true },
+      { username: 'tyler', password: 'tyler1234', isAdmin: true },
+      { username: 'libette', password: 'libette1234', isAdmin: true },
+      { username: 'adam', password: 'adam1234', isAdmin: true },
+      { username: 'shaun', password: 'shaun1234', isAdmin: false },
     ];
     const users = await Promise.all(usersToCreate.map(createUser));
 
@@ -208,9 +208,9 @@ async function rebuildDB() {
   try {
     await client.connect();
     await dropTables();
-    // await createTables();
-    // await createInitialUsers();
-    // await createInitialProducts();
+    await createTables();
+    await createInitialUsers();
+    await createInitialProducts();
   }
   catch (error) {
     console.log('Error during rebuildDB')

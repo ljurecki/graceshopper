@@ -7,22 +7,23 @@ import {
     Home,
     Login,
     Register,
-    Products
+    Products,
+    Cart
   } from './pages';
 
 
   const App = () => {
     const [jwt, setJwt] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
     // const [user, setUser] = useState({});
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
   
-    function logOut() {
-      window.localStorage.removeItem('jwt');
-      setJwt('');
-      setUser({});
-      setIsLoggedIn(false);
-    }
+    // function logOut() {
+    //   window.localStorage.removeItem('jwt');
+    //   setJwt('');
+    //   setUser({});
+    //   setIsLoggedIn(false);
+    // }
   
     async function persistLogin() {
       if (window.localStorage.getItem('jwt')) {

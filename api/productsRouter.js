@@ -11,6 +11,7 @@ const {
   // productAvailability,
 } = require(`../db`);
 const {requireUser} = require(`./utils`);
+
 const { ProductExistsError, ProductNotFoundError } = require(`../errors`);
 
 // GET /api/products
