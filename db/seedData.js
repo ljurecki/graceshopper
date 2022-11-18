@@ -18,7 +18,7 @@ async function dropTables() {
   catch (ex) {
     console.log('error dropping tables')
   }
-}
+};
 
 async function createTables() {
   try {
@@ -208,9 +208,9 @@ async function rebuildDB() {
   try {
     await client.connect();
     await dropTables();
-    await createTables();
-    await createInitialUsers();
-    await createInitialProducts();
+    // await createTables();
+    // await createInitialUsers();
+    // await createInitialProducts();
   }
   catch (error) {
     console.log('Error during rebuildDB')
