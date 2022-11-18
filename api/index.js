@@ -4,6 +4,29 @@ const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
 const { getUserById } = require('../db/users');
 
+export const registerUser = async (username, password) => {
+  try {
+    console.log(username, password)
+    const response = await fetch(`${baseURL}users/register`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username,
+        password
+      })
+    })
+
+    const result = await response.json();
+    console.log(result)
+    return result;
+
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 router.use(async (req, res, next) => {
   const prefix = 'Bearer ';
   const auth = req.header('Authorization');

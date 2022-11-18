@@ -1,33 +1,39 @@
-import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
 
-const NavBar = ({ isLoggedIn, logOut, navigate }) => {
+import { Link } from "react-router-dom";
+
+const Navbar = ({ user, setUser }) => {
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem("token");
+  };
   return (
     <>
-      <Navbar bg='dark' variant='dark'>
-        <Container>
-          <Navbar.Brand>Fitness Trackr</Navbar.Brand>
-          <Nav className='me-auto'>
-            <Nav.Link onClick={() => navigate('/')}>Home</Nav.Link>
-            <Nav.Link onClick={() => navigate('/products')}>
-             Products
-            </Nav.Link>
-            {isLoggedIn ? (
-              <Nav.Link
-                onClick={() => {
-                  navigate('/');
-                  logOut();
-                }}>
-                Logout
-              </Nav.Link>
-            ) : (
-              <Nav.Link onClick={() => navigate('/login')}>Login</Nav.Link>
-            )}
-          </Nav>
-        </Container>
-      </Navbar>
+      <Link to="/">Productly</Link>
+      <Link to="/products/categories/all">Products</Link>
+      <Link to="/cart">Cart</Link>
+      {!user && (
+        <>
+          <Link to="/register">Register</Link>
+          <Link to="/login">Login</Link>
+        </>
+      )}
+      {user && (
+        <>
+          <span>Welcome {user.email}!</span>
+          {user.is_admin && (
+            <>
+              <Link to="/admin/products">Admin-Products</Link>
+              <Link to="/admin/users">Admin-Users</Link>
+            </>
+          )}
+          <Link onClick={handleLogout} to="/">
+            Logout
+          </Link>
+        </>
+      )}
     </>
   );
 };
 
-export default NavBar;
+export default Navbar;
+

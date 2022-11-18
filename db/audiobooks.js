@@ -46,30 +46,14 @@ async function getAudiobookById(Id) {
     throw error;
   }
 }
-async function getAudiobookByTitle(title) {
-  try {
-    const {
-      rows: [audiobook],
-    } = await client.query(
-      `
-      SELECT *
-      FROM audiobooks
-      WHERE id = $1;
-      `,
-      [title]
-    );
-    return audiobook;
-  } catch (error) {
-    throw error;
-  }
-}
-async function updateAudiobooks({ id, ...fields }) {
+
+async function updateAudiobook({ id, ...fields }) {
   try {
     const indexString = Object.keys(fields).map((key, index) => {
       return `"${key}"=$${index + 1}`;
     });
     const {
-      rows: [audiobooks],
+      rows: [audiobook],
     } = await client.query(`
       UPDATE audiobooks
       SET ${indexString}
@@ -77,7 +61,7 @@ async function updateAudiobooks({ id, ...fields }) {
       RETURNING *;`,
       Object.values(fields)
     );
-    return audiobooks;
+    return audiobook;
   } catch (err) {
     console.error(err);
     throw err;

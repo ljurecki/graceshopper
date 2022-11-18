@@ -1,7 +1,6 @@
 const express = require('express');
 const audiobooksRouter = express.Router();
 
-// These are all of the items listed in the project description that will need to be built out.
 const {
   getAllAudiobooks,
   createAudiobook,
@@ -18,6 +17,7 @@ const {
 const { AudiobookExistsError, AudiobookNotFoundError } = require(`../errors`);
 const { requireUser } = require(`./utils`);
 
+
 // GET /api/products
 audiobooksRouter.get('/', async (req, res) => {
   const allProducts = await getAllAudiobooks();
@@ -28,9 +28,9 @@ audiobooksRouter.get('/', async (req, res) => {
 
 // POST /api/audiobook
 audiobooksRouter.post('/', async (req, res) => {
-  const { title, description, price, imageURL } = req.body;
+  const { title, description, price, imageurl } = req.body;
   const _title = await getAudiobookBytitle(title);
-  const newAudiobook = await createAudiobook({ title, imageURL, description, price, author, genre });
+  const newAudiobook = await createAudiobook({ title, imageurl, description, price, author, genre });
 
   if (_title) {
     res.send({
@@ -48,7 +48,7 @@ audiobooksRouter.patch('/:audiobookId', requireUser, async (req, res, next) => {
   const { audiobookId } = req.params;
 
   try {
-    const { title, imageURL, description, price, author, genre } = req.body;
+    const { title, imageurl, description, price, author, genre } = req.body;
 
     const updateFields = {};
 
@@ -56,8 +56,8 @@ audiobooksRouter.patch('/:audiobookId', requireUser, async (req, res, next) => {
       updateFields.id = audiobookId;
     }
 
- if (imageURL) {
-      updateFields.imageURL = imageURL;
+ if (imageurl) {
+      updateFields.imageurl = imageuel;
     }
 
     if (title) {
@@ -103,8 +103,7 @@ audiobooksRouter.patch('/:audiobookId', requireUser, async (req, res, next) => {
   } catch ({ title, message }) {
     next({ title, message });
   }
-
 });
-//testing merge
+
 
 module.exports = audiobooksRouter;
