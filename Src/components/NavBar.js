@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 
-const Navbar = ({ isLoggedIn, logOut, navigate }) => {
+const NavBar = ({ isLoggedIn, logOut, navigate }) => {
   return (
     <>
       <Navbar bg='dark' variant='dark'>
@@ -30,4 +30,4 @@ const Navbar = ({ isLoggedIn, logOut, navigate }) => {
   );
 };
 
-export default Navbar;
+export default NavBar;

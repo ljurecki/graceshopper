@@ -1,7 +1,7 @@
-import React /*{ useState, useEffect }*/ from 'react';
-import { Route, Routes, /*useNavigate*/ } from 'react-router-dom';
+import React, {useState, useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import { Navbar, LoginForm, RegisterForm } from './components';
+import { NavBar, LoginForm, RegisterForm } from './components';
 import {
  // Cart,
     Home,
@@ -44,7 +44,7 @@ import {
     return (
       <>
         <div className='sticky-top'>
-          <Navbar />
+          <NavBar />
         </div>
         <Container className='px-0' fluid id='main-app'>
           <Routes>
