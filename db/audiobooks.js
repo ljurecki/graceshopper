@@ -1,96 +1,95 @@
 
-const { client } = require("./client");
+const client = require("./client");
 
-async function audioBook({ title, description }) {
+
+async function createAudiobook({ title, description }) {
   try {
-    const { rows: [audioBook] } = await client.query(`
-      INSERT INTO audioBook (title, "imageURL", description, price, author, genre, )
+    const { rows: [audiobook] } = await client.query(`
+      INSERT INTO audiobook (title, "imageURL", description, price, author, genre, )
       VALUES ($1, $2, $3, $4, $5)
       ON CONFLICT (title) DO NOTHING
       RETURNING *;
-    `, [title, imageURL, description, price, author, genre])
-    return product;
+    `, [title, imageurl, description, price, author, genre])
+    return audiobook;
   } catch (error) {
   throw error;
 }
 }
 
-async function getAllAudioBooks() {
+async function getAllAudiobooks() {
   try {
-    const { rows: audioBooks } = await client.query(
+    const { rows: audiobook } = await client.query(
       `
-      SELECT * FROM audioBooks;
+      SELECT * 
+      FROM audiobooks;
       `
     );
-    return products;
+    return audiobook;
   } catch (error) {
     throw error;
   }
 }
-async function getAudioBookById(audioBookId) {
+async function getAudiobookById(Id) {
   try {
     const {
-      rows: [audioBook],
+      rows: [audiobook],
     } = await client.query(
       `
       SELECT *
-      FROM audioBooks
+      FROM audiobooks
       WHERE id = $1;
       `,
-      [audioBookId]
+      [Id]
     );
-    return product;
+    return audiobook;
   } catch (error) {
     throw error;
   }
 }
 
-async function updateAudioBooks({ id, ...fields }) {
+async function updateAudiobook({ id, ...fields }) {
   try {
     const indexString = Object.keys(fields).map((key, index) => {
       return `"${key}"=$${index + 1}`;
     });
     const {
-      rows: [audioBooks],
-    } = await client.query(
-      `
-      UPDATE audioBooks
+      rows: [audiobook],
+    } = await client.query(`
+      UPDATE audiobooks
       SET ${indexString}
       WHERE id=${id}
       RETURNING *;`,
       Object.values(fields)
     );
-    return audioBooks;
+    return audiobook;
   } catch (err) {
     console.error(err);
     throw err;
   }
 }
 
-async function deleteAudioBook(audioBookId) {
+async function deleteAudiobook(Id) {
   try {
     const {
-      rows: [audioBook],
+      rows: [audiobook],
     } = await client.query(
       `
-      DELETE FROM audioBooks
+      DELETE FROM audiobooks
       WHERE id = $1
       RETURNING *;
       `,
-      [audioBookId]
+      [Id]
     );
-    return audioBook;
+    return audiobook;
   } catch (error) {
     throw error;
   }
 }
 module.exports = {
-  createAudioBook,
-  getAllAudioBooks,
-  getAudioBookById,
-  updateAudioBooks,
-  deleteAudioBook,
+  createAudiobook,
+  getAllAudiobooks,
+  getAudiobookById,
+  updateAudiobooks,
+  deleteAudiobook,
+  getAudiobookByTitle
 };
-// module.exports = {
-//     createProduct
-// }

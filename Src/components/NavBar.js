@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 
 const Navbar = ({ user, setUser }) => {
@@ -35,3 +36,4 @@ const Navbar = ({ user, setUser }) => {
 };
 
 export default Navbar;
+

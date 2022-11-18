@@ -19,6 +19,7 @@ const AudiobookForm = ({ jwt, user}) => {
   async function addAudiobook() {
     const newAudiobook = {
       title,
+      imageurl,
       description,
       price,
       author,

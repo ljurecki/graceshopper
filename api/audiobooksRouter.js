@@ -1,52 +1,36 @@
 const express = require('express');
-const audioBooksRouter = express.Router();
+const audiobooksRouter = express.Router();
 
-const router = express.Router();
-// These are all of the items listed in the project description that will need to be built out.
 const {
-  getAllAudioBooks,
-  createAudioBook,
-  getAudioBookByTitle,
-  getAudioBookById,
+  getAllAudiobooks,
+  createAudiobook,
+  getAudiobookByTitle,
+  getAudiobookById,
   // getAudioBookByAuthor,
   // getAudioBookByGenre,
   // getAudioBookByPrice,
-  updateAudioBook,
+  updateAudiobook,
   // addAudioBookToCart,
   // audioBookAvailability,
 } = require(`../db`);
 
-const { ProductExistsError, ProductNotFoundError } = require(`../errors`);
+const { AudiobookExistsError, AudiobookNotFoundError } = require(`../errors`);
 const { requireUser } = require(`./utils`);
 
+
 // GET /api/products
-router.get('/', async (req, res) => {
-  const allProducts = await getAllAudioBooks();
+audiobooksRouter.get('/', async (req, res) => {
+  const allProducts = await getAllAudiobooks();
 
   res.send(allProducts);
 });
 
-// GET /api/products/productId
-productsRouter.get('/', async (req, res, next) => {
-  const { productId } = req.params;
-  const _product = await getAudioBookById(audioBookId);
 
-  if (!_audioBook) {
-    res.send({
-      error: 'AudioBookDoesNotExists',
-      title: 'AudioBook does not exists',
-      message: AudioBookNotFoundError(audioBookId),
-    });
-  } else {
-    res.send('LIST OF AudioBooks')
-  }
-});
-
-// POST /api/products
-router.post('/', requireUser, async (req, res) => {
-  const { title, description, price, imageURL } = req.body;
-  const _title = await getAudioBookBytitle(title);
-  const newProduct = await createAudioBook({ title, imageURL, description, price, author, genre });
+// POST /api/audiobook
+audiobooksRouter.post('/', async (req, res) => {
+  const { title, description, price, imageurl } = req.body;
+  const _title = await getAudiobookBytitle(title);
+  const newAudiobook = await createAudiobook({ title, imageurl, description, price, author, genre });
 
   if (_title) {
     res.send({
@@ -55,29 +39,29 @@ router.post('/', requireUser, async (req, res) => {
       message: AudioBookExistsError(_title.title),
     });
   } else {
-    res.send(newAudioBook);
+    res.send(newAudiobook);
   }
 });
 
 // PATCH /api/productId
-router.patch('/:productId', requireUser, async (req, res, next) => {
-  const { audioBookId } = req.params;
+audiobooksRouter.patch('/:audiobookId', requireUser, async (req, res, next) => {
+  const { audiobookId } = req.params;
 
   try {
-    const { title, imageURL, description, price, author, genre } = req.body;
+    const { title, imageurl, description, price, author, genre } = req.body;
 
     const updateFields = {};
 
-    if (audioBookId) {
-      updateFields.id = audioBookId;
+    if (audiobookId) {
+      updateFields.id = audiobookId;
+    }
+
+ if (imageurl) {
+      updateFields.imageurl = imageuel;
     }
 
     if (title) {
       updateFields.title = title;
-    }
-
-    if (imageURL) {
-      updateFields.imageURL = imageURL;
     }
 
     if (description) {
@@ -88,7 +72,6 @@ router.patch('/:productId', requireUser, async (req, res, next) => {
       updateFields.price = price;
     }
 
-
     if (author) {
       updateFields.author = author;
     }
@@ -98,30 +81,29 @@ router.patch('/:productId', requireUser, async (req, res, next) => {
     }
 
 
-    const _product = await getAudioBookById(audioBookId);
-    const _title = await getAudioBookByTitle(title);
+    const _audiobook = await getAudiobookById(audiobookId);
+    const _title = await getAudiobookByTitle(title);
 
-    if (!_product) {
+    if (!_audiobook) {
       res.send({
         error: 'Audio BookDoesNotExists',
         title: 'AudioBook does not exists',
-        message: AudioBookNotFoundError(audioBookId),
+        message: AudiobookNotFoundError(audiobookId),
       });
     } else if (_title) {
       res.send({
         error: 'AudioBookAlreadyExists',
         title: 'AudioBook already exists',
-        message: AudioBookExistsError(_title.title),
+        message: AudiobookExistsError(_title.title),
       });
     } else {
-      const allCanUpdateAudioBook = await updateAudioBook(updateFields);
-      res.send(allCanUpdateAudioBook);
+      const adminUpdateAudiobook = await updateAudiobook(updateFields);
+      res.send(adminUpdateAudiobook);
     }
   } catch ({ title, message }) {
     next({ title, message });
   }
-
 });
 
 
-module.exports = audioBooksRouter;
+module.exports = audiobooksRouter;
