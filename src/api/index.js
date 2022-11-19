@@ -83,6 +83,7 @@ export const getProductsByUsername = async (user, jwt) => {
 };
 
 export const createProduct = async (jwt, /*user*/ { name, imageurl, description, price, author, genre }) => {
+
     try {
         const headers = createHeaders(jwt);
         return await fetch(`${BASE_URL}/products`, {
