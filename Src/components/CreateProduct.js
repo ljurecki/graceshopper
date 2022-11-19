@@ -40,7 +40,7 @@ const CreateProduct = ({ jwt, fetchAllProducts }) => {
       imageURL
     };
     
-    const response = await createProduct(product, jwt);
+    const response = await CreateProduct(product, jwt);
     if (!response.error) {
       setSuccessMessage('Product Created!');
       setErrorMessage('');
