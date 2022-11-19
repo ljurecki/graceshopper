@@ -1,26 +1,24 @@
-const client = require('./client');
 
 const {
   createUser,
   createProduct,
-  createAudiobook,
 } = require('./');
 
+const client = require('./client');
 
 async function dropTables() {
   try {
-    console.log('Dropping All Tables... baby!!!')
+    console.log('Dropping All Tables... baby!!!');
     await client.query(`
-    DROP TABLE IF EXISTS users;
       DROP TABLE IF EXISTS products;
-      DROP TABLE IF EXISTS audiobook;
-    `)
+      DROP TABLE IF EXISTS users;
+    `);
     console.log('Finished Dropping Tables')
   }
   catch (ex) {
-    console.log('error dropping tables')
+    console.log(ex)
   }
-}
+};
 
 async function createTables() {
   try {
@@ -31,7 +29,7 @@ async function createTables() {
       username VARCHAR(255) UNIQUE NOT NULL,
       password VARCHAR(255) NOT NULL,
       "isAdmin" BOOLEAN DEFAULT false
-    );`)
+    );`);
 
     await client.query(`
     CREATE TABLE products(
@@ -42,19 +40,12 @@ async function createTables() {
       price TEXT NOT NULL,
       author TEXT NOT NULL,
       genre TEXT NOT NULL
-    );`)
-
-    await client.query(`
-    CREATE TABLE cart(
-      id SERIAL PRIMARY KEY,
-      "userId" INTEGER REFERENCES users(id),
-      "productId" INTEGER REFERENCES products(id)
-    );`)
+    );`);
 
     console.log('Finished Creating Tables')
   }
   catch (ex) {
-    console.log('error creating tables')
+    console.log(ex)
   }
 };
 
@@ -63,12 +54,12 @@ async function createInitialUsers() {
   console.log('Starting to create users...');
   try {
     const usersToCreate = [
-      { username: 'david', password: 'david1234!', isAdmin: true },
-      { username: 'mandy', password: 'mandy1234!', isAdmin: true },
-      { username: 'tyler', password: 'tyler1234!', isAdmin: true },
-      { username: 'libette', password: 'libette1234!', isAdmin: true },
-      { username: 'adam', password: 'adam1234!', isAdmin: true },
-      { username: 'shaun', password: 'shaun1234!', isAdmin: false },
+      { username: 'david', password: 'david1234', isAdmin: true },
+      { username: 'mandy', password: 'mandy1234', isAdmin: true },
+      { username: 'tyler', password: 'tyler1234', isAdmin: true },
+      { username: 'libette', password: 'libette1234', isAdmin: true },
+      { username: 'adam', password: 'adam1234', isAdmin: true },
+      { username: 'shaun', password: 'shaun1234', isAdmin: false },
     ];
     const users = await Promise.all(usersToCreate.map(createUser));
 
@@ -76,7 +67,7 @@ async function createInitialUsers() {
     console.log(users);
     console.log('Finished creating users!');
   } catch (error) {
-    console.error('Error creating users!');
+    console.error(error);
     throw error;
   }
 }
@@ -207,7 +198,7 @@ async function createInitialProducts() {
     console.log('products created:', products);
     console.log('Finished creating products');
   } catch (error) {
-    console.error('Error creating products');
+    console.error(error);
     throw error;
   }
 }
@@ -220,14 +211,12 @@ async function rebuildDB() {
     await createTables();
     await createInitialUsers();
     await createInitialProducts();
-    // await createInitialAudiobooks();
   }
   catch (error) {
-    console.log('Error during rebuildDB')
+    console.log(error)
     throw error;
   }
 }
-
 
 module.exports = {
   rebuildDB,
