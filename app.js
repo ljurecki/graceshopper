@@ -16,8 +16,9 @@ const PORT = process.env.PORT || 3001;
 const client = require('./db/client');
 client.connect();
 
+// app.use('/files', express.static("files"));
+
 app.listen(PORT, () => {
     console.log(`server is up and running on port ${PORT}`)
 })
-
 

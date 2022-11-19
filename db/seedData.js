@@ -10,6 +10,7 @@ async function dropTables() {
   try {
     console.log('Dropping All Tables... baby!!!');
     await client.query(`
+      DROP TABLE IF EXISTS cart_products;
       DROP TABLE IF EXISTS products;
       DROP TABLE IF EXISTS users;
     `);
@@ -42,13 +43,21 @@ async function createTables() {
       genre TEXT NOT NULL
     );`);
 
+    await client.query(`
+      CREATE TABLE cart_products(
+        id SERIAL PRIMARY KEY,
+        "cartId" INTEGER REFERENCES users(id),
+        "productId" INTEGER REFERENCES products(id),
+        qty INTEGER,
+        total INTEGER
+      );`);
+  
     console.log('Finished Creating Tables')
   }
   catch (ex) {
     console.log(ex)
   }
 };
-
 
 async function createInitialUsers() {
   console.log('Starting to create users...');
