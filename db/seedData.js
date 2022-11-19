@@ -3,7 +3,6 @@ const client = require('./client');
 const {
   createUser,
   createProduct,
-  createAudiobook,
 } = require('./');
 
 
@@ -11,9 +10,9 @@ async function dropTables() {
   try {
     console.log('Dropping All Tables... baby!!!')
     await client.query(`
+      DROP TABLE IF EXISTS cart;
       DROP TABLE IF EXISTS users;
       DROP TABLE IF EXISTS products;
-      DROP TABLE IF EXISTS audiobook;
     `)
     console.log('Finished Dropping Tables')
   }
@@ -220,7 +219,6 @@ async function rebuildDB() {
     await createTables();
     await createInitialUsers();
     await createInitialProducts();
-    // await createInitialAudiobooks();
   }
   catch (error) {
     console.log('Error during rebuildDB')
