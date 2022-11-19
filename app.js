@@ -13,8 +13,6 @@ app.use('/api', router);
 
 const PORT = process.env.PORT || 3001;
 
-// app.use('/files', express.static("files"));
-
 const client = require('./db/client');
 client.connect();
 
