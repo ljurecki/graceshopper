@@ -1,4 +1,3 @@
-
 const {
   createUser,
   createProduct,
@@ -10,17 +9,10 @@ async function dropTables() {
   try {
     console.log('Dropping All Tables... baby!!!');
     await client.query(`
-<<<<<<< HEAD
-      DROP TABLE IF EXISTS cart;
-      DROP TABLE IF EXISTS users;
-      DROP TABLE IF EXISTS products;
-    `)
-=======
       DROP TABLE IF EXISTS cart_products;
       DROP TABLE IF EXISTS products;
       DROP TABLE IF EXISTS users;
     `);
->>>>>>> 980eff678086778cbfda1a8fbf1da9a11c2f15fb
     console.log('Finished Dropping Tables')
   }
   catch (ex) {

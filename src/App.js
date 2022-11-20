@@ -1,18 +1,14 @@
-import React, {useState, useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import React /*{ useState, useEffect }*/ from 'react';
+import { Route, Routes, /*useNavigate*/ } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import { NavBar, LoginForm, RegisterForm } from './components';
+import { Navbar } from './components';
 import {
- // Cart,
+    // Cart,
     Home,
-<<<<<<< HEAD:Src/App.js
-    Products
-=======
     Login,
     Register,
     Products,
     Cart
->>>>>>> 980eff678086778cbfda1a8fbf1da9a11c2f15fb:src/App.js
   } from './pages';
 
 
@@ -51,7 +47,7 @@ import {
     return (
       <>
         <div className='sticky-top'>
-          <NavBar />
+          <Navbar />
         </div>
         <Container className='px-0' fluid id='main-app'>
           <Routes>
@@ -64,11 +60,11 @@ import {
               element={<Products /*user={user} jwt={jwt} isLoggedIn={isLoggedIn}*/ />}
             />
             <Route
-              path='/registerForm'
+              path='/register'
               element={<Register /*navigate={navigate}*/ />}
             />
             <Route
-              path='/loginForm'
+              path='/login'
               element={<Login /*setJwt={setJwt} navigate={navigate}*/ />}
             />
           </Routes>
@@ -78,4 +74,3 @@ import {
   };
   
   export default App;
-  

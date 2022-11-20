@@ -83,4 +83,3 @@ async function createUser({ username, password, isAdmin}) {
     getUserById,
     getUserByUsername,
   };
-  

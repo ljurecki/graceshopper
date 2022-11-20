@@ -1,141 +1,83 @@
-import React, { useState } from 'react';
-import { registerForm } from '../api';
-import { Form, Button, Alert } from 'react-bootstrap';
+import React, {useState} from 'react';
+import { Navigate } from 'react-router-dom';
+import { registerUser } from '../api';
+import swal from 'sweetalert';
 
+const Register = ({ setToken, navigate }) => {
+    //props.setToken
+    // const {setToken} = props
+const [username, setUsername] = useState('');
+const [password, setPassword] = useState('');
+const [confirmPassword, setConfirmPassword] = useState('');
 
-const RegisterForm = ({ navigate, setJwt }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
+let loginForm = document.getElementById('loginForm')
+let errorMessage = document.getElementById('errorMessage')
 
-    const registerUser = async () => {
-        const result = await register(username, password);
-        if (!result.error) {
-            if (result.token) {
-                setJwt(result.token);
-                window.localStorage.setItem('jwt', result.token);
-                navigate('/');
-            } else {
-                console.error('No token returned from server');
-            }
-        } else {
-            console.error(result.error);
-            setErrorMessage(result.error);
-        }
-    };
+const handleSubmit = async() => {
+    const results = await registerUser(username, password);
+
+    if (password !== confirmPassword) {
+        swal('Passwords do not match! Try again!', '', "error")
+        return null;
+    }
+
+    if (results.token) {
+        setToken(results.token)
+        swal('Your account has been successfully created!', 'Username: ' + username, "success")
+        console.log(results.message);
+        window.localStorage.setItem('token', results.token);
+        navigate('/home');
+    } else {
+        console.log(results.error)
+        loginForm.style.animation = 'shake .5s'
+        document.getElementsByName('username')[0].value = ''
+        document.getElementsByName('password')[0].value = ''
+        document.getElementsByName('confirmPassword')[0].value = ''
+        swal('There was an error creating your account:', results.error, "error")
+        errorMessage.innerText = results.error
+    }
+}
 
     return (
-        <Form
-          onSubmit={e => {
-            e.preventDefault();
-            registerUser();
-          }}>
-          <Form.Group className='mb-3' style={{ margin: '3% 25% 0px 25%' }}>
-            <Form.Control
-              placeholder='Username'
-              onChange={e => {
-                setUsername(e.target.value);
-              }}
-            />
-          </Form.Group>
-    
-          <Form.Group className='mb-3' style={{ margin: '2% 25% 0px 25%' }}>
-            <Form.Control
-              type='password'
-              placeholder='Password'
-              onChange={e => {
-                setPassword(e.target.value);
-              }}
-            />
-          </Form.Group>
-          <Form.Group style={{ margin: '2% 25% 0px 25%' }}>
-            <Button
-              variant='success'
-              type='submit'
-              className='mx-2 justify-self-end'>
-              Submit
-            </Button>
-            <Button
-              variant='primary'
-              className='mx-2 justify-self-end'
-              onClick={() => navigate('/register')}>
-              Register
-            </Button>
-            {errorMessage && (
-              <Alert variant='danger' className='mt-3'>
-                {errorMessage}
-              </Alert>
-            )}
-          </Form.Group>
-        </Form>
-      );
-    };
-    
-    export default RegisterForm;   
+        <div className='loginForm' id='loginForm'>
+            <form className='registerForm' onSubmit={(event) => {
+                event.preventDefault();
+                handleSubmit();
+            }
+            }>
+                <div className='inputDiv'>
+                    <label className='inputLabel'>Create Username</label>
+                    <input
+                        className='userorpass'
+                        name='username'
+                        type='text'
+                        autoFocus
+                        onChange={(event) => setUsername(event.target.value)}
+                    />
+                </div>
+                <div className='inputDiv'>
+                    <label className='inputLabel'>Create Password</label>
+                    <input
+                        className='userorpass'
+                        name='password'
+                        type='password'
+                        onChange={(event) => setPassword(event.target.value)}
+                    />
+                </div>
+                <div className='inputDiv'>
+                    <label className='inputLabel'>Confirm Password</label>
+                    <input
+                        className='userorpass'
+                        name='confirmPassword'
+                        type='password'
+                        onChange={(event) => setConfirmPassword(event.target.value)}
+                    />
+                </div>
+                <button className='submit' type='submit'>Register</button>
+                <p id='errorMessage'></p>
+            </form>
+        </div>
+    )
+}
 
-
-
-
-
-
-
-//     const handleRegisterClick = async (event) => {
-//         event.preventDefault();
-//         const registerInfo = {
-//             user: user,
-//             password: password
-//         };
-
-//         let firstPassword = document.querySelector('.password').value,
-//             confirmPassword = document.querySelector('.confirm_password').value;
-
-//         if (firstPassword == "") {
-//             alert("Password field cannot be empty");
-//             return false;
-//         }
-
-//         if (firstPassword != confirmPassword) {
-//             alert("Passwords did not match, please try again!");
-//             return false
-//         }
-
-//         const newUser = await registerUser(registerInfo);
-//         alert(newUser.message)
-
-//         setUser("");
-//         setPassword("");
-//         document.querySelector('.confirm_password').value = '';
-//         window.location.reload(false);
-//     };
-
-//     const handleUserChange = (event) => {
-//         setUser(event.target.value);
-//     }
-//     const handlePasswordChange = (event) => {
-//         setPassword(event.target.value);
-//     }
-
-
-//     return (
-//         <div id='registerPage'>
-//             <h1>REGISTER NEW USER</h1>
-//             <form>
-//                 <label for="username">Username: </label>
-//                 <input type="text" id="username" placeholder="Username" value={user} onChange={handleUserChange} />
-//                 <br />
-//                 <label for="password">Password: </label>
-//                 <input type="password" className="password" placeholder="Password" id="password" value={password}
-//                     onChange={handlePasswordChange} />
-//                 <br />
-//                 <label for="confirm-password">Confirm Password: </label>
-//                 <input type="password" className="confirm_password" placeholder="Re-Enter Password" id="confirm-password"
-//                 />
-//                 <br />
-//                 <br />
-//                 <button onClick={handleRegisterClick}>Register</button>
-//             </form>
-//         </div>
-//     );
-// };
-
-// export default RegisterUser;
+export default Register;

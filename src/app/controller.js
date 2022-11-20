@@ -1,4 +1,4 @@
-const cartRepository = require('./repository')
+const cartRepository = require('./repositorty')
 const productRepository = require('../Product/repository');
 exports.createProduct = async (req, res) => {
     try {
@@ -195,4 +195,3 @@ exports.emptyCart = async (req, res) => {
         })
     }
 }
-
