@@ -22,13 +22,16 @@ const {
 const {requireUser} = require(`./utils`);
 
 const { ProductExistsError, ProductNotFoundError } = require(`../errors`);
-// const { requireUser } = require(`./utils`);
 
 // GET /api/products
 productsRouter.get('/', async (req, res) => {
-  const allProducts = await getAllProducts();
-  // console.log(allproducts)
-  res.send(allProducts);
+  try {
+    const allProducts = await getAllProducts();
+    res.send(allProducts);
+
+  } catch ({ title, message }) {
+      next({ title, message });
+  }
 });
 
 

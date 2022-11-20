@@ -12,9 +12,14 @@ root.render(
 );
 
 
+<<<<<<< HEAD:Src/index.js
 
 require("./config/mongoose.js")(App);
 require('./app/routeHandler')(App)
+=======
+// // require("./config/mongoose.js")(app);
+// // require('./app/routeHandler')(app)
+>>>>>>> 980eff678086778cbfda1a8fbf1da9a11c2f15fb:src/index.js
 // // const bodyParser = require('body-parser');
 
 

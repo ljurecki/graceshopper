@@ -44,6 +44,12 @@ router.use('/users', usersRouter);
 const productsRouter = require('./productsRouter');
 router.use('/products', productsRouter);
 
+<<<<<<< HEAD
+=======
+const cartRouter = require('./cartRouter');
+router.use('/cart', cartRouter);
+
+>>>>>>> 980eff678086778cbfda1a8fbf1da9a11c2f15fb
 router.get('*', (req, res) => {
   res.status(404).send({
     message: 'Page not found!!',

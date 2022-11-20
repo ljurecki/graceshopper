@@ -1,15 +1,15 @@
 import React from 'react';
 
-const Home = () => {
+const Login = () => {
     return (
         <>
-            <div >
+            <div id="title">
                 <h1>
-                    Shop Until You Drop!
+                    Cart!
                 </h1>
             </div>
         </>
     )
 };
 
-export default Home;
+export default Login;

@@ -5,22 +5,29 @@ import { NavBar, LoginForm, RegisterForm } from './components';
 import {
  // Cart,
     Home,
+<<<<<<< HEAD:Src/App.js
     Products
+=======
+    Login,
+    Register,
+    Products,
+    Cart
+>>>>>>> 980eff678086778cbfda1a8fbf1da9a11c2f15fb:src/App.js
   } from './pages';
 
 
   const App = () => {
     const [jwt, setJwt] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
     // const [user, setUser] = useState({});
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
   
-    function logOut() {
-      window.localStorage.removeItem('jwt');
-      setJwt('');
-      setUser({});
-      setIsLoggedIn(false);
-    }
+    // function logOut() {
+    //   window.localStorage.removeItem('jwt');
+    //   setJwt('');
+    //   setUser({});
+    //   setIsLoggedIn(false);
+    // }
   
     async function persistLogin() {
       if (window.localStorage.getItem('jwt')) {

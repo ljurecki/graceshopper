@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "react-scripts build",
     "start-server": "nodemon app.js",
     "start": "node app.js",
     "seed": "node ./db/seed.js",
