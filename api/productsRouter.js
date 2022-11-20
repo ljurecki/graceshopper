@@ -1,5 +1,14 @@
 const express = require('express');
-const productsRouter = express.Router();
+
+// shopping cart
+const productsRouter = require ("express").Router();
+const productController = require('./controller');
+const multerInstance = require('../../config/multer')
+router.post("/", multerInstance.upload.single('image'), productController.createProduct);
+router.get("/", productController.getProducts);
+router.get("/:id", productController.getProductById);
+router.delete("/:id", productController.removeProduct);
+
 // These are all of the items listed in the project description that will need to be built out.
 const {
   getAllProducts,

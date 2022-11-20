@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
+const express = require('express');
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -12,8 +13,8 @@ root.render(
 
 
 
-// // require("./config/mongoose.js")(app);
-// // require('./app/routeHandler')(app)
+require("./config/mongoose.js")(App);
+require('./app/routeHandler')(App)
 // // const bodyParser = require('body-parser');
 
 
