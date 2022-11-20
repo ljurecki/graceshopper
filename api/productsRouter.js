@@ -2,7 +2,7 @@ const express = require('express');
 
 // shopping cart
 const productsRouter = require ("express").Router();
-const productController = require('./controller');
+const productController = require('../controller');
 const multerInstance = require('../../config/multer')
 router.post("/", multerInstance.upload.single('image'), productController.createProduct);
 router.get("/", productController.getProducts);
