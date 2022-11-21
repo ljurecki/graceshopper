@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { getAllProducts } from '../api';
 import { Card, ListGroup, Tab, Tabs } from 'react-bootstrap';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Products = () => {
   const [productsToDisplay, setProductsToDisplay] = useState([]);
-//   const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   async function allProducts() {
     setProductsToDisplay(await getAllProducts());

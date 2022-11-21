@@ -62,15 +62,15 @@ import {
             />
             <Route
               path='/products'
-              element={<Products /*user={user} jwt={jwt} isLoggedIn={isLoggedIn}*/ />}
+              element={<Products user={user} jwt={jwt} isLoggedIn={isLoggedIn} />}
             />
             <Route
               path='/register'
-              element={<Register /*navigate={navigate}*/ />}
+              element={<Register navigate={navigate} />}
             />
             <Route
               path='/login'
-              element={<Login /*setJwt={setJwt} navigate={navigate}*/ />}
+              element={<Login setJwt={setJwt} navigate={navigate} />}
             />
           </Routes>
         </Container>
