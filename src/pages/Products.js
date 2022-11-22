@@ -36,14 +36,14 @@ const Products = () => {
                 key={id}
                 className='px-0 py-3 mx-3 d-flex flex-column'>
                 <Card.Title>
-                {title}
+                  {title}
                 </Card.Title>
                 <Card.Text>
-                    {imageURL},
-                    Description: {description},
-                    Price: {price},
-                    Author: {author},
-                    Genre: {genre}
+                  {imageURL},
+                  Description: {description},
+                  Price: {price},
+                  Author: {author},
+                  Genre: {genre}
                 </Card.Text>
                 {/* {jwt ? (
                   <Link to={`/activities/${id}`} state={{ activity: activity }}>
@@ -57,7 +57,7 @@ const Products = () => {
           <h1>No Products Found!</h1>
         )}
       </ListGroup>
-      </>
+    </>
   );
 };
 

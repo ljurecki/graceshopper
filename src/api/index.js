@@ -1,4 +1,4 @@
-const BASE_URL = 'https://localhost:5432/api';
+const BASE_URL = 'postgress://localhost:5432/api';
 
 const createHeaders = jwt => {
     return jwt
@@ -82,7 +82,7 @@ export const getProductsByUsername = async (user, jwt) => {
     }
 };
 
-export const createProduct = async (jwt, /*user*/ { name, imageurl, description, price, author, genre }) => {
+export const createProduct = async (jwt, user, { name, imageurl, description, price, author, genre }) => {
 
     try {
         const headers = createHeaders(jwt);
@@ -119,7 +119,7 @@ export const updateProduct = async (updatedProduct, jwt) => {
 export const deleteProduct = async (product, jwt) => {
     try {
         const headers = createHeaders(jwt);
-        return await fetch(`${BASE_URL}/oroducts/${product.id}`, {
+        return await fetch(`${BASE_URL}/products/${product.id}`, {
             method: 'DELETE',
             headers,
         }).then(response => response.json());
