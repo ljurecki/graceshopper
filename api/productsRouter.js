@@ -15,7 +15,7 @@ const {requireUser} = require(`./utils`);
 const { ProductExistsError, ProductNotFoundError } = require(`../errors`);
 
 // GET /api/products
-productsRouter.get('/', async (req, res) => {
+productsRouter.get('/', async (req, res, send) => {
   try {
     const allProducts = await getAllProducts();
     res.send(allProducts);

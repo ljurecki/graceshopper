@@ -2,11 +2,11 @@ const client = require("./client");
 
 async function getAllProducts() {
   try {
-    const { rows } = await client.query(
+    const { rows: products } = await client.query(
       `SELECT * 
       FROM products;`);
 
-    return rows;
+    return products;
   } catch (error) {
     throw error;
   }

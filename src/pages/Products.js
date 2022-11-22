@@ -7,13 +7,13 @@ const Products = () => {
   const [productsToDisplay, setProductsToDisplay] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-  async function allProducts() {
+  async function AllProducts() {
     setProductsToDisplay(await getAllProducts());
     console.log(getAllProducts)
   }
 
   useEffect(() => {
-    allProducts();
+    AllProducts();
   }, []);
 
   return (
