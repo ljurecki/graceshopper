@@ -1,6 +1,7 @@
-import React /*{ useState, useEffect }*/ from 'react';
+import React, { useState } from 'react';
 import { Route, Routes, /*useNavigate*/ } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
+import { getUserData } from './api';
 import { Navbar } from './components';
 import {
     // Cart,
@@ -13,10 +14,10 @@ import {
 
 
   const App = () => {
-    const [jwt, setJwt] = useState('');
+    // const [jwt, setJwt] = useState('');
     // const [isLoggedIn, setIsLoggedIn] = useState(false);
-    // const [user, setUser] = useState({});
-    // const navigate = useNavigate();
+    const [user, setUser] = useState({});
+    // // const navigate = useNavigate();
   
     // function logOut() {
     //   window.localStorage.removeItem('jwt');
@@ -25,24 +26,24 @@ import {
     //   setIsLoggedIn(false);
     // }
   
-    async function persistLogin() {
-      if (window.localStorage.getItem('jwt')) {
-        setJwt(window.localStorage.getItem('jwt'));
-      }
-      if (jwt) {
-        setIsLoggedIn(true);
-        const response = await getUserData(jwt);
-        if (!response.error) {
-          setUser(response);
-        } else {
-          console.error(response.error);
-        }
-      }
-    }
+    // async function persistLogin() {
+    //   if (window.localStorage.getItem('jwt')) {
+    //     setJwt(window.localStorage.getItem('jwt'));
+    //   }
+    //   if (jwt) {
+    //     setIsLoggedIn(true);
+    //     const response = await getUserData(jwt);
+    //     if (!response.error) {
+    //       setUser(response);
+    //     } else {
+    //       console.error(response.error);
+    //     }
+    //   }
+    // }
   
-    useEffect(() => {
-      persistLogin();
-    }, [jwt]);
+    // useEffect(() => {
+    //   persistLogin();
+    // }, [jwt]);
   
     return (
       <>
@@ -57,7 +58,7 @@ import {
             />
             <Route
               path='/products'
-              element={<Products /*user={user} jwt={jwt} isLoggedIn={isLoggedIn}*/ />}
+              element={<Products user={user} /*jwt={jwt} isLoggedIn={isLoggedIn}*//>}
             />
             <Route
               path='/register'

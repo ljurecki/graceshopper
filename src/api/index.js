@@ -1,4 +1,4 @@
-const BASE_URL = 'https://localhost:5432/api';
+const BASE_URL = 'http://localhost:3000/';
 
 const createHeaders = jwt => {
     return jwt
@@ -59,11 +59,14 @@ export const getUserData = async jwt => {
 
 export const getAllProducts = async () => {
     try {
-        return await fetch(`${BASE_URL}/products`, {
+        const response = await fetch(`${BASE_URL}/products`, {
             headers: {
                 'Content-Type': 'application/json',
             },
-        }).then(response => response.json());
+        })
+        const results = response.json();
+        
+        return results;
     } catch (err) {
         console.error(err);
     }

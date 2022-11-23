@@ -5,7 +5,7 @@ import { Card, ListGroup, Tab, Tabs } from 'react-bootstrap';
 
 const Products = () => {
   const [productsToDisplay, setProductsToDisplay] = useState([]);
-//   const [showModal, setShowModal] = useState(false);
+
 
   async function allProducts() {
     setProductsToDisplay(await getAllProducts());
@@ -30,7 +30,7 @@ const Products = () => {
 
         {productsToDisplay ? (
           productsToDisplay.map(product => {
-            const { id, title, imageURL, description, price, author, genre } = product;
+            const { id, title, imageurl, description, price, author, genre } = product;
             return (
               <ListGroup.Item
                 key={id}
@@ -39,7 +39,7 @@ const Products = () => {
                 {title}
                 </Card.Title>
                 <Card.Text>
-                    {imageURL},
+                    {imageurl},
                     Description: {description},
                     Price: {price},
                     Author: {author},

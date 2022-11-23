@@ -27,7 +27,7 @@ const CreateProduct = ({ jwt, fetchAllProducts }) => {
     setPrice('');
     setAuthor('');
     setGenre('');
-    setImageURL(''); 
+    setImageurl(''); 
   };
 
   const handleSubmit = async () => {
@@ -44,7 +44,7 @@ const CreateProduct = ({ jwt, fetchAllProducts }) => {
     if (!response.error) {
       setSuccessMessage('Product Created!');
       setErrorMessage('');
-      setTimeout(() => {
+      setTimeout(() => { 
         closeModal();
         fetchAllProducts();
       }, 1000);
