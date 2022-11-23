@@ -14,21 +14,21 @@ cartRouter.get("/", requireUser, async (req, res) => {
 });
 
 // Needs work!!!
-productsRouter.post('/', async (req, res) => {
-    const { productId, qty } = req.body;
-    const _title = await getProductByTitle(title);
-    const newProduct = await createProduct({ title, imageurl, description, price, author, genre });
+// productsRouter.post('/', async (req, res) => {
+//     const { productId, qty } = req.body;
+//     const _title = await getProductByTitle(title);
+//     const newProduct = await createProduct({ title, imageurl, description, price, author, genre });
   
-    if (_title) {
-      res.send({
-        error: 'ProductAlreadyExists',
-        title: 'Product already exists',
-        message: ProductExistsError(_title.title),
-      });
-    } else {
-      res.send(newProduct);
-    }
-  });
+//     if (_title) {
+//       res.send({
+//         error: 'ProductAlreadyExists',
+//         title: 'Product already exists',
+//         message: ProductExistsError(_title.title),
+//       });
+//     } else {
+//       res.send(newProduct);
+//     }
+//   });
 
 // PATCH /api/cart_products/:productId
 cartRouter.patch('/:productId', requireUser, async (req, res, next) => {

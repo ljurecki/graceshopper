@@ -17,83 +17,146 @@ const {
 } = require('../errors');
 
 // POST /api/users/login
-usersRouter.post('/login', async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    res.send({
+      name: "MissingCredentialsError",
+      message: "Please suppy both a username and password"
+    });
+  }
   try {
-    const { username, password } = req.body;
-
-    if (!username || !password) {
-      res.send({
-        error: 'MissingUsernameOrPassword',
-        name: 'Missing username or password',
-        message: 'Please enter a username and password',
-      });
+    const user = await getUserByUsername(username);
+    const hashedPassword = user.password
+    if (user && await bcrypt.compare(password, hashedPassword)) {
+      const jwtToken = jwt.sign(user, JWT_SECRET);
+      res.send({ user: user, token: jwtToken, message: "you're logged in!" });
     } else {
-      const user = await getUser(req.body);
-      if (user) {
-        const token = jwt.sign(user, JWT_SECRET);
-        res.send({
-          name: 'LoginSuccess',
-          message: "you're logged in!",
-          token,
-          user,
-        });
-      } else {
-        res.send({
-          error: 'UserNotFound',
-          name: 'User not found',
-          message: UserDoesNotExistError(username),
-        });
-      }
+      next({
+        name: "IncorrectCredentialsError",
+        message: "Username or password is incorrect",
+      });
     }
   } catch ({ name, message }) {
     next({ name, message });
   }
 });
+
+
+// usersRouter.post('/login', async (req, res, next) => {
+//   try {
+//     const { username, password } = req.body;
+
+//     if (!username || !password) {
+//       res.send({
+//         error: 'MissingUsernameOrPassword',
+//         name: 'Missing username or password',
+//         message: 'Please enter a username and password',
+//       });
+//     } else {
+//       const user = await getUser(req.body);
+//       if (user) {
+//         const token = jwt.sign(user, JWT_SECRET);
+//         res.send({
+//           name: 'LoginSuccess',
+//           message: "you're logged in!",
+//           token,
+//           user,
+//         });
+//       } else {
+//         res.send({
+//           error: 'UserNotFound',
+//           name: 'User not found',
+//           message: UserDoesNotExistError(username),
+//         });
+//       }
+//     }
+//   } catch ({ name, message }) {
+//     next({ name, message });
+//   }
+// });
 
 
 // POST /api/users/register
-
-usersRouter.post('/register', async (req, res, next) => {
-  const { username, password, isAdmin } = req.body;
-
+router.post('/register', async (req, res, next) => {
+  const { username, password } = req.body;
   try {
-    if (!username || !password) {
+    const _user = await getUserByUsername(username);
+    if (_user) {
       res.send({
-        error: 'MissingUsernameOrPassword',
-        name: 'Missing username or password',
-        message: 'Please enter a username and password',
+        error: "UserExistsError",
+        message: "User " + username + " is already taken.",
+        name: 'UsernameExists',
       });
-    } else if (password.length < 8) {
+    } else if(password.length < 8) {
       res.send({
-        error: 'PasswordTooShort',
-        name: 'PasswordTooShort',
-        message: PasswordTooShortError(),
+        error: "PasswordLengthError",
+        message: "Password Too Short!",
+        name: "Short Password",
       });
-    } else {
-      const _user = await getUserByUsername(username);
-      if (_user) {
-        res.send({
-          error: 'Username already taken',
-          name: 'UsernameAlreadyTaken',
-          message: UserTakenError(_user.username),
-        });
       } else {
-        const user = await createUser({ username, password, isAdmin });
-        if (user) {
-          const token = jwt.sign(user, JWT_SECRET);
-          res.send({
-            name: 'RegisterSuccess',
-            message: "you're logged in!",
-            token,
-            user,
-          });
+      const user = await createUser({username, password});
+
+      if (user) {
+      const jwtToken = jwt.sign(user, JWT_SECRET);
+       const response =  {
+          message: "thank you for signing up",
+          token: jwtToken,
+          user: {
+            id: user.id,
+            username: user.username,
+          },
         }
+        res.send(response);
       }
     }
   } catch ({ name, message }) {
-    next({ name, message });
+    next({ name, message })
   }
 });
+
+
+// usersRouter.post('/register', async (req, res, next) => {
+//   const { username, password, isAdmin } = req.body;
+
+//   try {
+//     if (!username || !password) {
+//       res.send({
+//         error: 'MissingUsernameOrPassword',
+//         name: 'Missing username or password',
+//         message: 'Please enter a username and password',
+//       });
+//     } else if (password.length < 8) {
+//       res.send({
+//         error: 'PasswordTooShort',
+//         name: 'PasswordTooShort',
+//         message: PasswordTooShortError(),
+//       });
+//     } else {
+//       const _user = await getUserByUsername(username);
+//       if (_user) {
+//         res.send({
+//           error: 'Username already taken',
+//           name: 'UsernameAlreadyTaken',
+//           message: UserTakenError(_user.username),
+//         });
+//       } else {
+//         const user = await createUser({ username, password, isAdmin });
+//         if (user) {
+//           const token = jwt.sign(user, JWT_SECRET);
+//           res.send({
+//             name: 'RegisterSuccess',
+//             message: "you're logged in!",
+//             token,
+//             user,
+//           });
+//         }
+//       }
+//     }
+//   } catch ({ name, message }) {
+//     next({ name, message });
+//   }
+// });
 
 usersRouter.get('/me', async (req, res) => {
   res.send(req.user);
