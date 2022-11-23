@@ -9,7 +9,7 @@ const Products = () => {
 
   async function allProducts() {
     setProductsToDisplay(await getAllProducts());
-    console.log(getAllProducts)
+    console.log("see something",getAllProducts)
   }
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const Products = () => {
                   {title}
                 </Card.Title>
                 <Card.Text>
-                  {imageurl},
+                  <img src={imageurl}/>,
                   Description: {description},
                   Price: {price},
                   Author: {author},

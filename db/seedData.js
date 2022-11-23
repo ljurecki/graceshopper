@@ -1,6 +1,7 @@
 const {
   createUser,
   createProduct,
+  createCartProduct,
 } = require('./');
 
 const client = require('./client');
@@ -50,7 +51,7 @@ async function createTables() {
         qty INTEGER,
         total INTEGER
       );`);
-  
+
     console.log('Finished Creating Tables')
   }
   catch (ex) {
@@ -211,6 +212,42 @@ async function createInitialProducts() {
   }
 }
 
+async function createInitialCartProducts() {
+  try {
+    console.log('Starting to create cart products...');
+
+    const cartProductsToCreate = [
+      {
+        productId: 1,
+        qty: 3,
+        total: 18
+      },
+
+      {
+        productId: 2,
+        qty: 1,
+        total: 12
+      },
+      {
+        productId: 3,
+        qty: 2,
+        total: 15
+      },
+    ];
+    
+    const cartProducts = await Promise.all(
+
+      cartProductsToCreate.map(cartProduct => createCartProduct(cartProduct))
+    );
+
+    console.log('cart products created:', cartProducts);
+    console.log('Finished creating cart products');
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 
 async function rebuildDB() {
   try {
@@ -219,6 +256,7 @@ async function rebuildDB() {
     await createTables();
     await createInitialUsers();
     await createInitialProducts();
+    await createInitialCartProducts();
   }
   catch (error) {
     console.log(error)
