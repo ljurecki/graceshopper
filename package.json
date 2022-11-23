@@ -11,6 +11,8 @@
     "seed": "node ./db/seed.js",
     "seed:dev": "nodemon ./db/seed.js",
     "client-start": "react-scripts start"
+    
+    
   },
   "keywords": [
     "node",

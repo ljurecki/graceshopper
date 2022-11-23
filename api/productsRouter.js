@@ -15,10 +15,12 @@ const {requireUser} = require(`./utils`);
 const { ProductExistsError, ProductNotFoundError } = require(`../errors`);
 
 // GET /api/products
-productsRouter.get('/', async (req, res) => {
+productsRouter.get('/', async (req, res, next) => {
   try {
-    const allProducts = await getAllProducts();
-    res.send(allProducts);
+    const products = await getAllProducts();
+    if(products){
+      res.send(products);
+    }    
 
   } catch ({ title, message }) {
       next({ title, message });

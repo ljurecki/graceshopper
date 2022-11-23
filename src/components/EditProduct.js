@@ -16,7 +16,7 @@ const EditProduct = ({ jwt, navigate }) => {
   const [newPrice, setNewPrice] = useState(price);
   const [newAuthor, setNewAuthor] = useState(author);
   const [newGenre, setNewGenre] = useState(genre);
-  const [newimageURL, setNewImageURL] = useState("imageURL");
+  const [newimageurl, setNewImageurl] = useState("imageurl");
   
 
 
@@ -130,7 +130,7 @@ const EditProduct = ({ jwt, navigate }) => {
 
         {/* Not sure about this one:
           <Form.Group className='mb-3' style={{ margin: '1% 1% 0px 1%' }}>
-            <FloatingLabel label='Product imageURL'>
+            <FloatingLabel label='Product imageurl'>
               <Form.Control
                 placeholder='image'
                 as='textarea'

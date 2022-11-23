@@ -1,29 +1,30 @@
-import React /*{ useState, useEffect }*/ from 'react';
-import { Route, Routes, /*useNavigate*/ } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { Navbar } from './components';
 import {
-    // Cart,
+    Cart,
     Home,
     Login,
     Register,
-    Products,
-    Cart
+    Products
   } from './pages';
+  // pulled this from fitnesstracker on Nov 20
+  import { getUserData } from './api';
 
 
   const App = () => {
     const [jwt, setJwt] = useState('');
-    // const [isLoggedIn, setIsLoggedIn] = useState(false);
-    // const [user, setUser] = useState({});
-    // const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [user, setUser] = useState({});
+    const navigate = useNavigate();
   
-    // function logOut() {
-    //   window.localStorage.removeItem('jwt');
-    //   setJwt('');
-    //   setUser({});
-    //   setIsLoggedIn(false);
-    // }
+    function logOut() {
+      window.localStorage.removeItem('jwt');
+      setJwt('');
+      setUser({});
+      setIsLoggedIn(false);
+    }
   
     async function persistLogin() {
       if (window.localStorage.getItem('jwt')) {
@@ -56,16 +57,20 @@ import {
               element={<Home/>}
             />
             <Route
+              path='/cart'
+              element={<Cart/>}
+            />
+            <Route
               path='/products'
-              element={<Products /*user={user} jwt={jwt} isLoggedIn={isLoggedIn}*/ />}
+              element={<Products user={user} jwt={jwt} isLoggedIn={isLoggedIn} />}
             />
             <Route
               path='/register'
-              element={<Register /*navigate={navigate}*/ />}
+              element={<Register navigate={navigate} />}
             />
             <Route
               path='/login'
-              element={<Login /*setJwt={setJwt} navigate={navigate}*/ />}
+              element={<Login setJwt={setJwt} navigate={navigate} />}
             />
           </Routes>
         </Container>
@@ -74,4 +79,3 @@ import {
   };
   
   export default App;
-  
