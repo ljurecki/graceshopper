@@ -30,7 +30,7 @@ const Products = () => {
 
         {productsToDisplay ? (
           productsToDisplay.map(product => {
-            const { id, title, imageURL, description, price, author, genre } = product;
+            const { id, title, imageurl, description, price, author, genre } = product;
             return (
               <ListGroup.Item
                 key={id}
@@ -39,7 +39,7 @@ const Products = () => {
                 {title}
                 </Card.Title>
                 <Card.Text>
-                    {imageURL},
+                   <img src={imageurl}/>,
                     Description: {description},
                     Price: {price},
                     Author: {author},

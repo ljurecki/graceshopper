@@ -7,7 +7,8 @@ import {
     Home,
     Login,
     Register,
-    Products
+    Products,
+    Checkout
   } from './pages';
   // pulled this from fitnesstracker on Nov 20
   import { getUserData } from './api';
@@ -59,6 +60,10 @@ import {
             <Route
               path='/cart'
               element={<Cart/>}
+            />
+             <Route
+              path='/Checkout'
+              element={<Checkout/>}
             />
             <Route
               path='/products'

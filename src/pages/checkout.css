@@ -1,0 +1,12 @@
+*{
+    display: flex;
+    flex-direction: column;
+}
+#addressOne{
+display: flex;
+flex-wrap: column;
+}
+#addressTwo{
+    display: flex;
+    flex-direction: column;
+    }

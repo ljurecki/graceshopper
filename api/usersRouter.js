@@ -8,7 +8,7 @@ const {
   getUser,
   getAllProductsByUser
 } = require('../db/')
-const { requireUser } = require('./utilities');
+const { requireUser } = require('./utils');
 
 const {
   UserDoesNotExistError,
