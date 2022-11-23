@@ -10,7 +10,7 @@ const CreateProduct = ({ jwt, fetchAllProducts }) => {
   const [price, setPrice] = useState('');
   const [author, setAuthor] = useState('');
   const [genre, setGenre] = useState('');
-  const [imageURL, setImageURL] = useState('');
+  const [imageurl, setImageurl] = useState('');
   
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
@@ -27,7 +27,7 @@ const CreateProduct = ({ jwt, fetchAllProducts }) => {
     setPrice('');
     setAuthor('');
     setGenre('');
-    setImageURL(''); 
+    setImageurl(''); 
   };
 
   const handleSubmit = async () => {

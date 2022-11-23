@@ -1,7 +1,7 @@
 const { Client } = require('pg');
 
 const connectionString =
-  process.env.DATABASE_URL || 'postgress://localhost:5432/graceshopper';
+  process.env.DATABASE_URL || 'https://localhost:5432/graceshopper';
 
 
 const client = new Client({

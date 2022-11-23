@@ -1,4 +1,4 @@
-const BASE_URL = 'postgress://localhost:5432/api';
+const BASE_URL = 'https://localhost:5432/api';
 
 const createHeaders = jwt => {
     return jwt
