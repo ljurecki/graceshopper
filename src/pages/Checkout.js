@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 <link rel="stylesheet" href="checkout.css"></link>
 
 
@@ -27,7 +28,7 @@ const Checkout = () => {
                     <label>CVC <input type="text"/></label>
                     <label>Experation Date <input type="text"/></label>
                 </form>
-                <button>Submit</button>
+                <Link to="/Ordernumber">Submit</Link>
             </div>
         </>
     )

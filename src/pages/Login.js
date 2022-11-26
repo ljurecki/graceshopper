@@ -3,6 +3,7 @@ import { Container, Tabs, Tab } from 'react-bootstrap';
 import { LoginForm } from '../components';
 
 const Login = ({ navigate, setJwt }) => {
+
   return (
     <>
       <Tabs
@@ -13,7 +14,7 @@ const Login = ({ navigate, setJwt }) => {
         <Tab eventKey="Login" title="Login!"></Tab>
       </Tabs>
     <Container>
-      <LoginForm navigate={navigate} setJwt={setJwt} />
+      <LoginForm navigate={navigate} setJwt = {setJwt} />
     </Container>
     </>
   );

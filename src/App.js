@@ -8,7 +8,8 @@ import {
     Login,
     Register,
     Products,
-    Checkout
+    Checkout,
+    Ordernumber
   } from './pages';
   // pulled this from fitnesstracker on Nov 20
   import { getUserData } from './api';
@@ -76,6 +77,10 @@ import {
             <Route
               path='/login'
               element={<Login setJwt={setJwt} navigate={navigate} />}
+            />
+             <Route
+              path='/Ordernumber'
+              element={<Ordernumber setJwt={setJwt} navigate={navigate} />}
             />
           </Routes>
         </Container>
