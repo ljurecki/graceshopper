@@ -37,13 +37,6 @@ router.get('/health', async (req, res) => {
   });
 });
 
-// pulled from fitness tracker.  Not sure if it is needed.
-router.use((req, res, next) => {
-  if (req.user) {
-    console.log("req.user W");
-  }
-  next();
-});
 
 const usersRouter = require('./usersRouter');
 router.use('/users', usersRouter);
@@ -59,6 +52,13 @@ router.get('*', (req, res) => {
     message: 'Page not found!!',
   });
 });
+
+router.use((err, req, res) => {
+  res.send({
+    message: err,
+  });
+});
+
 
 
 module.exports = router;

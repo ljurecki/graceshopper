@@ -22,7 +22,7 @@ usersRouter.post('/login', async (req, res, next) => {
   if (!username || !password) {
     res.send({
       name: "MissingCredentialsError",
-      message: "Please suppy both a username and password"
+      message: "Please suppy both a username and password",
     });
   }
   try {

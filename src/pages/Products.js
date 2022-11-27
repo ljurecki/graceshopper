@@ -23,7 +23,7 @@ const Products = () => {
         variant='pills'
         className='bg-dark'
         style={{ fontSize: '25px' }}>
-        <Tab eventKey='activities' title='Products'></Tab>
+        <Tab eventKey='cart' title='Products'></Tab>
       </Tabs>
 
       <ListGroup variant='flush'>
@@ -45,7 +45,7 @@ const Products = () => {
                   Author: {author},
                   Genre: {genre}
                 </Card.Text>
-                {/* {jwt ? (
+                  {/* {jwt ? (
                   <Link to={`/activities/${id}`} state={{ activity: activity }}>
                     <Button variant='info'>Edit</Button>
                   </Link>

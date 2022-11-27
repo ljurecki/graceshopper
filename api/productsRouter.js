@@ -83,20 +83,20 @@ productsRouter.patch('/:productId', requireUser, async (req, res, next) => {
     }
 
     const _product = await getProductById(productId);
-    // const _title = await getProductByTitle(title);
+    const _title = await getProductByTitle(title);
 
     if (!_product) {
       res.send({
         error: 'ProductDoesNotExists',
-        title: 'Product does not exists',
+        title: 'Product does not exist',
         message: ProductNotFoundError(productId),
       });
-    // } else if (_title) {
-    //   res.send({
-    //     error: 'ProductAlreadyExists',
-    //     title: 'Product already exists',
-    //     message: ProductExistsError(_title.title),
-    //   });
+    } else if (_title) {
+      res.send({
+        error: 'ProductAlreadyExists',
+        title: 'Product already exists',
+        message: ProductExistsError(_title.title),
+      });
     } else {
       const adminUpdateProduct = await updateProduct(updateFields);
       res.send(adminUpdateProduct);
