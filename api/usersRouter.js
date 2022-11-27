@@ -17,7 +17,7 @@ const {
 } = require('../errors');
 
 // POST /api/users/login
-router.post('/login', async (req, res, next) => {
+usersRouter.post('/login', async (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) {
     res.send({
@@ -78,7 +78,7 @@ router.post('/login', async (req, res, next) => {
 
 
 // POST /api/users/register
-router.post('/register', async (req, res, next) => {
+usersRouter.post('/register', async (req, res, next) => {
   const { username, password } = req.body;
   try {
     const _user = await getUserByUsername(username);

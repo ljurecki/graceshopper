@@ -37,7 +37,7 @@ const CreateProduct = ({ jwt, fetchAllProducts }) => {
       price,
       author,
       genre,
-      imageURL
+      imageurl
     };
     
     const response = await createProduct(product, jwt);
