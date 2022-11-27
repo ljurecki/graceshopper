@@ -4,4 +4,7 @@ export { default as CreateProduct} from "./CreateProduct"
 export { default as EditProduct} from "./EditProduct"
 export { default as LoginForm } from "./LoginForm"
 export { default as RegisterForm } from "./RegisterForm"
-
+export { default as AddProductToCart } from "./AddProductToCart"
+export { default as CreateCartProduct } from "./CreateCartProduct"
+export { default as EditCart } from "./EditCart"
+export { default as ViewProduct } from "./ViewProduct"

@@ -23,6 +23,7 @@ const LoginForm = ({ navigate, setJwt }) => {
     }
   };
 
+
   return (
     <Form
       onSubmit={e => {
@@ -51,7 +52,8 @@ const LoginForm = ({ navigate, setJwt }) => {
         <Button
           variant='success'
           type='submit'
-          className='mx-2 justify-self-end'>
+          className='mx-2 justify-self-end'
+          onClick={() => navigate('/products')}>
           Submit
         </Button>
         <Button

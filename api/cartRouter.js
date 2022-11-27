@@ -1,42 +1,55 @@
 const express = require("express");
 const cartRouter = express.Router();
 const {
-    getProductById,
+    getAllCartProducts,
+    getCartProductById,
+    getAllProductsByUser,
     deleteCartProduct,
+    createCartProduct,
 } = require("../db");
 const { requireUser } = require("./utils");
 
 
 cartRouter.get("/", requireUser, async (req, res) => {
-
     const cart = await getCart(req.user.id);
-    res.send({ cart });
+    res.send( cart );
 });
 
-// Needs work!!!
-// productsRouter.post('/', async (req, res) => {
-//     const { productId, qty } = req.body;
-//     const _title = await getProductByTitle(title);
-//     const newProduct = await createProduct({ title, imageurl, description, price, author, genre });
-  
-//     if (_title) {
-//       res.send({
-//         error: 'ProductAlreadyExists',
-//         title: 'Product already exists',
-//         message: ProductExistsError(_title.title),
-//       });
-//     } else {
-//       res.send(newProduct);
-//     }
-//   });
+// Needs work.... will this work??
+cartRouter.post('/', requireUser, async (req, res, next) => {
+    var authheader=req.headers.authorization;
+    console.log(authheader)
+    const { productId, qty } = req.body;
+    const _title = await getProductByTitle(_title);
+    const newProduct = await createCartProduct({ _title, imageurl, description, price, author, genre });
+    try{
+        const cartProductName = await getCartProductByName(_title);
+        const cartProduct = await createCartProduct(cartData);
+    if (_title) {
+      res.send({
+        error: 'ProductAlreadyinCart',
+        title: 'Product already in cart',
+        message: ProductExistsError(_title.title),
+      });
+    } else {
+        const cartProductObj = {
+            title: title,
+            qty: qty,
+            price: price
+        }
+      res.send(cartProductObj);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 // PATCH /api/cart_products/:productId
 cartRouter.patch('/:productId', requireUser, async (req, res, next) => {
     try {        const { cartId, productId } = req.params;
 
         const product = await getProductById(productId);
-        // const cart = await getCartProductById(product.productId);
-
+        const cart = await getCartProductById(product.productId);
 
         if (cartId === req.user.id) {
             const { qty } = req.body;
