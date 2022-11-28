@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { getAllProducts } from '../api';
-import { Card, ListGroup, Tab, Tabs } from 'react-bootstrap';
+import React, { useState, useEffect, jwt } from 'react';
+import { getAllProducts} from '../api';
+
+import { Card, ListGroup, Tab, Tabs, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const Products = () => {
@@ -23,8 +24,16 @@ const Products = () => {
         variant='pills'
         className='bg-dark'
         style={{ fontSize: '25px' }}>
-        <Tab eventKey='activities' title='Products'></Tab>
-      </Tabs>
+        <Tab eventKey='Products' title='Products'></Tab>
+      
+          {/* <Tab eventKey='deleteproducts' title='deleteProducts'>
+            <Products
+              Products={Products}
+              deleteProduct={deleteProduct}
+            />
+          </Tab> */}
+        
+        </Tabs>
 
       <ListGroup variant='flush'>
 
@@ -45,11 +54,11 @@ const Products = () => {
                   Author: {author},
                   Genre: {genre}
                 </Card.Text>
-                {/* {jwt ? (
-                  <Link to={`/activities/${id}`} state={{ activity: activity }}>
+                
+                  <Link to={`/Products/${id}`}>
                     <Button variant='info'>Edit</Button>
                   </Link>
-                ) : null} */}
+                
               </ListGroup.Item>
             );
           })

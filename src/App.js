@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import { Navbar } from './components';
+import { EditProduct, Navbar } from './components';
 import {
     Cart,
     Home,
@@ -67,8 +67,12 @@ import {
               element={<Checkout/>}
             />
             <Route
-              path='/products'
+              path='/Products'
               element={<Products user={user} jwt={jwt} isLoggedIn={isLoggedIn} />}
+            />
+              <Route
+              path='/EditProduct'
+              element={<EditProduct user={user} jwt={jwt} isLoggedIn={isLoggedIn} />}
             />
             <Route
               path='/register'

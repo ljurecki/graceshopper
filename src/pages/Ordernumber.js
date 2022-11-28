@@ -1,8 +1,7 @@
 import React from 'react';
 <link rel="stylesheet" href="checkout.css"></link>
-function time(){
-    var number = Math.floor(Math.random() * 30);
-   
+function getRandomInt() {
+    return Math.floor(Math.random() * 500  + 10000);
   }
 
 const Ordernumber = ({time}) => {
@@ -13,7 +12,7 @@ const Ordernumber = ({time}) => {
                     Your Order Number is
                 </h1>
               <h3>
-             {time}
+             {getRandomInt() + "BB"}
               </h3>
             </div>
         </>
