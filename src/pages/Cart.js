@@ -6,25 +6,13 @@ import { Link } from 'react-router-dom';
 
 const Cart = ({ jwt, user }) => {
   const [productsToDisplay, setProductsToDisplay] = useState([]);
-//   const [showModal, setShowModal] = useState(false);
-//   const [relatedRoutines, setRelatedRoutines] = useState([]);
 
-//   const openRelatedModal = async activity => {
-//     setRelatedRoutines(await getRoutinesByActivity(activity));
-//     setShowModal(true);
-//   };
-
-//   const closeModal = () => {
-//     setShowModal(false);
-//     setRelatedRoutines([]);
-//   };
-
-  async function allProducts() {
-    setProductsToDisplay(await getAllProducts());
+  async function allCartProducts() {
+    setCartProductsToDisplay(await getAllCartProducts());
   }
 
   useEffect(() => {
-    allProducts();
+    allCartProducts();
   }, []);
 
   return (
@@ -42,7 +30,7 @@ const Cart = ({ jwt, user }) => {
 
         {productsToDisplay ? (
           productsToDisplay.map(product => {
-            const { id, title, qty } = cartProduct;
+            const { id, title, qty } = product;
             return (
               <ListGroup.Item
                 key={id}
@@ -55,7 +43,7 @@ const Cart = ({ jwt, user }) => {
                 </Card.Title>
                 <Card.Text>Quantity: {qty}</Card.Text>
                 {jwt ? (
-                  <Link to={`/cart/${id}`} state={{ cart: cart }}>
+                  <Link to={`/cart/${id}`} state={{ cart: Cart }}>
                     <Button variant='info'>Edit</Button>
                   </Link>
                 ) : null}
@@ -66,38 +54,7 @@ const Cart = ({ jwt, user }) => {
           <h1>No Cart Found!</h1>
         )}
       </ListGroup>
-
-      <Modal show={showModal} onHide={closeModal} id='relatedRoutinesModal'>
-        <Modal.Header closeButton>
-          <Modal.Title className='w-100 text-center'>
-            Routines Featuring Activity
-          </Modal.Title>
-        </Modal.Header>
-        {relatedRoutines && relatedRoutines.length ? (
-          <>
-            {relatedRoutines.map(routine => {
-              const { id, name, creatorName, goal } = routine;
-              return (
-                <Modal.Body key={id}>
-                  <ListGroup.Item>
-                    <Card.Title>Name: {name}</Card.Title>
-                    <Card.Text>Goal: {goal}</Card.Text>
-                    <Card.Subtitle className='text-muted pb-1'>
-                      Creator: {creatorName}
-                    </Card.Subtitle>
-                  </ListGroup.Item>
-                </Modal.Body>
-              );
-            })}
-          </>
-        ) : (
-          <Modal.Body className='text-center'>No Routines Found</Modal.Body>
-        )}
-      </Modal>
-    </>
-  );
-};
+      </>
+  )};
 
 export default Cart;
-
-

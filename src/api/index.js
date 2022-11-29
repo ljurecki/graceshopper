@@ -132,14 +132,14 @@ export const deleteProduct = async (product, jwt) => {
 };
 
 // for cart??
-export const attachProductToCart = async (product, jwt) => {
+export const addProductToCart = async (productId, qty, jwt) => {
     try {
       const headers = createHeaders(jwt);
-      return await fetch(`${BASE_URL}/products/${product.id}/cartProducts`, {
+      return await fetch(`${BASE_URL}/products/${productId}/cartProducts`, {
         method: 'POST',
         headers,
         body: JSON.stringify({
-          productId: product.id,
+          productId: productId,
           title: title,
           qty: qty
         }),
@@ -181,4 +181,15 @@ export const attachProductToCart = async (product, jwt) => {
       console.error(err);
     }
   };
-  
+
+  export const emptyCart = async (jwt, {id, title, qty}) => {
+    try {
+        const headers = createHeaders(jwt);
+      return await fetch(`${BASE_URL}/cartProducts/${id}`, {
+        method: 'DELETE',
+        headers,
+      })
+    } catch (err) {
+      console.error(err);
+    }
+  };

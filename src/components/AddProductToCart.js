@@ -1,6 +1,6 @@
 // based off AttachActivity.js in Fitness Tracker
 import React, { useState, useEffect } from 'react';
-import { attachProductToCart, getAllProducts } from '../api';
+import { addProductToCart, getAllProducts } from '../api';
 import {
   Form,
   FloatingLabel,
@@ -12,7 +12,7 @@ import {
   Alert,
 } from 'react-bootstrap';
 
-const AddProductToCart = ({ productId, jwt }) => {
+const AddProductToCart = ({ product, jwt, updateCurrentProduct }) => {
   const [showModal, setShowModal] = useState(false);
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
@@ -43,8 +43,8 @@ const AddProductToCart = ({ productId, jwt }) => {
     }
     const cartProduct = selectedProduct;
     selectedProduct.title = title;
-    selecteProduct.qty = qty;
-    const result = await attachProductToCart(title, qty, jwt);
+    selectedProduct.qty = qty;
+    const result = await addProductToCart(title, qty, jwt);
 
     if (!result.error) {
       setSuccessMessage('Product Added!');
