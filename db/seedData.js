@@ -1,7 +1,10 @@
 
+//DONT EDIT
+
 const {
   createUser,
   createProduct,
+  createCartProduct,
 } = require('./');
 
 const client = require('./client');
@@ -10,7 +13,7 @@ async function dropTables() {
   try {
     console.log('Dropping All Tables... baby!!!');
     await client.query(`
-    DROP TABLE IF EXISTS cart_products;
+      DROP TABLE IF EXISTS cart_products;
       DROP TABLE IF EXISTS products;
       DROP TABLE IF EXISTS users;
     `);
@@ -42,23 +45,21 @@ async function createTables() {
       author TEXT NOT NULL,
       genre TEXT NOT NULL
     );`);
-    
+
     await client.query(`
       CREATE TABLE cart_products(
         id SERIAL PRIMARY KEY,
         "cartId" INTEGER REFERENCES users(id),
         "productId" INTEGER REFERENCES products(id),
         qty INTEGER,
-        total INTEGER
       );`);
-  
+
     console.log('Finished Creating Tables')
   }
   catch (ex) {
     console.log(ex)
   }
 };
-
 
 async function createInitialUsers() {
   console.log('Starting to create users...');
@@ -213,6 +214,39 @@ async function createInitialProducts() {
   }
 }
 
+async function createInitialCartProducts() {
+  try {
+    console.log('Starting to create cart products...');
+
+    const cartProductsToCreate = [
+      {
+        productId: 1,
+        qty: 3,
+      },
+
+      {
+        productId: 2,
+        qty: 1,
+      },
+      {
+        productId: 3,
+        qty: 2,
+      },
+    ];
+    
+    const cartProducts = await Promise.all(
+
+      cartProductsToCreate.map(cartProduct => createCartProduct(cartProduct))
+    );
+
+    console.log('cart products created:', cartProducts);
+    console.log('Finished creating cart products');
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
 
 async function rebuildDB() {
   try {
@@ -221,6 +255,7 @@ async function rebuildDB() {
     await createTables();
     await createInitialUsers();
     await createInitialProducts();
+    await createInitialCartProducts();
   }
   catch (error) {
     console.log(error)

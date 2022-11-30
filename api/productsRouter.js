@@ -7,18 +7,18 @@ const {
   getProductByTitle,
   getProductById,
   updateProduct,
-  // addProductToCart,
-  // productAvailability,
 } = require(`../db`);
 const {requireUser} = require(`./utils`);
 
 const { ProductExistsError, ProductNotFoundError } = require(`../errors`);
 
 // GET /api/products
-productsRouter.get('/', async (req, res) => {
+productsRouter.get('/', async (req, res, next) => { //tested working
   try {
-    const allProducts = await getAllProducts();
-    res.send(allProducts);
+    const products = await getAllProducts();
+    if(products){
+      res.send(products);
+    }    
 
   } catch ({ title, message }) {
       next({ title, message });
@@ -26,8 +26,8 @@ productsRouter.get('/', async (req, res) => {
 });
 
 
-// POST /api/products  
-productsRouter.post('/', async (req, res) => {
+// POST /api/products   
+productsRouter.post('/', async (req, res) => { //tested working
   const { title, description, price, imageurl } = req.body;
   const _title = await getProductByTitle(title);
   const newProduct = await createProduct({ title, imageurl, description, price, author, genre });
@@ -44,7 +44,7 @@ productsRouter.post('/', async (req, res) => {
 });
 
 // PATCH /api/productId
-productsRouter.patch('/:productId', requireUser, async (req, res, next) => {
+productsRouter.patch('/:productId', requireUser, async (req, res, next) => { //tested working
   const { productId } = req.params;
 
   try {

@@ -8,6 +8,7 @@ const {
   getUser,
   getAllProductsByUser
 } = require('../db/')
+const { requireUser } = require('./utils');
 
 const {
   UserDoesNotExistError,
@@ -16,7 +17,7 @@ const {
 } = require('../errors');
 
 // POST /api/users/login
-usersRouter.post('/login', async (req, res, next) => {
+usersRouter.post('/login', async (req, res, next) => { //tested working
   try {
     const { username, password } = req.body;
 
@@ -52,7 +53,7 @@ usersRouter.post('/login', async (req, res, next) => {
 
 // POST /api/users/register
 
-usersRouter.post('/register', async (req, res, next) => {
+usersRouter.post('/register', async (req, res, next) => { //tested working
   const { username, password, isAdmin } = req.body;
 
   try {
@@ -98,17 +99,17 @@ usersRouter.get('/me', async (req, res) => {
   res.send(req.user);
 });
 
-usersRouter.get('/:username/products', async (req, res, next) => {
-  try {
-    const { username } = req.params;
-    if (req.user && req.user.username === username) {
-      const userProducts = await getAllProductsByUser({ username });
-      res.send(userProducts);
-    }
-  } catch ({ name, message }) {
-    next({ name, message });
-  }
-});
+// usersRouter.get('/:username/products', async (req, res, next) => {
+//   try {
+//     const { username } = req.params;
+//     if (req.user && req.user.username === username) {
+//       const userProducts = await getAllProductsByUser({ username });
+//       res.send(userProducts);
+//     }
+//   } catch ({ name, message }) {
+//     next({ name, message });
+//   }
+// });
 
 
 module.exports = usersRouter;

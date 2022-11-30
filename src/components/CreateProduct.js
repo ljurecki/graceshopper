@@ -10,7 +10,7 @@ const CreateProduct = ({ jwt, fetchAllProducts }) => {
   const [price, setPrice] = useState('');
   const [author, setAuthor] = useState('');
   const [genre, setGenre] = useState('');
-  const [imageURL, setImageURL] = useState('');
+  const [imageurl, setImageurl] = useState('');
   
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
@@ -37,14 +37,14 @@ const CreateProduct = ({ jwt, fetchAllProducts }) => {
       price,
       author,
       genre,
-      imageURL
+      imageurl
     };
     
     const response = await createProduct(product, jwt);
     if (!response.error) {
       setSuccessMessage('Product Created!');
       setErrorMessage('');
-      setTimeout(() => { 
+      setTimeout(() => {
         closeModal();
         fetchAllProducts();
       }, 1000);

@@ -1,27 +1,35 @@
 const client = require("./client");
 
-async function getAllCartProducts(){
-  try{
-    const { rows: products } = await client.query(`
-      SELECT products.*, users.username AS "shopperName"
+
+async function getCart() { //tested working
+  try {
+    const { rows: product } = await client.query(`
+      SELECT cart_products.*, users.username AS "shopperName"
       FROM cart_products
-      JOIN users ON cart_products."shopperId"=users.id;`);
-      return products
-  }catch (error){
+      JOIN users ON cart_products."cartId"=users.id;`
+      );
+
+      console.log(product)
+    return product
+  } catch (error) {
     console.error(error)
     throw error;
   }
 }
 
-async function getCartProductById(id) {
-  try {
+
+async function createCartProduct({ //tested working
+  productId,
+  qty,
+  total }) {
+    try {
     const {
-      rows: [cart_product],
-    } = await client.query(
-      `
-        SELECT * FROM cart_products
-        WHERE id=$1;`,
-      [id]
+      rows: [cart_product]
+    } = await client.query(`
+      INSERT INTO cart_products ("productId", qty, total)
+      VALUES ($1, $2, $3)
+      RETURNING *;
+    `, [productId, qty, total]
     );
     return cart_product;
   } catch (err) {
@@ -30,20 +38,20 @@ async function getCartProductById(id) {
   }
 }
 
-async function addProductToCart({
+async function addProductToCart({ //tested working
   cartId,
   productId,
-  qty,
-  total
+  qty
 }) {
+
   try {
     const {
       rows: [cart_product],
     } = await client.query(`
-      INSERT INTO cart_product("cartId", "productId", qty, total)
-      VALUES($1, $2, $3, $4)
+      INSERT INTO cart_products("cartId", "productId", qty)
+      VALUES($1, $2, $3)
       RETURNING *;`,
-      [cartId, productId, qty, total]
+      [cartId, productId, qty]
     );
 
     return cart_product;
@@ -53,22 +61,24 @@ async function addProductToCart({
   }
 }
 
-async function getCartProducstByUser({ id }) {
-  try {
-    const { rows } = await client.query(`
-      SELECT * FROM cart_products
-      WHERE "cartId"=$1;`,
-      [id]
-    );
 
-    return rows;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-}
-
-async function deleteCartProduct(id) {
+      async function getCartProductById(id) { //tested working
+        try {
+          const {
+            rows: [cart_product],
+          } = await client.query(
+            `SELECT * FROM cart_products
+              WHERE id=$1`,
+            [id]
+          );
+          return cart_product;
+        } catch (err) {
+          console.error(err);
+          throw err;
+        }
+      }
+      
+async function deleteCartProduct(id) { //tested working
   try {
     const {
       rows: [cart_product],
@@ -85,9 +95,9 @@ async function deleteCartProduct(id) {
 }
 
 module.exports = {
-  getAllCartProducts,
+  getCart,
   getCartProductById,
+  createCartProduct,
   addProductToCart,
-  getCartProducstByUser,
   deleteCartProduct
 };

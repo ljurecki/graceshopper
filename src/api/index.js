@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/';
+const BASE_URL = 'http://localhost:3001/api';
 
 const createHeaders = jwt => {
     return jwt
@@ -64,8 +64,8 @@ export const getAllProducts = async () => {
                 'Content-Type': 'application/json',
             },
         })
-        const results = response.json();
         
+        const results = response.json();
         return results;
     } catch (err) {
         console.error(err);
@@ -85,7 +85,8 @@ export const getProductsByUsername = async (user, jwt) => {
     }
 };
 
-export const createProduct = async (jwt, /*user*/ { name, imageurl, description, price, author, genre }) => {
+export const createProduct = async (jwt, user, { name, imageurl, description, price, author, genre }) => {
+
     try {
         const headers = createHeaders(jwt);
         return await fetch(`${BASE_URL}/products`, {
@@ -121,7 +122,7 @@ export const updateProduct = async (updatedProduct, jwt) => {
 export const deleteProduct = async (product, jwt) => {
     try {
         const headers = createHeaders(jwt);
-        return await fetch(`${BASE_URL}/oroducts/${product.id}`, {
+        return await fetch(`${BASE_URL}/products/${product.id}`, {
             method: 'DELETE',
             headers,
         }).then(response => response.json());
@@ -129,4 +130,3 @@ export const deleteProduct = async (product, jwt) => {
         console.error(err);
     }
 };
-
