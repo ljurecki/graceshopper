@@ -1,3 +1,6 @@
+
+//DONT EDIT
+
 const {
   createUser,
   createProduct,
@@ -49,7 +52,6 @@ async function createTables() {
         "cartId" INTEGER REFERENCES users(id),
         "productId" INTEGER REFERENCES products(id),
         qty INTEGER,
-        total INTEGER
       );`);
 
     console.log('Finished Creating Tables')
@@ -220,18 +222,15 @@ async function createInitialCartProducts() {
       {
         productId: 1,
         qty: 3,
-        total: 18
       },
 
       {
         productId: 2,
         qty: 1,
-        total: 12
       },
       {
         productId: 3,
         qty: 2,
-        total: 15
       },
     ];
     

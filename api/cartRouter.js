@@ -1,99 +1,53 @@
 const express = require("express");
 const cartRouter = express.Router();
 const {
-    getProductById,
+    getCartProductById,
     deleteCartProduct,
+    addProductToCart,
+    getCart
 } = require("../db");
 const { requireUser } = require("./utils");
+// const { UnauthorizedDeleteError } = require('../errors');
 
-
-cartRouter.get("/", requireUser, async (req, res) => {
+cartRouter.get("/", requireUser, async (req, res) => { //tested working
 
     const cart = await getCart(req.user.id);
     res.send({ cart });
 });
 
-// Needs work!!!
-productsRouter.post('/', async (req, res) => {
-    const { productId, qty } = req.body;
-    const _title = await getProductByTitle(title);
-    const newProduct = await createProduct({ title, imageurl, description, price, author, genre });
-  
-    if (_title) {
-      res.send({
-        error: 'ProductAlreadyExists',
-        title: 'Product already exists',
-        message: ProductExistsError(_title.title),
-      });
-    } else {
-      res.send(newProduct);
+cartRouter.post('/', requireUser, async (req, res, next) => { //tested working
+    try
+    {const { productId, qty  } = req.body;
+    const cartItem = await addProductToCart({cartId:req.user.id, productId, qty})
+
+    res.send(cartItem)
+    }catch (error) {
+        next(error);
     }
-  });
-
-// PATCH /api/cart_products/:productId
-cartRouter.patch('/:productId', requireUser, async (req, res, next) => {
-    try {        const { cartId, productId } = req.params;
-
-        const product = await getProductById(productId);
-        // const cart = await getCartProductById(product.productId);
-
-
-        if (cartId === req.user.id) {
-            const { qty } = req.body;
-            const addProductToCart = {};
-            if(productId) {
-                addProductToCart.id = id;
-            }
-            if (qty) {
-                addProductToCart.qty = qty;
-            }
-
-        } else {
-            res.send({
-                error: 'UserUnauthorized',
-                name: 'User unauthorized to update this cart',
-                message: UnauthorizedUpdateError(req.user.username, product.title),
-            });
-        }
-    } catch (error) {
-        res.send({ error: error.message });
-    }
-});
-
+ });   
 
 /*delete item in cart*/
-cartRouter.delete("/:productId", requireUser, async (req, res) => {
-    const { productId } = req.params;
+cartRouter.delete("/:cartProductId", requireUser, async (req, res, next) => { 
+    console.log('end delete route')
+    const { cartProductId } = req.params;
     try {
-        const _product = await getCartProductById(productId);
+        const _product = await getCartProductById(cartProductId);
+        console.log(_product)
 
-        if (_product.shopperId !== req.user.id) {
+        if (_product.cartId !== req.user.id) {
             res.status(403).send({
                 error: 'UserCannotDeleteProduct',
                 name: 'User cannot delete product',
-                message: UnauthorizedDeleteError(req.user.username, _routine.name),
+                message: UnauthorizedDeleteError(req.user.username, _title.name),
             });
         } else {
-            const deleteProduct = await deleteCartProduct(_product.id);
-            res.send(deleteProduct);
+            const removeProduct = await deleteCartProduct(_product.id);
+            next(removeProduct);
         }
     } catch ({ name, message }) {
         next({ name, message });
     }
 });
 
-/*Checkout*/
-// cartRouter.patch("/:cartId/checkout", async (req, res) => {
-//   try {
-//     if (!req.user) {
-//       res.send({ error: "No token present with request." });
-//       return;
-//     }
-//     const cartItem = await checkoutCart(req.params.cartId);
-//     res.send({ cartItem });
-//   } catch (error) {
-//     res.send({ error: error.message });
-//   }
-// });
 
 module.exports = cartRouter;
