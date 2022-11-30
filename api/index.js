@@ -37,7 +37,6 @@ router.get('/health', async (req, res) => {
   });
 });
 
-
 const usersRouter = require('./usersRouter');
 router.use('/users', usersRouter);
 
@@ -58,7 +57,5 @@ router.use((err, req, res) => {
     message: err,
   });
 });
-
-
 
 module.exports = router;

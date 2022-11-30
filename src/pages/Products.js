@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 const Products = () => {
   const [productsToDisplay, setProductsToDisplay] = useState([]);
-  const [showModal, setShowModal] = useState(false);
 
   async function allProducts() {
     setProductsToDisplay(await getAllProducts());
@@ -23,7 +22,7 @@ const Products = () => {
         variant='pills'
         className='bg-dark'
         style={{ fontSize: '25px' }}>
-        <Tab eventKey='cart' title='Products'></Tab>
+        <Tab eventKey='activities' title='Products'></Tab>
       </Tabs>
 
       <ListGroup variant='flush'>
@@ -45,7 +44,7 @@ const Products = () => {
                   Author: {author},
                   Genre: {genre}
                 </Card.Text>
-                  {/* {jwt ? (
+                {/* {jwt ? (
                   <Link to={`/activities/${id}`} state={{ activity: activity }}>
                     <Button variant='info'>Edit</Button>
                   </Link>
@@ -60,5 +59,4 @@ const Products = () => {
     </>
   );
 };
-
-export default Products;
+ export default Products;

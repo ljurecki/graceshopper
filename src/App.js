@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
+import { getUserData } from './api';
 import { Navbar } from './components';
 import {
     Cart,
@@ -10,7 +11,6 @@ import {
     Products
   } from './pages';
   // pulled this from fitnesstracker on Nov 20
-  import { getUserData } from './api';
 
 
   const App = () => {

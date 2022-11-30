@@ -1,6 +1,6 @@
 const client = require("./client");
 
-async function getAllProducts() {
+async function getAllProducts() { //tested working
   try {
     const { rows } = await client.query(
       `SELECT * 
@@ -12,7 +12,7 @@ async function getAllProducts() {
   }
 }
 
-async function getProductById(id) {
+async function getProductById(id) { //tested working
   try {
     const { rows: [product]
     } = await client.query(`
@@ -27,7 +27,7 @@ async function getProductById(id) {
   }
 }
 
-async function getProductByTitle(title) {
+async function getProductByTitle(title) { //tested working
   try {
     const {
       rows: [product]
@@ -43,26 +43,8 @@ async function getProductByTitle(title) {
   }
 }
 
-async function getAllProductsByUser({ username }) {
-  try {
-    const {
-      rows: products
-    } = await client.query(`
-        SELECT products.*, users.username
-        FROM products
-        JOIN users ON products.users.id
-        WHERE users.username=$1;`,
-      [username]
-    );
 
-    return products;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-}
-
-async function createProduct({ title, imageurl, description, price, author, genre }) {
+async function createProduct({ title, imageurl, description, price, author, genre }) { //tested working
   try {
     const {
       rows: [product]
@@ -80,61 +62,8 @@ async function createProduct({ title, imageurl, description, price, author, genr
   }
 }
 
-async function getProductByAuthor(author) {
-  try {
-    const {
-      rows: [product],
-    } = await client.query(`
-        SELECT *
-        FROM products
-        WHERE author=$1;`,
-      [author]
-    );
-    return product;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-}
 
-
-async function getProductByGenre(genre) {
-  try {
-    const {
-      rows: [product],
-    } = await client.query(`
-        SELECT *
-        FROM products
-        WHERE genre=$1;
-        `,
-      [genre]
-    );
-    return product;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-}
-
-async function getProductByPrice(price) {
-  try {
-    const {
-      rows: [product],
-    } = await client.query(`
-        SELECT *
-        FROM products
-        WHERE price=$1;
-        `,
-      [price]
-    );
-    return product;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-}
-
-async function updateProduct({ id, ...fields }) {
+async function updateProduct({ id, ...fields }) { //tested working
   try {
     const indexString = Object.keys(fields).map((key, index) => {
       return `"${key}"=$${index + 1}`;
@@ -155,7 +84,7 @@ async function updateProduct({ id, ...fields }) {
   }
 }
 
-async function deleteProduct(id) {
+async function deleteProduct(id) { //Needs testing
   try {
     const {
       rows: [product],
@@ -179,12 +108,6 @@ module.exports = {
   createProduct,
   getProductByTitle,
   getProductById,
-  getProductByAuthor,
-  getProductByGenre,
-  getProductByPrice,
   updateProduct,
-  getAllProductsByUser,
-  // addProductToCart,
-  // productAvailability,
   deleteProduct
 };

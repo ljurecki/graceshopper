@@ -1,7 +1,7 @@
 const client = require('./client');
 const bcrypt = require('bcrypt');
 
-async function createUser({ username, password, isAdmin}) {
+async function createUser({ username, password, isAdmin}) { //tested working
   const SALT_COUNT = 10;
     const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
     try {
@@ -23,7 +23,7 @@ async function createUser({ username, password, isAdmin}) {
     }
   }
 
-  async function getUser({ username, password }) {
+  async function getUser({ username, password }) { //tested working
     try {
       const user = await getUserByUsername(username);
       const hashedPassword = user.password;
@@ -39,7 +39,7 @@ async function createUser({ username, password, isAdmin}) {
   }
 
 
-  async function getUserById(userId) {
+  async function getUserById(userId) { //tested working
     try {
       const {
         rows: [user],
@@ -59,7 +59,7 @@ async function createUser({ username, password, isAdmin}) {
     }
   }
 
-  async function getUserByUsername(userName) {
+  async function getUserByUsername(userName) { //tested working
     try {
       const {
         rows: [user],

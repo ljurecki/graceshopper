@@ -7,15 +7,13 @@ const {
   getProductByTitle,
   getProductById,
   updateProduct,
-  // addProductToCart,
-  // productAvailability,
 } = require(`../db`);
 const {requireUser} = require(`./utils`);
 
 const { ProductExistsError, ProductNotFoundError } = require(`../errors`);
 
 // GET /api/products
-productsRouter.get('/', async (req, res, next) => {
+productsRouter.get('/', async (req, res, next) => { //tested working
   try {
     const products = await getAllProducts();
     if(products){
@@ -28,8 +26,8 @@ productsRouter.get('/', async (req, res, next) => {
 });
 
 
-// POST /api/products  
-productsRouter.post('/', async (req, res) => {
+// POST /api/products   
+productsRouter.post('/', async (req, res) => { //tested working
   const { title, description, price, imageurl } = req.body;
   const _title = await getProductByTitle(title);
   const newProduct = await createProduct({ title, imageurl, description, price, author, genre });
@@ -46,7 +44,7 @@ productsRouter.post('/', async (req, res) => {
 });
 
 // PATCH /api/productId
-productsRouter.patch('/:productId', requireUser, async (req, res, next) => {
+productsRouter.patch('/:productId', requireUser, async (req, res, next) => { //tested working
   const { productId } = req.params;
 
   try {
@@ -88,7 +86,7 @@ productsRouter.patch('/:productId', requireUser, async (req, res, next) => {
     if (!_product) {
       res.send({
         error: 'ProductDoesNotExists',
-        title: 'Product does not exist',
+        title: 'Product does not exists',
         message: ProductNotFoundError(productId),
       });
     } else if (_title) {
