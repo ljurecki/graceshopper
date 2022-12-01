@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form, FloatingLabel, Row, Col } from 'react-bootstrap';
+import addProductToCart from './AddProductToCart';
 
-const ViewProduct = ({ product }) => {
+const ViewCart = ({ cartProduct }) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => setShowModal(true);
@@ -22,47 +23,36 @@ const ViewProduct = ({ product }) => {
       <Modal show={showModal} onHide={closeModal} size='lg'>
         <Modal.Header style={{ fontSize: '20px' }} closeButton>
           <Modal.Title className='w-100 text-center'>
-            {product.title}
+            {product.name}
           </Modal.Title>
         </Modal.Header>
         <Form>
           <Form.Group className='m-3'>
-            <FloatingLabel label='Goal'>
+            <FloatingLabel label='Title'>
               <Form.Control
                 as='textarea'
-                id='product'
+                id='cartProduct'
                 plaintext
                 readOnly
                 style={{ height: '80px' }}
-                defaultValue={product}
+                defaultValue={cartProduct}
               />
             </FloatingLabel>
           </Form.Group>
 
           <Form.Group as={Row} className='m-3'>
             <Col className='p-0'>
-              <FloatingLabel label='Author'>
+              <FloatingLabel label='Quantity'>
                 <Form.Control
-                  id='author'
                   plaintext
                   readOnly
-                  defaultValue={routine.creatorName}
+                  defaultValue={quantity}
                 />
               </FloatingLabel>
             </Col>
-            <Col className='p-0 d-flex justify-content-center align-items-center'>
-              <Form.Dropdown
-                id='qty'
-                type='dropdown'
-                label='quantity'
-                readOnly
-                selected={product.qty}
-              />
-            </Col>
+
+          <cartProducts cartProduct={cartProduct} />
           </Form.Group>
-
-          <Product product={product} />
-
           <Form.Group className='m-3 d-flex justify-content-end'>
             <Button
               variant='secondary'
@@ -74,7 +64,6 @@ const ViewProduct = ({ product }) => {
         </Form>
       </Modal>
     </>
-  );
-};
+  )};
 
-export default ViewProduct;
+export default ViewCart;

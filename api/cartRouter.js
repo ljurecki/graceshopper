@@ -27,12 +27,11 @@ cartRouter.post('/', requireUser, async (req, res, next) => { //tested working
  });   
 
  // PATCH: update quantity in cart
-cartRouter.patch("/:cartProductId", requireUser, async (req, res, next) => {
+cartRouter.patch("/:cartproductId", requireUser, async (req, res, next) => {
     const { cartProductId } = req.params;
     try {
     const { productId, qty } = req.body;
     const _product = await getCartProductById(cartProductId);
-    const updateQty = await updateCartProduct(_product.id);
     res.send(updatedProduct);
     } catch (error) {
       next(error);

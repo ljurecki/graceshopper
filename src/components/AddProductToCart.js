@@ -21,7 +21,7 @@ const AddProductToCart = ({ product, jwt, updateCurrentProduct }) => {
   const [selectedProductTitle, setSelectedProductTitle] = useState('');
   const [quantity, setQuantity] = useState('');
 
-  const [cartProductList, setcartProductList] = useState([]);
+  const [cartProductList, setCartProductList] = useState([]);
   const [searchValue, setSearchValue] = useState('');
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -44,7 +44,7 @@ const AddProductToCart = ({ product, jwt, updateCurrentProduct }) => {
     const cartProduct = selectedProduct;
     selectedProduct.title = title;
     selectedProduct.qty = qty;
-    const result = await addProductToCart(title, qty, jwt);
+    const result = await addProductToCart(selectedProduct.title, selectedProduct.qty, jwt);
 
     if (!result.error) {
       setSuccessMessage('Product Added!');
@@ -73,8 +73,8 @@ const AddProductToCart = ({ product, jwt, updateCurrentProduct }) => {
         }}>
         Add Product
       </Button>
-
-      <Modal show={showModal} onHide={closeModal}>
+</> )};
+      {/* <Modal show={showModal} onHide={closeModal}>
         <Modal.Header style={{ fontSize: '20px' }} closeButton>
           <Modal.Title className='w-100 text-center'>
             Add Product to Cart
@@ -93,7 +93,7 @@ const AddProductToCart = ({ product, jwt, updateCurrentProduct }) => {
                     overflowX: 'hidden',
                     width: '483px',
                   }}>
-                  {activityList && activityList.length && (
+                  {cartProductList && cartProductList.length && (
                     <>
                       <Form.Control
                         autoFocus
@@ -103,7 +103,7 @@ const AddProductToCart = ({ product, jwt, updateCurrentProduct }) => {
                         onChange={e => setSearchValue(e.target.value)}
                         value={searchValue}
                       />
-                      {activityList.map(activity => {
+                      {cartProductList.map(product => {
                         if (
                           activity.name.toLowerCase().startsWith(searchValue)
                         ) {
@@ -123,19 +123,19 @@ const AddProductToCart = ({ product, jwt, updateCurrentProduct }) => {
                   )}
                 </Dropdown.Menu>
               </Dropdown>
-            </Col>
+            </Col> */}
 
-            <Col className='p-0' sm='9'>
-              <Form.Control
-                id='ProductToAttach'
-                placeholder='Product Title'
-                plaintext
-                disabled
-                value={selectedProductTitle}
-              />
-            </Col>
-          </Form.Group>
-
+            // <Col className='p-0' sm='9'>
+            //   <Form.Control
+            //     id='ProductToAttach'
+            //     placeholder='Product Title'
+            //     plaintext
+            //     disabled
+            //     value={selectedProductTitle}
+            //   />
+            // </Col>
+          // </Form.Group>
+<Form>
           <Form.Group className='m-3' as={Row}>
             <Col className='ps-0 pe-1'>
               <FloatingLabel label='Quantity'>
@@ -144,7 +144,7 @@ const AddProductToCart = ({ product, jwt, updateCurrentProduct }) => {
                   placeholder='Quantity'
                   required
                   onChange={e => setQuantity(e.target.value)}
-                  value={count}
+                  value='qty'
                 />
               </FloatingLabel>
             </Col>
@@ -156,15 +156,17 @@ const AddProductToCart = ({ product, jwt, updateCurrentProduct }) => {
             </Button>
           </Form.Group>
         </Form>
-        {errorMessage && <Alert variant='danger'>{errorMessage}</Alert>}
-        {successMessage && (
-          <Alert variant='success' className='mt-3'>
-            {successMessage}
-          </Alert>
-        )}
-      </Modal>
-    </>
-  );
-};
+
+        // {errorMessage && <Alert variant='danger'>{error}</Alert>}
+        // {successMessage && (
+        //   <Alert variant='success' className='mt-3'>
+        //     {successMessage}
+        //   </Alert>
+        // )}
+  
+    //   </Modal>
+    // </>
+  // );
+// };
 
 export default AddProductToCart;
