@@ -27,7 +27,7 @@ async function getProductById(id) { //tested working
   }
 }
 
-async function getProductByTitle(title) { //tested working
+async function getProductByTitle(title) {
   try {
     const {
       rows: [product]

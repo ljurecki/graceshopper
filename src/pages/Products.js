@@ -1,9 +1,9 @@
 import React from 'react';
-import { ListGroup, Tabs, Tab } from 'react-bootstrap';
+import { ListGroup, Tabs, Tab} from 'react-bootstrap';
 // import { Link } from 'react-router-dom';
-import { ProductCard } from '../components/index';
+import { ProductCard, CreateProduct } from '../components/index';
 
-const Products = ({jwt, products}) => {
+const Products = ({jwt, products, user}) => {
 
   return (
     <>
@@ -16,7 +16,8 @@ const Products = ({jwt, products}) => {
       </Tabs>
 
       <ListGroup variant='flush'>
-      <div id='outer div element'>
+      {user.isAdmin && <CreateProduct user={user} jwt={jwt} />}
+        <div id='outer div element'>
         {products ? (
           products.map(product => {
            return <ProductCard jwt={jwt} product={product} key={product.id} />

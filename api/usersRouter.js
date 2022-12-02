@@ -6,7 +6,6 @@ const {
   createUser,
   getUserByUsername,
   getUser,
-  getAllProductsByUser
 } = require('../db/')
 const { requireUser } = require('./utils');
 
@@ -95,7 +94,7 @@ usersRouter.post('/register', async (req, res, next) => { //tested working
   }
 });
 
-usersRouter.get('/me', async (req, res) => {
+usersRouter.get('/me', requireUser, async (req, res) => {
   res.send(req.user);
 });
 

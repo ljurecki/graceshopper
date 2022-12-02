@@ -38,7 +38,7 @@ return (
       <h1 className='ms-1 pt-4 d-flex justify-content-start'>
       {title}
       </h1>
-      <p className='ms-1 pb-1 d-flex justify-content-start'>by {author}</p>
+      <span className='ms-1 pb-1 d-flex justify-content-start'>by {author}</span>
       <Row>
     <Col className='pt-2'xs lg="3">
     <img src={imageurl} className='pb-3'/>

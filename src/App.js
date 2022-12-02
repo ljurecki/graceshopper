@@ -70,7 +70,7 @@ const App = () => {
           />
           <Route
             path='/products'
-            element={<Products jwt={jwt} products={products} navigate={navigate} />}
+            element={<Products user={user} jwt={jwt} products={products} navigate={navigate} />}
           />
           <Route
             path='/register'

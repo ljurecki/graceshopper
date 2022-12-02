@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import { createProduct } from '../api';
 import { Button, Modal, Form, FloatingLabel, Alert } from 'react-bootstrap';
 
-const CreateProduct = ({ jwt, fetchAllProducts }) => {
-  const [showModal, setShowModal] = useState(false);
-
+const CreateProduct = ({ jwt, user }) => {
   const [title, setTitle] = useState('');
+  const [imageurl, setImageurl] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [author, setAuthor] = useState('');
   const [genre, setGenre] = useState('');
-  const [imageurl, setImageurl] = useState('');
   
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+
+  const [showModal, setShowModal] = useState(false);
+
 
   const openModal = () => {
     setErrorMessage('');
@@ -23,34 +24,32 @@ const CreateProduct = ({ jwt, fetchAllProducts }) => {
   const closeModal = () => {
     setShowModal(false);
     setTitle('');
+    setImageurl(''); 
     setDescription('');
     setPrice('');
     setAuthor('');
     setGenre('');
-    setImageurl(''); 
   };
 
-  const handleSubmit = async () => {
-    const product = {
+  async function handleSubmit() {
+    const newProduct = {
       title,
+      imageurl,
       description,
       price,
       author,
       genre,
-      imageurl
     };
-    
-    const response = await createProduct(product, jwt);
-    if (!response.error) {
+    const result = await createProduct(jwt, user, newProduct );
+    if (result) {
       setSuccessMessage('Product Created!');
       setErrorMessage('');
       setTimeout(() => {
         closeModal();
-        fetchAllProducts();
       }, 1000);
     } else {
-      console.error(response.error);
-      setErrorMessage(response.error);
+      console.error(error);
+      setErrorMessage(error);
     }
   };
 
@@ -79,7 +78,6 @@ const CreateProduct = ({ jwt, fetchAllProducts }) => {
           <Form.Group className='m-3'>
             <FloatingLabel label='Title'>
               <Form.Control
-                id='productTitle'
                 placeholder='Title'
                 required
                 onChange={e => setTitle(e.target.value)}
@@ -143,21 +141,19 @@ const CreateProduct = ({ jwt, fetchAllProducts }) => {
               />
             </FloatingLabel>
           </Form.Group>
-
-          {/* Not sure how to do image */}
-          {/* <Form.Group className='m-3'>
+          <Form.Group className='m-3'>
             <FloatingLabel label='imageURL'>
               <Form.Control
                 as='textarea'
-                id=''
-                placeholder='Description'
+                id='imageUrl'
+                placeholder='imageurl'
                 required
                 style={{ height: '80px' }}
-                onChange={e => setDescription(e.target.value)}
-                value={description}
+                onChange={e => {setImageurl(e.target.value)}}
+                value={imageurl}
               />
             </FloatingLabel>
-          </Form.Group> */}
+          </Form.Group>
 
 
           <Form.Group className='m-3 d-flex justify-content-end'>
