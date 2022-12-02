@@ -12,11 +12,11 @@ const Products = ({jwt, products}) => {
         variant='pills'
         className='bg-dark'
         style={{ fontSize: '60px' }}>
-        <Tab className='pb-3' eventKey='activities' title='Find the Best Books'></Tab>
+        <Tab className='pb-1' eventKey='activities' title='Find the Best Books'></Tab>
       </Tabs>
 
       <ListGroup variant='flush'>
-
+      <div id='outer div element'>
         {products ? (
           products.map(product => {
            return <ProductCard jwt={jwt} product={product} key={product.id} />
@@ -24,6 +24,7 @@ const Products = ({jwt, products}) => {
         ) : (
           <h1>No Products Found!</h1>
         )}
+        </div>
       </ListGroup>
     </>
   );
