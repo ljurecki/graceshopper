@@ -1,0 +1,17 @@
+div#outer\ div\ element {
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr;
+    margin: 2% 5% 3% 5%;
+    justify-content: space-around;
+}
+.list-group-item{
+    border:none !important;
+}
+
+#input {
+    width: 50px;
+    height: 38px;
+}
+#addprodalert {
+    width: 95%;
+}
