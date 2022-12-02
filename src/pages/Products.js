@@ -24,6 +24,7 @@ const Products = ({jwt, products}) => {
         ) : (
           <h1>No Products Found!</h1>
         )}
+        <Link to="/Checkout">Submit</Link>
         </div>
       </ListGroup>
     </>
