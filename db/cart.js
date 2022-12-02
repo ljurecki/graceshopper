@@ -1,35 +1,37 @@
 const client = require("./client");
 
 
-async function getCart() { //tested working
+async function getCart(userId) { //tested working
   try {
     const { rows: product } = await client.query(`
-      SELECT cart_products.*, users.username AS "shopperName"
-      FROM cart_products
-      JOIN users ON cart_products."cartId"=users.id;`
+       SELECT *
+       FROM cart_products
+       WHERE "cartId"=$1;`, [userId]
       );
 
-      console.log(product)
     return product
   } catch (error) {
     console.error(error)
     throw error;
   }
 }
-
+// SELECT cart_products.*, users.username AS "shopperName"
+// FROM cart_products
+// WHERE "cartId"=$1
+// JOIN users ON cart_products."cartId"=users.id
 
 async function createCartProduct({ //tested working
   productId,
-  qty,
-  total }) {
-    try {
+  qty
+}) {
+  try {
     const {
       rows: [cart_product]
     } = await client.query(`
-      INSERT INTO cart_products ("productId", qty, total)
-      VALUES ($1, $2, $3)
+      INSERT INTO cart_products ("productId", qty)
+      VALUES ($1, $2)
       RETURNING *;
-    `, [productId, qty, total]
+    `, [productId, qty]
     );
     return cart_product;
   } catch (err) {
@@ -62,22 +64,22 @@ async function addProductToCart({ //tested working
 }
 
 
-      async function getCartProductById(id) { //tested working
-        try {
-          const {
-            rows: [cart_product],
-          } = await client.query(
-            `SELECT * FROM cart_products
+async function getCartProductById(id) { //tested working
+  try {
+    const {
+      rows: [cart_product],
+    } = await client.query(
+      `SELECT * FROM cart_products
               WHERE id=$1`,
-            [id]
-          );
-          return cart_product;
-        } catch (err) {
-          console.error(err);
-          throw err;
-        }
-      }
-      
+      [id]
+    );
+    return cart_product;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
+
 async function deleteCartProduct(id) { //tested working
   try {
     const {
