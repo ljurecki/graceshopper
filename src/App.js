@@ -8,7 +8,9 @@ import {
   Home,
   Login,
   Register,
-  Products
+  Products,
+  Ordernumber,
+  Checkout
 } from './pages';
 
 
