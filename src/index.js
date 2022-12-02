@@ -9,16 +9,3 @@ root.render(
     <App />
   </BrowserRouter>
 );
-
-
-// // require("./config/mongoose.js")(app);
-// // require('./app/routeHandler')(app)
-// // const bodyParser = require('body-parser');
-
-
-// app.use(bodyParser.json())
-// app.get('/', (req, res) => {
-//     res.json({
-//         message: 'Arise MERN Developers'
-//     });
-// });

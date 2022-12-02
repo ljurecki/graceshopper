@@ -1,19 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { getAllProducts } from '../api';
-import { Card, ListGroup, Tab, Tabs } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { ListGroup, Tabs, Tab } from 'react-bootstrap';
+// import { Link } from 'react-router-dom';
+import { ProductCard } from '../components/index';
 
-const Products = () => {
-  const [productsToDisplay, setProductsToDisplay] = useState([]);
-
-  async function allProducts() {
-    setProductsToDisplay(await getAllProducts());
-    console.log("see something",getAllProducts)
-  }
-
-  useEffect(() => {
-    allProducts();
-  }, []);
+const Products = ({jwt, products}) => {
 
   return (
     <>
@@ -21,36 +11,15 @@ const Products = () => {
         justify='true'
         variant='pills'
         className='bg-dark'
-        style={{ fontSize: '25px' }}>
-        <Tab eventKey='activities' title='Products'></Tab>
+        style={{ fontSize: '60px' }}>
+        <Tab className='pb-3' eventKey='activities' title='Find the Best Books'></Tab>
       </Tabs>
 
       <ListGroup variant='flush'>
 
-        {productsToDisplay ? (
-          productsToDisplay.map(product => {
-            const { id, title, imageurl, description, price, author, genre } = product;
-            return (
-              <ListGroup.Item
-                key={id}
-                className='px-0 py-3 mx-3 d-flex flex-column'>
-                <Card.Title>
-                  {title}
-                </Card.Title>
-                <Card.Text>
-                  <img src={imageurl}/>,
-                  Description: {description},
-                  Price: {price},
-                  Author: {author},
-                  Genre: {genre}
-                </Card.Text>
-                {/* {jwt ? (
-                  <Link to={`/activities/${id}`} state={{ activity: activity }}>
-                    <Button variant='info'>Edit</Button>
-                  </Link>
-                ) : null} */}
-              </ListGroup.Item>
-            );
+        {products ? (
+          products.map(product => {
+           return <ProductCard jwt={jwt} product={product} key={product.id} />
           })
         ) : (
           <h1>No Products Found!</h1>

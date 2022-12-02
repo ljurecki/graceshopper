@@ -9,25 +9,24 @@ const {
 const { requireUser } = require("./utils");
 // const { UnauthorizedDeleteError } = require('../errors');
 
-cartRouter.get("/", requireUser, async (req, res) => { //tested working
-
+cartRouter.get("/", requireUser, async (req, res) => {
     const cart = await getCart(req.user.id);
     res.send({ cart });
 });
 
 cartRouter.post('/', requireUser, async (req, res, next) => { //tested working
-    try
-    {const { productId, qty  } = req.body;
-    const cartItem = await addProductToCart({cartId:req.user.id, productId, qty})
+    try {
+        const { productId, qty } = req.body;
+        const cartItem = await addProductToCart({ cartId: req.user.id, productId, qty })
 
-    res.send(cartItem)
-    }catch (error) {
+        res.send(cartItem)
+    } catch (error) {
         next(error);
     }
- });   
+});
 
 /*delete item in cart*/
-cartRouter.delete("/:cartProductId", requireUser, async (req, res, next) => { 
+cartRouter.delete("/:cartProductId", requireUser, async (req, res, next) => {
     console.log('end delete route')
     const { cartProductId } = req.params;
     try {
