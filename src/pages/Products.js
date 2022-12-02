@@ -1,6 +1,6 @@
 import React from 'react';
 import { ListGroup, Tabs, Tab } from 'react-bootstrap';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ProductCard } from '../components/index';
 
 const Products = ({jwt, products}) => {
