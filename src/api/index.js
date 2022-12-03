@@ -132,7 +132,7 @@ export const deleteProduct = async (product, jwt) => {
 };
 
 // for cart??
-export const addProductToCart = async (productId, qty, jwt) => {
+export const addProductToCart = async (productId, title, qty, jwt) => {
     try {
       const headers = createHeaders(jwt);
       return await fetch(`${BASE_URL}/products/${productId}/cartProducts`, {

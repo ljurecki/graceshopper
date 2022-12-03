@@ -10,7 +10,6 @@ const Cart = ({ jwt, user }) => {
 
   async function addProductToCart() {
     setCartProductsToDisplay(await addProductToCart());
-    console.log("see cart", allCartProducts)
   }
 
   useEffect(() => {
@@ -19,16 +18,16 @@ const Cart = ({ jwt, user }) => {
 
   return (
     <>
-      <Tabs
+      {/* <Tabs
         justify='true'
         variant='pills'
         className='bg-dark'
         style={{ fontSize: '25px' }}>
         <Tab eventKey='cart' title='Cart'></Tab>
-      </Tabs>
+      </Tabs> */}
 
       <ListGroup variant='flush'>
-        {jwt && <CartForm user={user} jwt={jwt} />}
+        {/* {jwt && <CartForm user={user} jwt={jwt} />} */}
 
         {cartProductsToDisplay ? (
           cartProductsToDisplay.map(cartProduct => {
@@ -40,7 +39,7 @@ const Cart = ({ jwt, user }) => {
                 <Card.Title
                   as='h2'
                   className='selectLink'
-                  onClick={() => openRelatedModal(product)}>
+                  onClick={() => openRelatedModal(cartProduct)}>
                   {title}
                 </Card.Title>
                 <Card.Text>Quantity: {qty}</Card.Text>

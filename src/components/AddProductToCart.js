@@ -71,7 +71,7 @@ const AddProductToCart = ({ product, jwt, updateCurrentProduct }) => {
           setErrorMessage('');
           openModal();
         }}>
-        Add Product
+        Add Product To Cart
       </Button>
 </> )};
       {/* <Modal show={showModal} onHide={closeModal}>
@@ -135,7 +135,7 @@ const AddProductToCart = ({ product, jwt, updateCurrentProduct }) => {
             //   />
             // </Col>
           // </Form.Group>
-<Form>
+{/* <Form>
           <Form.Group className='m-3' as={Row}>
             <Col className='ps-0 pe-1'>
               <FloatingLabel label='Quantity'>
@@ -155,7 +155,7 @@ const AddProductToCart = ({ product, jwt, updateCurrentProduct }) => {
               Add Product
             </Button>
           </Form.Group>
-        </Form>
+        </Form> */}
 
         // {errorMessage && <Alert variant='danger'>{error}</Alert>}
         // {successMessage && (

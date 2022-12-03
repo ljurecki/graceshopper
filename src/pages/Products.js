@@ -1,5 +1,5 @@
 import React, { useState, useEffect, jwt } from 'react';
-import { getAllProducts} from '../api';
+import { addProductToCart, getAllProducts} from '../api';
 
 import { Card, ListGroup, Tab, Tabs, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -59,7 +59,7 @@ const Products = () => {
                     <Button variant='info'>Edit</Button>
                   </Link>
                   <Link to={`/Cart/${id}`}>
-                    <Button variant='info'>Select</Button>
+                    <Button variant='info'onClick={() => {addProductToCart()}}>Select</Button>
                   </Link>
                 
               </ListGroup.Item>
