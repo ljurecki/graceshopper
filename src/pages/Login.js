@@ -11,11 +11,11 @@ const Login = ({ navigate, setJwt }) => {
         variant='pills'
         className='bg-dark'
         style={{ fontSize: '25px' }}>
-        <Tab eventKey="Login" title="Login!"></Tab>
+        <Tab eventKey="Login" title="Let's keep shopping, Log In!"></Tab>
       </Tabs>
-    <Container>
-      <LoginForm navigate={navigate} setJwt = {setJwt} />
-    </Container>
+      <Container>
+        <LoginForm navigate={navigate} setJwt={setJwt} />
+      </Container>
     </>
   );
 };

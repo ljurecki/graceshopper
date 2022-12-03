@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, Button, Badge } from 'react-bootstrap';
 
 const NavBar = ({ isLoggedIn, logOut, navigate }) => {
   return (
@@ -13,6 +13,9 @@ const NavBar = ({ isLoggedIn, logOut, navigate }) => {
               Products
             </Nav.Link>
             <Nav.Link onClick={() => navigate('/cart')}>Cart</Nav.Link>
+            {/* <Button onClick={() => navigate('/cart')} variant="light"> //cart badge if we have time to make it a counter
+              Cart <Badge bg="dark">9</Badge>
+            </Button> */}
             {isLoggedIn ? (
               <Nav.Link
                 onClick={() => {

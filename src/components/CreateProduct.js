@@ -93,7 +93,7 @@ const CreateProduct = ({ jwt, user }) => {
                 id='productDescription'
                 placeholder='Description'
                 required
-                style={{ height: '80px' }}
+                style={{ height: '150px' }}
                 onChange={e => setDescription(e.target.value)}
                 value={description}
               />
@@ -103,11 +103,9 @@ const CreateProduct = ({ jwt, user }) => {
           <Form.Group className='m-3'>
             <FloatingLabel label='Price'>
               <Form.Control
-                as='textarea'
                 id='productPrice'
                 placeholder='Price'
                 required
-                style={{ height: '80px' }}
                 onChange={e => setPrice(e.target.value)}
                 value={price}
               />
@@ -117,11 +115,9 @@ const CreateProduct = ({ jwt, user }) => {
           <Form.Group className='m-3'>
             <FloatingLabel label='Author'>
               <Form.Control
-                as='textarea'
                 id='productAuthor'
                 placeholder='Author'
                 required
-                style={{ height: '80px' }}
                 onChange={e => setAuthor(e.target.value)}
                 value={author}
               />
@@ -131,11 +127,9 @@ const CreateProduct = ({ jwt, user }) => {
           <Form.Group className='m-3'>
             <FloatingLabel label='Genre'>
               <Form.Control
-                as='textarea'
                 id='productGenre'
                 placeholder='Genre'
                 required
-                style={{ height: '80px' }}
                 onChange={e => setGenre(e.target.value)}
                 value={genre}
               />

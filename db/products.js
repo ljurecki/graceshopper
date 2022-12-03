@@ -92,8 +92,9 @@ async function deleteProduct(id) { //Needs testing
       SELECT * FROM products
       WHERE id=${id}`,
     )
-    await client.query(`
-      DELETE FROM products WHERE id=${id};`
+    await client.query(
+      `DELETE FROM products 
+      WHERE id=${id};`
     );
     return product;
   } catch (err) {

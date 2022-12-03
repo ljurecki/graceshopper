@@ -85,27 +85,6 @@ export const getProductsByUsername = async (user, jwt) => {
     }
 };
 
-// export const createProduct = async (jwt, { title, imageurl, description, price, author, genre }) => {
-//     try {
-//         const headers = createHeaders(jwt);
-//         return await fetch(`${BASE_URL}/products`, {
-//             method: 'POST',
-//             headers,
-//             body: JSON.stringify({
-//                 title,
-//                 imageurl,
-//                 description,
-//                 price,
-//                 author,
-//                 genre
-//             }),
-            
-//         }).then(response => response.json());
-//     } catch (err) {
-//         console.error(err);
-//     }
-// };
-
 
 export const createProduct = async (jwt, user, { title, imageurl, description, price, author, genre }) => {
     try {
@@ -147,10 +126,11 @@ export const updateProduct = async (updatedProduct, jwt) => {
 
 export const deleteProduct = async (product, jwt) => {
     try {
-        const headers = createHeaders(jwt);
         return await fetch(`${BASE_URL}/products/${product.id}`, {
-            method: 'DELETE',
-            headers,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${jwt}`,
+            },
         }).then(response => response.json());
     } catch (err) {
         console.error(err);

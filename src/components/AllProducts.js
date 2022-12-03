@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { addProductToCart,  } from '../api';
+import { addProductToCart, getAllProducts, deleteProduct} from '../api';
 import { Card, ListGroup, Button, Tab, Tabs, Container, Row, Col, Modal, Alert} from 'react-bootstrap';
 
 
-const ProductCard = ({ jwt , product}) => {
+const ProductCard = ({ jwt , product, user, navigate}) => {
 const { id, title, imageurl, description, price, author, genre } = product;
 const [qty, setQty] = useState(1);
 
@@ -27,6 +27,15 @@ async function addToCart() {
     }, 2000);
   }
 }
+
+const handleDelete = async product => {
+  const result = await deleteProduct(product.id, jwt);
+  if (!result.error) {
+    getAllProducts();
+  } else {
+    console.error(result.error);
+  }
+};
 
 return (
 
@@ -87,14 +96,35 @@ return (
           {successMessage}
         </Alert>
       )}
-</Card.Text>
+      </Card.Text>
       </>
      ) : null
-      }</Col></Row>
+      }
+      {user.isAdmin ? (
+      <>
+      <Card.Text className='d-flex justify-content-end flex-wrap'>
+        <Button className='mx-2' variant="danger" 
+        onClick={() => {
+          if (confirm('Are you sure you want to delete?')) {
+            handleDelete(product.id);
+          }
+        }}>
+        Delete
+      </Button>
+        <Button variant="outline-info" 
+        // onClick={event => {
+        //   event.preventDefault();
+        //         editProduct();}}
+        >
+          Edit
+        </Button>
+      </Card.Text>
+     </> 
+     ) : null } 
+      </Col></Row>
       </Container>
       </Card.Text>
   </ListGroup.Item>
-
 );
 };
 

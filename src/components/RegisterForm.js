@@ -15,7 +15,7 @@ const RegisterForm = ({ navigate }) => {
       setErrorMessage('');
       setTimeout(() => {
         navigate('/login');
-      }, 3000);
+      }, 2000);
     } else {
       console.error(results.error);
       setErrorMessage(results.error);
