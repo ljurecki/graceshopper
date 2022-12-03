@@ -6,6 +6,7 @@ const LoginForm = ({ navigate, setJwt }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const loginUser = async () => {
     const result = await login(username, password);
@@ -13,16 +14,19 @@ const LoginForm = ({ navigate, setJwt }) => {
       if (result.token) {
         setJwt(result.token);
         window.localStorage.setItem('jwt', result.token);
-        navigate('/');
+        setSuccessMessage('Welcome Back to Best Books!');
+        setErrorMessage('');
+        setTimeout(() => {
+          navigate('/');
+        }, 1000);
       } else {
-        console.error('No token returned from server');
+        console.error('No token returned from server');;
       }
     } else {
       console.error(result.error);
-      setErrorMessage(result.error);
+      setErrorMessage('Incorrect Username or Password');
     }
   };
-
 
   return (
     <Form
@@ -52,8 +56,7 @@ const LoginForm = ({ navigate, setJwt }) => {
         <Button
           variant='success'
           type='submit'
-          className='mx-2 justify-self-end'
-          onClick={() => navigate('/products')}>
+          className='mx-2 justify-self-end'>
           Submit
         </Button>
         <Button
@@ -65,6 +68,11 @@ const LoginForm = ({ navigate, setJwt }) => {
         {errorMessage && (
           <Alert variant='danger' className='mt-3'>
             {errorMessage}
+          </Alert>
+        )}
+        {successMessage && (
+          <Alert variant='success' className='mt-3'>
+            {successMessage}
           </Alert>
         )}
       </Form.Group>

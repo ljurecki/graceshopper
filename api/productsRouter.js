@@ -27,8 +27,8 @@ productsRouter.get('/', async (req, res, next) => { //tested working
 
 
 // POST /api/products   
-productsRouter.post('/', async (req, res) => { //tested working
-  const { title, description, price, imageurl } = req.body;
+productsRouter.post('/', requireUser, async (req, res) => { //tested working
+  const { title, imageurl, description, price, author, genre } = req.body;
   const _title = await getProductByTitle(title);
   const newProduct = await createProduct({ title, imageurl, description, price, author, genre });
 
@@ -104,6 +104,27 @@ productsRouter.patch('/:productId', requireUser, async (req, res, next) => { //t
   }
 
 });
+
+productsRouter.delete('/:productId', requireUser, async (req, res, next) => {
+  const { productId } = req.params;
+  try {
+    const _product = await getProductById(productId);
+
+    if (!_product.id) {
+      res.status(403).send({
+        error: 'UserCannotDeleteRoutine',
+        name: 'User cannot delete routine',
+        message: UnauthorizedDeleteError(req.user.isAdmin, _product.title),
+      });
+    } else {
+      const removeProduct = await deleteProduct(_product.id);
+      res.send(removeProduct);
+    }
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
 
 
 module.exports = productsRouter;

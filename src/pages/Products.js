@@ -1,76 +1,33 @@
-import React, { useState, useEffect, jwt } from 'react';
-import { addProductToCart, getAllProducts} from '../api';
+import React from 'react';
+import { ListGroup, Tabs, Tab} from 'react-bootstrap';
+import { ProductCard, CreateProduct } from '../components/index';
 
-import { Card, ListGroup, Tab, Tabs, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+const Products = ({jwt, products, user, navigate}) => {
 
-const Products = () => {
-  const [productsToDisplay, setProductsToDisplay] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+ return (
+  <>
+    <Tabs
+      justify='true'
+      variant='pills'
+      className='bg-dark'
+      style={{ fontSize: '60px' }}>
+      <Tab className='pb-1' eventKey='activities' title='Find the Best Books'></Tab>
+    </Tabs>
 
-  async function allProducts() {
-    setProductsToDisplay(await getAllProducts());
-    console.log("see something",getAllProducts)
-  }
-
-  useEffect(() => {
-    allProducts();
-  }, []);
-
-  return (
-    <>
-      <Tabs
-        justify='true'
-        variant='pills'
-        className='bg-dark'
-        style={{ fontSize: '25px' }}>
-        <Tab eventKey='Products' title='Products'></Tab>
-      
-          {/* <Tab eventKey='deleteproducts' title='deleteProducts'>
-            <Products
-              Products={Products}
-              deleteProduct={deleteProduct}
-            />
-          </Tab> */}
-        
-        </Tabs>
-
-      <ListGroup variant='flush'>
-
-        {productsToDisplay ? (
-          productsToDisplay.map(product => {
-            const { id, title, imageurl, description, price, author, genre } = product;
-            return (
-              <ListGroup.Item
-                key={id}
-                className='px-0 py-3 mx-3 d-flex flex-column'>
-                <Card.Title>
-                  {title}
-                </Card.Title>
-                <Card.Text>
-                  <img src={imageurl}/>,
-                  Description: {description},
-                  Price: {price},
-                  Author: {author},
-                  Genre: {genre}
-                </Card.Text>
-                
-                  <Link to={`/Products/${id}`}>
-                    <Button variant='info'>Edit</Button>
-                  </Link>
-                  <Link to={`/Cart/${id}`}>
-                    <Button variant='info'onClick={() => {addProductToCart()}}>Select</Button>
-                  </Link>
-                
-              </ListGroup.Item>
-            );
-          })
-        ) : (
-          <h1>No Products Found!</h1>
-        )}
-      </ListGroup>
-    </>
-  );
+    <ListGroup variant='flush'>
+    {user.isAdmin && <CreateProduct user={user} jwt={jwt} />}
+      <div id='outer div element'>
+      {products ? (
+        products.map(product => {
+         return <ProductCard user={user} jwt={jwt} product={product} key={product.id} navigate={navigate}/>
+        })
+      ) : (
+        <h1>No Products Found!</h1>
+      )}
+      </div>
+    </ListGroup>
+  </>
+);
 };
 
 export default Products;

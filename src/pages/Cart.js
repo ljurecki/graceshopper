@@ -1,61 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import { getAllProducts, addProductToCart } from '../api';
-// import { addProductToCart } from '../components';
-import { Button, Card, ListGroup, Modal, Tab, Tabs } from 'react-bootstrap';
+import React, {useState, useEffect} from 'react';
+import { ListGroup, Tabs, Tab } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-// import { getCartProductById } from '../../db';
+import { CartItemCard } from '../components/index';
+import {getCart} from '../api'
 
-const Cart = ({ jwt, user }) => {
-  const [cartProductsToDisplay, setCartProductsToDisplay] = useState([]);
+const Cart = ({jwt}) => {
+  const [cartProducts, setCartProducts] = useState([]);
 
-  async function addProductToCart() {
-    setCartProductsToDisplay(await addProductToCart());
+  async function allCartProducts() {
+    setCartProducts(await getCart(jwt));
   }
 
   useEffect(() => {
-    addProductToCart();
-  }, []);
+    if(jwt) {
+      allCartProducts();
+    }
+  }, [jwt]);
 
   return (
     <>
-      {/* <Tabs
+      <Tabs
         justify='true'
         variant='pills'
         className='bg-dark'
         style={{ fontSize: '25px' }}>
-        <Tab eventKey='cart' title='Cart'></Tab>
-      </Tabs> */}
+        <Tab eventKey='activities' title='Cart'></Tab>
+      </Tabs>
 
       <ListGroup variant='flush'>
-        {/* {jwt && <CartForm user={user} jwt={jwt} />} */}
 
-        {cartProductsToDisplay ? (
-          cartProductsToDisplay.map(cartProduct => {
-            const { id, title, qty } = cartProduct;
-            return (
-              <ListGroup.Item
-                key={id}
-                className='px-0 py-3 mx-3 d-flex flex-column'>
-                <Card.Title
-                  as='h2'
-                  className='selectLink'
-                  onClick={() => openRelatedModal(cartProduct)}>
-                  {title}
-                </Card.Title>
-                <Card.Text>Quantity: {qty}</Card.Text>
-                {jwt ? (
-                  <Link to={`/cart/${id}`} state={{ cart: Cart }}>
-                    <Button variant='info'>Select</Button>
-                  </Link>
-                ) : null}
-              </ListGroup.Item>
-            );
+        {cartProducts ? (
+          cartProducts.map(products => {
+            return <CartItemCard products={products} />
           })
         ) : (
-          <h1>No Cart Found!</h1>
+          <h1>No Products Found!</h1>
         )}
       </ListGroup>
-      </>
-  )};
+<Link to="/Checkout">Submit</Link>
+    </>
+  );
+};
 
 export default Cart;
