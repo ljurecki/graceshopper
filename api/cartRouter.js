@@ -8,11 +8,11 @@ const {
 } = require("../db");
 const { requireUser } = require("./utils");
 
-// cartRouter.get("/", async (req, res) => {
-//     console.log("USER DETIALS", req.user)
-//     const cart = await getCart(req.user.id);
-//     res.send({ cart });
-// });
+cartRouter.get('/', async (req, res) => {
+    console.log("USER DETIALS", req.user)
+    const cart = await getCart(req.user.id);
+    res.send(cart);
+});
 
 cartRouter.post('/', requireUser, async (req, res, next) => { //tested working
     try {
