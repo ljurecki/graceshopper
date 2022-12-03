@@ -1,12 +1,8 @@
 import React from 'react';
 import { Card, ListGroup } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
 
-
-const CartItemCard = ({ products }) => {
-    // const { productId, qty } = cart_product;
-
-    const {productId } = useParams();
+const CartItemCard = ({ products, product }) => {
+    const { productId, qty } = product;
 
     if (productId) {
     const [cart_Product] = products.filter((product) => product.id === productId);
@@ -28,18 +24,6 @@ const CartItemCard = ({ products }) => {
                 Genre: {genre}
                 Qty:<input type="number" value={qty} onChange={(event) => setQty(event.target.value)}></input>
             </Card.Text>
-            
-            {/* {jwt ? (
-      <div>
-       <input type="number" value={qty} onChange={(event) => setQty(event.target.value)}></input>
-        <Button variant='info' onClick={async () => {
-            const product = await addProductToCart(jwt, { productId: id, qty })
-            console.log(product)
-        }
-            
-            }>Add to Cart</Button>
-      </div>) : null
-    } */}
         </ListGroup.Item>
     )} else {
         <h1> No items in cart...</h1>
