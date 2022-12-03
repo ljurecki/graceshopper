@@ -76,8 +76,4 @@ const RegisterForm = ({ navigate }) => {
   );
 };
 
-<<<<<<< HEAD
 export default RegisterForm;
-=======
-export default RegisterForm;
->>>>>>> 81ae97df20831b3a4ecb437ac69d40d639714793
