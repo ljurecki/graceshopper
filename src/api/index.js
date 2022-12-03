@@ -137,16 +137,16 @@ export const deleteProduct = async (product, jwt) => {
     }
 };
 
-export const getCart = async (jwt, user) => {
-    const headers = createHeaders(jwt);
+export const getCart = async (jwt) => {
+   console.log(`${BASE_URL}/cart`)
     try {
         const response = await fetch(`${BASE_URL}/cart`, {
-            headers,
-            body: JSON.stringify({
-            user: user.id,
-        }),
+            headers: {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${jwt}`
+            }
     });   
-        const results = response.json();
+        const results = await response.json();
         return results;
     } catch (err) {
         console.error(err);
