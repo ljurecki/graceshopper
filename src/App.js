@@ -8,7 +8,9 @@ import {
   Home,
   Login,
   Register,
-  Products
+  Products,
+  Ordernumber,
+  Checkout
 } from './pages';
 
 
@@ -80,6 +82,14 @@ const App = () => {
             path='/login'
             element={<Login setJwt={setJwt} navigate={navigate} />}
           />
+          <Route
+              path='/Ordernumber'
+              element={<Ordernumber setJwt={setJwt} navigate={navigate} />}
+            />
+          <Route
+              path='/Checkout'
+              element={<Checkout/>}
+            />
         </Routes>
       </Container>
     </>
