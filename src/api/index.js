@@ -23,7 +23,7 @@ export const login = async (username, password) => {
             }),
         }).then(response => response.json());
     } catch (err) {
-        console.error(err);
+        console.error(error);
     }
 };
 
@@ -42,7 +42,7 @@ export const register = async (username, password) => {
         const result = await response.json();
         return result;
     } catch (err) {
-        console.error(err);
+        console.error(error);
     }
 };
 
@@ -85,24 +85,29 @@ export const getProductsByUsername = async (user, jwt) => {
     }
 };
 
-export const createProduct = async (jwt, { name, imageurl, description, price, author, genre }) => {
 
+export const createProduct = async (jwt, user, { title, imageurl, description, price, author, genre }) => {
     try {
-        const headers = createHeaders(jwt);
-        return await fetch(`${BASE_URL}/products`, {
+        const response = await fetch(`${BASE_URL}/products`, {
             method: 'POST',
-            headers,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${jwt}`,
+            },
             body: JSON.stringify({
-                name: name,
-                imageurl: imageurl,
-                description: description,
-                price: price,
-                author: author,
-                genre: genre
+                user,
+                title,
+                imageurl,
+                description,
+                price,
+                author,
+                genre
             }),
-        }).then(response => response.json());
-    } catch (err) {
-        console.error(err);
+        });
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.error(error);
     }
 };
 
@@ -121,10 +126,11 @@ export const updateProduct = async (updatedProduct, jwt) => {
 
 export const deleteProduct = async (product, jwt) => {
     try {
-        const headers = createHeaders(jwt);
         return await fetch(`${BASE_URL}/products/${product.id}`, {
-            method: 'DELETE',
-            headers,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${jwt}`,
+            },
         }).then(response => response.json());
     } catch (err) {
         console.error(err);

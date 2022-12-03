@@ -27,7 +27,7 @@ async function getProductById(id) { //tested working
   }
 }
 
-async function getProductByTitle(title) { //tested working
+async function getProductByTitle(title) {
   try {
     const {
       rows: [product]
@@ -92,8 +92,9 @@ async function deleteProduct(id) { //Needs testing
       SELECT * FROM products
       WHERE id=${id}`,
     )
-    await client.query(`
-      DELETE FROM products WHERE id=${id};`
+    await client.query(
+      `DELETE FROM products 
+      WHERE id=${id};`
     );
     return product;
   } catch (err) {

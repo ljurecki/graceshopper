@@ -40,8 +40,8 @@ cartRouter.delete("/:cartProductId", requireUser, async (req, res, next) => {
                 message: UnauthorizedDeleteError(req.user.username, _title.name),
             });
         } else {
-            const removeProduct = await deleteCartProduct(_product.id);
-            next(removeProduct);
+            const removeCartProduct = await deleteCartProduct(_product.id);
+            next(removeCartProduct);
         }
     } catch ({ name, message }) {
         next({ name, message });

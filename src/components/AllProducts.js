@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { addProductToCart,  } from '../api';
+import { addProductToCart, getAllProducts, deleteProduct} from '../api';
 import { Card, ListGroup, Button, Tab, Tabs, Container, Row, Col, Modal, Alert} from 'react-bootstrap';
 
 
-const ProductCard = ({ jwt , product}) => {
+const ProductCard = ({ jwt , product, user, navigate}) => {
 const { id, title, imageurl, description, price, author, genre } = product;
 const [qty, setQty] = useState(1);
 
@@ -28,6 +28,15 @@ async function addToCart() {
   }
 }
 
+const handleDelete = async product => {
+  const result = await deleteProduct(product.id, jwt);
+  if (!result.error) {
+    getAllProducts();
+  } else {
+    console.error(result.error);
+  }
+};
+
 return (
 
 <ListGroup.Item
@@ -38,7 +47,7 @@ return (
       <h1 className='ms-1 pt-4 d-flex justify-content-start'>
       {title}
       </h1>
-      <p className='ms-1 pb-1 d-flex justify-content-start'>by {author}</p>
+      <span className='ms-1 pb-1 d-flex justify-content-start'>by {author}</span>
       <Row>
     <Col className='pt-2'xs lg="3">
     <img src={imageurl} className='pb-3'/>
@@ -87,14 +96,35 @@ return (
           {successMessage}
         </Alert>
       )}
-</Card.Text>
+      </Card.Text>
       </>
      ) : null
-      }</Col></Row>
+      }
+      {user.isAdmin ? (
+      <>
+      <Card.Text className='d-flex justify-content-end flex-wrap'>
+        <Button className='mx-2' variant="danger" 
+        onClick={() => {
+          if (confirm('Are you sure you want to delete?')) {
+            handleDelete(product.id);
+          }
+        }}>
+        Delete
+      </Button>
+        <Button variant="outline-info" 
+        // onClick={event => {
+        //   event.preventDefault();
+        //         editProduct();}}
+        >
+          Edit
+        </Button>
+      </Card.Text>
+     </> 
+     ) : null } 
+      </Col></Row>
       </Container>
       </Card.Text>
   </ListGroup.Item>
-
 );
 };
 
