@@ -4,16 +4,18 @@ import { Link } from 'react-router-dom';
 import { CartItemCard } from '../components/index';
 import {getCart} from '../api'
 
-const Cart = ({ jwt, user}) => {
+const Cart = ({jwt}) => {
   const [cartProducts, setCartProducts] = useState([]);
 
-  async function allCartProducts(jwt, user) {
-    setCartProducts(await getCart(jwt, user));
+  async function allCartProducts(jwt) {
+    setCartProducts(await getCart(jwt));
   }
 
   useEffect(() => {
-    allCartProducts();
-  }, [user]);
+    if(jwt) {
+      allCartProducts();
+    }
+  }, [jwt]);
 
   return (
     <>
