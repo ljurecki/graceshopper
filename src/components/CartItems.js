@@ -6,7 +6,7 @@ const CartItemCard = ({ products, product }) => {
 
     if (productId) {
     const [cart_Product] = products.filter((product) => product.id === productId);
-    const { id, title, imageurl, description, price, author, genre } = cart_Product;
+    const { id, title, imageurl, price } = cart_Product;
 
     console.log(cart_Product)
     return (
@@ -18,11 +18,11 @@ const CartItemCard = ({ products, product }) => {
             </Card.Title>
             <Card.Text>
                 <img src={imageurl}/>,
-                Description: {description},
                 Price: {price},
-                Author: {author},
-                Genre: {genre}
-                Qty:<input type="number" value={qty} onChange={(event) => setQty(event.target.value)}></input>
+                Qty:<input type="number" value={qty}
+                onChange={(event) => 
+                setQty(event.target.value)}>
+                </input>
             </Card.Text>
         </ListGroup.Item>
     )} else {
