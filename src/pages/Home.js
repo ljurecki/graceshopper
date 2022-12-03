@@ -1,5 +1,8 @@
 import React from 'react';
+<<<<<<< HEAD
 import { Container } from 'react-bootstrap';
+=======
+>>>>>>> 81ae97df20831b3a4ecb437ac69d40d639714793
 
 const Home = () => {
 

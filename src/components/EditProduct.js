@@ -1,176 +1,172 @@
 import React, { useState } from 'react';
-import { Form, Button, Alert, Card, FloatingLabel } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
 import { updateProduct } from '../api';
+import { Button, Modal, Form, FloatingLabel, Alert } from 'react-bootstrap';
 
-const EditProduct = ({ jwt, navigate }) => {
-  const loc = useLocation();
-  const { product } = loc.state;
-  const { id, title, description, price, author, genre, imageURL } = product;
-
+const EditProduct = ({ jwt, user }) => {
+  const [title, setTitle] = useState('');
+  const [imageurl, setImageurl] = useState('');
+  const [description, setDescription] = useState('');
+  const [price, setPrice] = useState('');
+  const [author, setAuthor] = useState('');
+  const [genre, setGenre] = useState('');
+  
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  const [newName, setNewTitle] = useState(title);
-  const [newDescription, setNewDescription] = useState(description);
-  const [newPrice, setNewPrice] = useState(price);
-  const [newAuthor, setNewAuthor] = useState(author);
-  const [newGenre, setNewGenre] = useState(genre);
-  const [newimageurl, setNewImageurl] = useState("imageurl");
-  
+  const [showModal, setShowModal] = useState(false);
 
 
-  async function editProduct() {
-    const updatedProduct = {
-      id,
-      title: newTitle,
-      description: newDescription,
-      price: newPrice,
-      author: newAuthor,
-      genre: newGenre
+  const openModal = () => {
+    setErrorMessage('');
+    setSuccessMessage('');
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
+    setTitle('');
+    setImageurl(''); 
+    setDescription('');
+    setPrice('');
+    setAuthor('');
+    setGenre('');
+  };
+
+  async function handleSubmit() {
+    const newProduct = {
+      title,
+      imageurl,
+      description,
+      price,
+      author,
+      genre,
     };
-
-    const result = await updateProduct(jwt, updatedProduct);
-    console.log(result);
-    if (result.error) {
-      console.error(result.error);
-      setErrorMessage('Product with this Title Already Exists!');
-    } else {
-      setSuccessMessage('Product Updated!');
+    const result = await updateProduct(jwt, user, newProduct );
+    if (result) {
+      setSuccessMessage('Product Created!');
       setErrorMessage('');
       setTimeout(() => {
-        navigate('./products');
+        closeModal();
       }, 1000);
+    } else {
+      console.error(error);
+      setErrorMessage(error);
     }
-  }
+  };
 
   return (
     <>
-      <Card className='flex-fill mt-3 mx-5 shadow'>
-        <Card.Header
-          as='h3'
-          className='text-center'
-          style={{ backgroundColor: '#0D6EFD', color: '#fff' }}>
-          Update Product
-        </Card.Header>
+      <Button
+        variant='success'
+        className='position-fixed sticky-bottom rounded-pill shadow'
+        size='lg'
+        style={{ bottom: '25px', right: '25px' }}
+        onClick={() => {
+          openModal();
+        }}>
+        Create Product
+      </Button>
+
+      <Modal show={showModal} onHide={closeModal}>
+        <Modal.Header style={{ fontSize: '20px' }} closeButton>
+          <Modal.Title className='w-100 text-center'>New Product</Modal.Title>
+        </Modal.Header>
         <Form
-          id='forms'
-          onSubmit={event => {
-            event.preventDefault();
-            editActivity();
+          onSubmit={e => {
+            e.preventDefault();
+            handleSubmit();
           }}>
-
-          <Form.Group className='mb-3' style={{ margin: '1% 1% 0px 1%' }}>
-            <FloatingLabel label='Product Title'>
+          <Form.Group className='m-3'>
+            <FloatingLabel label='Title'>
               <Form.Control
-                placeholder={title}
-                onChange={e => {
-                  setNewTitle(e.target.value);
-                }}
-                value={newTitle}
+                placeholder='Title'
+                required
+                onChange={e => setTitle(e.target.value)}
+                value={title}
               />
             </FloatingLabel>
           </Form.Group>
 
-          <Form.Group className='mb-3' style={{ margin: '1% 1% 0px 1%' }}>
-            <FloatingLabel label='Product Description'>
+          <Form.Group className='m-3'>
+            <FloatingLabel label='Description'>
               <Form.Control
+                as='textarea'
+                id='productDescription'
                 placeholder='Description'
-                as='textarea'
-                style={{ height: '80px' }}
-                onChange={e => {
-                  setNewDescription(e.target.value);
-                }}
-                value={newDescription}
+                required
+                style={{ height: '150px' }}
+                onChange={e => setDescription(e.target.value)}
+                value={description}
               />
             </FloatingLabel>
           </Form.Group>
 
-          <Form.Group className='mb-3' style={{ margin: '1% 1% 0px 1%' }}>
-            <FloatingLabel label='Product Price'>
+          <Form.Group className='m-3'>
+            <FloatingLabel label='Price'>
               <Form.Control
+                id='productPrice'
                 placeholder='Price'
-                as='textarea'
-                style={{ height: '80px' }}
-                onChange={e => {
-                  setNewPrice(e.target.value);
-                }}
-                value={newPrice}
+                required
+                onChange={e => setPrice(e.target.value)}
+                value={price}
               />
             </FloatingLabel>
           </Form.Group>
 
-          <Form.Group className='mb-3' style={{ margin: '1% 1% 0px 1%' }}>
-            <FloatingLabel label='Product Author'>
+          <Form.Group className='m-3'>
+            <FloatingLabel label='Author'>
               <Form.Control
+                id='productAuthor'
                 placeholder='Author'
-                as='textarea'
-                style={{ height: '80px' }}
-                onChange={e => {
-                  setNewAuthor(e.target.value);
-                }}
-                value={newAuthor}
+                required
+                onChange={e => setAuthor(e.target.value)}
+                value={author}
               />
             </FloatingLabel>
           </Form.Group>
 
-          <Form.Group className='mb-3' style={{ margin: '1% 1% 0px 1%' }}>
-            <FloatingLabel label='Product Genre'>
+          <Form.Group className='m-3'>
+            <FloatingLabel label='Genre'>
               <Form.Control
+                id='productGenre'
                 placeholder='Genre'
+                required
+                onChange={e => setGenre(e.target.value)}
+                value={genre}
+              />
+            </FloatingLabel>
+          </Form.Group>
+          <Form.Group className='m-3'>
+            <FloatingLabel label='imageURL'>
+              <Form.Control
                 as='textarea'
+                id='imageUrl'
+                placeholder='imageurl'
+                required
                 style={{ height: '80px' }}
-                onChange={e => {
-                  setNewGenre(e.target.value);
-                }}
-                value={newGenre}
+                onChange={e => {setImageurl(e.target.value)}}
+                value={imageurl}
               />
             </FloatingLabel>
           </Form.Group>
 
-        {/* Not sure about this one:
-          <Form.Group className='mb-3' style={{ margin: '1% 1% 0px 1%' }}>
-            <FloatingLabel label='Product imageurl'>
-              <Form.Control
-                placeholder='image'
-                as='textarea'
-                style={{ height: '80px' }}
-                onChange={e => {
-                  setNewImage(e.target.value);
-                }}
-                value={newImage}
-              />
-            </FloatingLabel>
-          </Form.Group> */}
 
-          <Form.Group
-            className='m-3 d-flex justify-content-end'
-            style={{ margin: '1% 1% 0px 1%' }}>
+          <Form.Group className='m-3 d-flex justify-content-end'>
             <Button variant='success' type='submit'>
-              Update Product
+              Create Product
             </Button>
-
-            <Button
-              variant='secondary'
-              className='mx-2'
-              onClick={() => navigate('/products')}>
-              Cancel
-            </Button>
-
           </Form.Group>
           {errorMessage && (
             <Alert variant='danger' className='mt-3'>
-              {errorMessage}
+              Sorry, Product Title Already Exists!
             </Alert>
           )}
-
           {successMessage && (
             <Alert variant='success' className='mt-3'>
               {successMessage}
             </Alert>
           )}
         </Form>
-      </Card>
+      </Modal>
     </>
   );
 };

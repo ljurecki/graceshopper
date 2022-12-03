@@ -23,4 +23,8 @@ const Ordernumber = ({time}) => {
     )
 };
 
+<<<<<<< HEAD
 export default Ordernumber;
+=======
+export default Ordernumber;
+>>>>>>> 81ae97df20831b3a4ecb437ac69d40d639714793
