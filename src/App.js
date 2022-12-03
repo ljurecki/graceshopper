@@ -32,7 +32,7 @@ import {
       }
       if (jwt) {
         setIsLoggedIn(true);
-        const response = await getUserData(jwt);
+        const response = await getUserData();
         if (!response.error) {
           setUser(response);
         } else {
