@@ -53,6 +53,7 @@ const RegisterForm = ({ navigate }) => {
           variant='success'
           type='submit'
           className='mx-2 justify-self-end'>
+          {/* onClick={() => navigate('/login')}> */}
           Submit
         </Button>
         <Button

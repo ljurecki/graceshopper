@@ -23,7 +23,7 @@ export const login = async (username, password) => {
             }),
         }).then(response => response.json());
     } catch (err) {
-        console.error(error);
+        console.error(err);
     }
 };
 
@@ -42,7 +42,7 @@ export const register = async (username, password) => {
         const result = await response.json();
         return result;
     } catch (err) {
-        console.error(error);
+        console.error(err);
     }
 };
 

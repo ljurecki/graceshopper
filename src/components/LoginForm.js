@@ -17,10 +17,12 @@ const LoginForm = ({ navigate, setJwt }) => {
         setSuccessMessage('Welcome Back to Best Books!');
         setErrorMessage('');
         setTimeout(() => {
-          navigate('/');
+        navigate('/products');
         }, 1000);
       } else {
-        console.error('No token returned from server');;
+        console.error('No token returned from server')
+        setErrorMessage('Welcome new book lover!  Please register!')
+       
       }
     } else {
       console.error(result.error);
@@ -56,7 +58,8 @@ const LoginForm = ({ navigate, setJwt }) => {
         <Button
           variant='success'
           type='submit'
-          className='mx-2 justify-self-end'>
+          className='mx-2 justify-self-end'
+          onSubmit={() => navigate('/products')}>
           Submit
         </Button>
         <Button
