@@ -5,4 +5,3 @@ export { default as EditProduct} from "./EditProduct"
 export { default as LoginForm } from "./LoginForm"
 export { default as RegisterForm } from "./RegisterForm"
 export { default as ProductCard} from "./AllProducts"
-
