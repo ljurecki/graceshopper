@@ -2,9 +2,10 @@ const express = require("express");
 const cartRouter = express.Router();
 const {
     getCartProductById,
-    deleteCartProduct,
     addProductToCart,
-    getCart
+    getCart,
+    destroyCartProduct,
+    updateCartProduct,
 } = require("../db");
 const { requireUser } = require("./utils");
 
@@ -29,23 +30,57 @@ cartRouter.delete("/:cartProductId", requireUser, async (req, res, next) => {
     console.log('end delete route')
     const { cartProductId } = req.params;
     try {
-        const _product = await getCartProductById(cartProductId);
-        console.log(_product)
+        const _cartProduct = await getCartProductById(cartProductId);
+        console.log(_cartProduct)
 
-        if (_product.cartId !== req.user.id) {
+        if (_cartProduct) {
             res.status(403).send({
                 error: 'UserCannotDeleteProduct',
                 name: 'User cannot delete product',
-                message: UnauthorizedDeleteError(req.user.username, _title.name),
+                message,
             });
         } else {
-            const removeCartProduct = await deleteCartProduct(_product.id);
+            const removeCartProduct = await destroyCartProduct(cartProductId);
             next(removeCartProduct);
         }
     } catch ({ name, message }) {
         next({ name, message });
     }
 });
+
+
+cartRouter.patch('/:cartProductId', requireUser, async (req, res, next) => { 
+    const { cartProductId } = req.params;
+  
+    try {
+      const { qty } = req.body;
+      const updateFields = {};
+
+      if (cartProductId) {
+        updateFields.id = cartProductId;
+      }
+
+      if (qty) {
+        updateFields.qty = qty;
+      }
+  
+      const _cartProduct = await getCartProductById(cartProductId);
+  
+      if (!_cartProduct) {
+        res.send({
+          error: 'CartProductDoesNotExists',
+          title: 'Cart Product does not exists',
+          message: ProductNotFoundError(cartProductId),
+        });
+      } else {
+        const updateCartQty = await updateCartProduct(updateFields);
+        res.send(updateCartQty);
+      }
+    } catch (error) {
+      next(error);
+    }
+  });
+  
 
 
 module.exports = cartRouter;
