@@ -44,7 +44,7 @@ productsRouter.post('/', requireUser, async (req, res) => { //tested working
 });
 
 // PATCH /api/productId
-productsRouter.patch('/:productId', requireUser, async (req, res, next) => { //tested working
+productsRouter.patch('/:productId', requireUser, async (req, res, next) => { 
   const { productId } = req.params;
 
   try {
@@ -99,8 +99,8 @@ productsRouter.patch('/:productId', requireUser, async (req, res, next) => { //t
       const adminUpdateProduct = await updateProduct(updateFields);
       res.send(adminUpdateProduct);
     }
-  } catch ({ title, message }) {
-    next({ title, message });
+  } catch (error) {
+    next(error);
   }
 });
 

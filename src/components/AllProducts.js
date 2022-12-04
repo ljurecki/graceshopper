@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { addProductToCart, deleteProduct} from '../api';
+import { addProductToCart, deleteProduct } from '../api';
 import { Card, ListGroup, Button, Tab, Tabs, Container, Row, Col, Modal, Alert} from 'react-bootstrap';
+import {EditProduct} from '../components'
 
-
-const ProductCard = ({ jwt , product, user, navigate }) => {
+const ProductCard = ({ jwt , product, user}) => {
 const { id, title, imageurl, description, price, author, genre } = product;
+console.log('THIS product', id)
 const [qty, setQty] = useState(1);
 
 const [show, setShow] = useState(false);
 const handleClose = () => setShow(false);
-const handleShow = () => setShow(true);
 const [successMessage, setSuccessMessage] = useState('');
+const [errorMessage, setErrorMessage] = useState('');
 
 async function addToCart() {
   const newCartProduct = {
@@ -27,6 +28,26 @@ async function addToCart() {
     }, 2000);
   }
 }
+
+const [showModal, setShowModal] = useState(false);
+const openModal = () => setShow(true);
+
+
+const handleShow = () => {
+  setErrorMessage('');
+  setSuccessMessage('');
+  setShowModal(true);
+};
+
+const closeModal = () => {
+  setShowModal(false);
+  setTitle('');
+  setImageurl(''); 
+  setDescription('');
+  setPrice('');
+  setAuthor('');
+  setGenre('');
+};
 
 return (
 
@@ -50,7 +71,7 @@ return (
       className='mx-3 pt-0 d-flex justify-content-end'>
       <Tab className='pe-4 pt-2 float-end' eventKey="description" title="Description">
         <Button variant="light" onClick={() => {
-          handleShow();
+          openModal();
         }}>Read Full Description</Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header style={{ fontSize: '20px' }} closeButton>
@@ -72,7 +93,8 @@ return (
      {jwt ? (
       <>
        <Card.Text className='mt-5 pt-5 pb-4 d-flex justify-content-end flex-wrap'>
-       <input className='me-2' id='input' min="1" max="100" type="number" value={qty} onChange={(event) => setQty(event.target.value)}></input>
+       <input className='me-2' id='input' min="1" max="100" type="number" value={qty} 
+       onChange={(event) => setQty(event.target.value)}></input>
         <Button variant="outline-primary" 
         onClick={event => {
           event.preventDefault();
@@ -105,12 +127,22 @@ return (
         Delete
       </Button>
       <Button variant="outline-info" 
-        // onClick={event => {
-        //   event.preventDefault();
-        //         editProduct();}}
+        onClick={event => {
+          event.preventDefault();
+                handleShow();}}
         >
         Edit
       </Button>
+      <>
+      <Modal show={showModal} onHide={closeModal}>
+        <Modal.Header style={{ fontSize: '20px' }} closeButton>
+          <Modal.Title className='w-100 text-center'>Update Product</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <EditProduct product={product}/>
+        </Modal.Body>
+        </Modal>
+    </>
       </Card.Text>
      </> 
      ) : null } 

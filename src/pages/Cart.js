@@ -37,7 +37,7 @@ const Cart = ({ jwt, products }) => {
           )}
         </div>
       </ListGroup>
-      <Link to="/Checkout">Submit</Link>
+      <Link to="/Checkout">Checkout</Link>
     </>
   );
 };

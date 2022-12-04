@@ -80,15 +80,52 @@ async function getCartProductById(id) { //tested working
   }
 }
 
-async function deleteCartProduct(id) { //tested working
+// async function deleteCartProduct(id) { //tested working
+//   try {
+//     const {
+//       rows: [cart_product],
+//     } = await client.query(`
+//         DELETE FROM cart_products
+//         WHERE id=${id} 
+//         RETURNING *;`);
+
+//     return cart_product;
+//   } catch (err) {
+//     console.error(err);
+//     throw err;
+//   }
+// }
+
+async function destroyCartProduct(id) {
   try {
     const {
       rows: [cart_product],
     } = await client.query(`
-        DELETE FROM cart_products
-        WHERE id=${id} 
-        RETURNING *;`);
+      DELETE FROM cart_products
+      WHERE id=${id}
+      RETURNING *;`);
+    return cart_product;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+}
 
+
+async function updateCartProduct({ id, ...fields }) { //tested working
+  try {
+    const indexString = Object.keys(fields).map((key, index) => {
+      return `"${key}"=$${index + 1}`;
+    });
+    const {
+      rows: [cart_product],
+    } = await client.query(`
+      UPDATE products
+      SET ${indexString}
+      WHERE id=${id}
+      RETURNING *;`,
+      Object.values(fields)
+    );
     return cart_product;
   } catch (err) {
     console.error(err);
@@ -101,5 +138,6 @@ module.exports = {
   getCartProductById,
   createCartProduct,
   addProductToCart,
-  deleteCartProduct
+  destroyCartProduct,
+  updateCartProduct
 };

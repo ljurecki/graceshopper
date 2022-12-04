@@ -17,7 +17,7 @@ const LoginForm = ({ navigate, setJwt }) => {
         setSuccessMessage('Welcome Back to Best Books!');
         setErrorMessage('');
         setTimeout(() => {
-          navigate('/');
+          navigate('./products');
         }, 1000);
       } else {
         console.error('No token returned from server');;
