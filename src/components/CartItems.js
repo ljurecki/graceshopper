@@ -22,7 +22,8 @@ const CartItemCard = ({ products, product }) => {
                 Qty:<input type="number" value={qty}
                 onChange={(event) => 
                 setQty(event.target.value)}>
-                </input>
+                
+</input>
             </Card.Text>
         </ListGroup.Item>
     )} else {
