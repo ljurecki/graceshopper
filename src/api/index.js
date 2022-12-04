@@ -4,7 +4,7 @@ const createHeaders = jwt => {
     return jwt
         ? {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${jwt}`,
+            'Authorization': `Bearer ${jwt}`,
         }
         : {
             'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ export const createProduct = async (jwt, user, { title, imageurl, description, p
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${jwt}`,
+                'Authorization': `Bearer ${jwt}`,
             },
             body: JSON.stringify({
                 user,
@@ -124,18 +124,35 @@ export const updateProduct = async (updatedProduct, jwt) => {
     }
 };
 
-export const deleteProduct = async (product, jwt) => {
+export const deleteProduct = async (jwt, product) => {
     try {
-        return await fetch(`${BASE_URL}/products/${product.id}`, {
+        const response = await fetch(`${BASE_URL}/products/${product.id}`, {
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${jwt}`,
+                'Authorization': `Bearer ${jwt}`,
             },
-        }).then(response => response.json());
+        });
+        const result = await response.json();
+        return result;
     } catch (err) {
         console.error(err);
     }
 };
+
+
+export const deleteCartProduct = async (cart_product, jwt) => {
+    try {
+      const headers = createHeaders(jwt);
+      return await fetch(`${BASE_URL}/cart/${cart_product.id}`, {
+        method: 'DELETE',
+        headers,
+      }).then(response => response.json());
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
 
 export const getCart = async (jwt) => {
    console.log(`${BASE_URL}/cart`)
@@ -172,15 +189,3 @@ export const getCart = async (jwt) => {
     }
 };
   
-
-export const deleteCartProduct = async (cart_product, jwt) => {
-    try {
-      const headers = createHeaders(jwt);
-      return await fetch(`${BASE_URL}/cart/${cart_product.id}`, {
-        method: 'DELETE',
-        headers,
-      }).then(response => response.json());
-    } catch (err) {
-      console.error(err);
-    }
-  };
