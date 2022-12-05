@@ -10,7 +10,6 @@ const CartItemCard = ({ products, product }) => {
         const [cart_Product] = products.filter((product) => product.id === productId);
         const { id, title, imageurl, price } = cart_Product;
 
-        console.log(cart_Product)
         return (
             <ListGroup.Item
                 key={id}
@@ -21,7 +20,7 @@ const CartItemCard = ({ products, product }) => {
                 <Card.Text>
                     <img src={imageurl} />,
                     Price: {price},
-                    Qty:<input id='input' type="number" placeholder={qty}
+                    Qty:<input id='input' min="1" max="100" type="number" placeholder={qty}
                         onChange={(event) =>
                             setNewQty(event.target.value, updateCartProduct())}>
                     </input>

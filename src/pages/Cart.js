@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { CartItemCard } from '../components/index';
 import { getCart } from '../api'
 
-const Cart = ({ jwt, products }) => {
+const Cart = ({ jwt, products}) => {
   const [cartProducts, setCartProducts] = useState([]);
+
 
   async function allCartProducts() {
     setCartProducts(await getCart(jwt));
@@ -24,7 +25,7 @@ const Cart = ({ jwt, products }) => {
         variant='pills'
         className='bg-dark'
         style={{ fontSize: '60px' }}>
-        <Tab eventKey='activities' title='Shopping Cart'></Tab>
+        <Tab eventKey='activities' title='Great Book Finds!'></Tab>
       </Tabs>
       <ListGroup variant='flush'>
         <div id='outerCheckout'>
