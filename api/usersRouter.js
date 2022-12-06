@@ -17,13 +17,6 @@ const {
 
 // POST /api/users/login
 usersRouter.post('/login', async (req, res, next) => { //tested working
-   const { username, password } = req.body;
-  if (!username || !password) {
-    res.send({
-      name: "MissingCredentialsError",
-      message: "Please suppy both a username and password",
-    })
-  };
   try {
     const { username, password } = req.body;
 

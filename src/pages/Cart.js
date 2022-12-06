@@ -1,18 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { ListGroup, Tabs, Tab } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { CartItemCard } from '../components/index';
-import {getCart} from '../api'
+import { getCart } from '../api'
 
-const Cart = ({jwt, products}) => {
+const Cart = ({ jwt, products}) => {
   const [cartProducts, setCartProducts] = useState([]);
+
 
   async function allCartProducts() {
     setCartProducts(await getCart(jwt));
   }
 
   useEffect(() => {
-    if(jwt) {
+    if (jwt) {
       allCartProducts();
     }
   }, [jwt]);
@@ -23,20 +24,21 @@ const Cart = ({jwt, products}) => {
         justify='true'
         variant='pills'
         className='bg-dark'
-        style={{ fontSize: '25px' }}>
-        <Tab eventKey='activities' title='Cart'></Tab>
+        style={{ fontSize: '60px' }}>
+        <Tab eventKey='activities' title='Great Book Finds!'></Tab>
       </Tabs>
       <ListGroup variant='flush'>
-
-        {cartProducts ? (
-          cartProducts.map((product) => {
-            return <CartItemCard products={products} product={product} key={product.id}/>
-          })
-        ) : (
-          <h1>No Products Found!</h1>
-        )}
+        <div id='outerCheckout'>
+          {cartProducts ? (
+            cartProducts.map((product) => {
+              return <CartItemCard products={products} product={product} key={product.id} />
+            })
+          ) : (
+            <h1>No Products Found!</h1>
+          )}
+        </div>
       </ListGroup>
-<Link to="/Checkout">Submit</Link>
+      <Link to="/Checkout">Checkout</Link>
     </>
   );
 };

@@ -8,7 +8,6 @@ function requireUser(req, res, next) {
       message: UnauthorizedError(),
     });
   } else {
-    console.log("FROM REQUIRE USER MIDDLEWARE", req.user)
     next();
   }
 }

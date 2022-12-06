@@ -84,11 +84,11 @@ const App = () => {
           />
           <Route
               path='/Ordernumber'
-              element={<Ordernumber setJwt={setJwt} navigate={navigate} />}
+              element={<Ordernumber user={user} jwt={jwt} navigate={navigate} products={products}/>}
             />
           <Route
               path='/Checkout'
-              element={<Checkout/>}
+              element={<Checkout navigate={navigate}/>}
             />
         </Routes>
       </Container>

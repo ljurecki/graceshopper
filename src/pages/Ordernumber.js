@@ -1,24 +1,55 @@
-import React from 'react';
-<link rel="stylesheet" href="checkout.css"></link>
-import './checkout.css';
-function getRandomInt() {
-    return Math.floor(Math.random() * 500  + 10000);
-  }
+import React, { useState, useEffect } from 'react';
+import { Tabs, Tab, Container, ListGroup } from 'react-bootstrap';
+import { CheckoutCartItemCard } from '../components';
+import { getCart } from '../api'
 
-const Ordernumber = ({time}) => {
+const Ordernumber = ({ jwt, products }) => {
+
+    const [cartProducts, setCartProducts] = useState([]);
+
+    function getRandomInt() {
+        return Math.floor(Math.random() * 500 + 10000);
+    }
+
+    async function allCartProducts() {
+        setCartProducts(await getCart(jwt));
+    }
+
+    useEffect(() => {
+        if (jwt) {
+            allCartProducts();
+        }
+    }, [jwt]);
+
     return (
         <>
-            <div id="address">
-                <h1 id="orderNumber">
-                    Your Order Number is
-                </h1>
-              <h3 id="orderNumberReturn">
-             {getRandomInt() + "BB"}
-             </h3>
-            
-              
-              <img src="https://images.unsplash.com/photo-1535905557558-afc4877a26fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Ym9va3N8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-     />       </div>
+            <Tabs
+                justify='true'
+                variant='pills'
+                className='bg-dark'
+                style={{ fontSize: '60px' }}>
+                <Tab eventKey="Login" title="Thank You, Happy Reading!"></Tab>
+            </Tabs>
+            <Container>
+                <div id='orderinfo'>
+                    <h1 className='mt-5'>
+                        Your Order Number Is:
+                    </h1>
+                    <h3>{getRandomInt() + "BB"}</h3>
+                    <h2 className='mt-5'>These Books Will See You Soon:</h2>
+                    <ListGroup variant='flush'>
+                        <div id='orderedbooks'>
+                            {cartProducts ? (
+                                cartProducts.map((product) => {
+                                    return <CheckoutCartItemCard products={products} product={product} key={product.id} />
+                                })
+                            ) : (
+                                <h1>No Products Found!</h1>
+                            )}
+                        </div>
+                    </ListGroup>
+                </div>
+            </Container >
         </>
     )
 };

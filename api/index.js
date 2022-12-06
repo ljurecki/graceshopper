@@ -8,6 +8,7 @@ const { getUserById } = require('../db/users');
 router.use(async (req, res, next) => {
   const prefix = 'Bearer ';
   const auth = req.header('Authorization');
+
   
   if (!auth) {
     next();
@@ -15,9 +16,10 @@ router.use(async (req, res, next) => {
     const token = auth.slice(prefix.length);
     try {
       const { id } = jwt.verify(token, JWT_SECRET);
-    
+      console.log(token)
       if (id) {
         req.user = await getUserById(id);
+        console.log(req.user.id)
         next();
       }
     } catch ({ name, message }) {

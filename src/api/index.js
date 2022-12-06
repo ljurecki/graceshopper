@@ -4,7 +4,7 @@ const createHeaders = jwt => {
     return jwt
         ? {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${jwt}`,
+            'Authorization': `Bearer ${jwt}`,
         }
         : {
             'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ export const createProduct = async (jwt, user, { title, imageurl, description, p
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${jwt}`,
+                'Authorization': `Bearer ${jwt}`,
             },
             body: JSON.stringify({
                 user,
@@ -111,31 +111,61 @@ export const createProduct = async (jwt, user, { title, imageurl, description, p
     }
 };
 
-export const updateProduct = async (updatedProduct, jwt) => {
+export const updateProduct = async ({id, title, imageurl, description, price, author, genre }, jwt) => {
     try {
-        const headers = createHeaders(jwt);
-        return await fetch(`${BASE_URL}/products/${id}`, {
+            const response =  await fetch(`${BASE_URL}/products/${id}`, {
             method: 'PATCH',
-            headers,
-            body: JSON.stringify(updatedProduct),
-        }).then(response => response.json());
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`
+            },
+            body: JSON.stringify({
+                    title: title,
+                    imageurl: imageurl,
+                    description: description,
+                    price: price,
+                    author: author,
+                    genre: genre
+            })
+        })
+        const result = await response.json();
+        return result;
+    } catch (ex) {
+        console.log('error updating product')
+    }
+};
+
+
+export const deleteProduct = async (jwt, product) => {
+    try {
+        const response = await fetch(`${BASE_URL}/products/${product.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`,
+            },
+        });
+        const result = await response.json();
+        return result;
     } catch (err) {
         console.error(err);
     }
 };
 
-export const deleteProduct = async (product, jwt) => {
+
+export const deleteCartProduct = async (cartProductId, jwt) => {
     try {
-        return await fetch(`${BASE_URL}/products/${product.id}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${jwt}`,
-            },
-        }).then(response => response.json());
+        const headers = createHeaders(jwt);
+      return await fetch(`${BASE_URL}/cart/${cartProductId}`, {
+        method: 'DELETE',
+        headers,
+    }).then(response => response.json());
     } catch (err) {
-        console.error(err);
+        console.errror(err);
     }
-};
+  };
+
+  
 
 export const getCart = async (jwt) => {
    console.log(`${BASE_URL}/cart`)
@@ -146,15 +176,15 @@ export const getCart = async (jwt) => {
                 'Authorization': `Bearer ${jwt}`
             }
     });   
-        const results = await response.json();
-        return results;
+    const results = await response.json();
+    return results;
     } catch (err) {
         console.error(err);
     }
 };
 
 
-  export const addProductToCart = async (jwt, {productId, qty}) => {
+export const addProductToCart = async (jwt, {productId, qty}) => {
     const headers = createHeaders(jwt);
     try {
         const response = await fetch(`${BASE_URL}/cart`, {
@@ -171,16 +201,23 @@ export const getCart = async (jwt) => {
         console.error(err);
     }
 };
-  
 
-export const deleteCartProduct = async (cart_product, jwt) => {
+export const updateCartProduct = async ({id, qty }, jwt) => {
     try {
-      const headers = createHeaders(jwt);
-      return await fetch(`${BASE_URL}/cart/${cart_product.id}`, {
-        method: 'DELETE',
-        headers,
-      }).then(response => response.json());
-    } catch (err) {
-      console.error(err);
+            const response =  await fetch(`${BASE_URL}/cart/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`
+            },
+            body: JSON.stringify({
+                    qty: qty
+            })
+        })
+        const result = await response.json();
+        return result;
+    } catch (ex) {
+        console.log('error updating cart product')
     }
-  };
+};
+  
