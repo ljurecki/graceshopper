@@ -7,6 +7,7 @@ const {
   getProductByTitle,
   getProductById,
   updateProduct,
+  deleteProduct
 } = require(`../db`);
 const {requireUser} = require(`./utils`);
 
@@ -117,6 +118,7 @@ productsRouter.delete('/:productId', requireUser, async (req, res, next) => {
         message: UnauthorizedDeleteError(req.user.isAdmin, _product.title),
       });
     } else {
+      console.log('product route message!!!!', _product.id)
       const removeProduct = await deleteProduct(_product.id);
       res.send(removeProduct);
     }

@@ -111,7 +111,7 @@ export const createProduct = async (jwt, user, { title, imageurl, description, p
     }
 };
 
-export const updateProduct = async ({id, title, imageurl, description, price, author, genre }, jwt) => {
+export const updateProduct = async (jwt, {id, title, imageurl, description, price, author, genre }) => {
     try {
             const response =  await fetch(`${BASE_URL}/products/${id}`, {
             method: 'PATCH',
@@ -136,9 +136,9 @@ export const updateProduct = async ({id, title, imageurl, description, price, au
 };
 
 
-export const deleteProduct = async (jwt, product) => {
+export const deleteProduct = async (jwt, productId) => {
     try {
-        const response = await fetch(`${BASE_URL}/products/${product.id}`, {
+        const response = await fetch(`${BASE_URL}/products/${productId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -153,10 +153,10 @@ export const deleteProduct = async (jwt, product) => {
 };
 
 
-export const deleteCartProduct = async (cartProductId, jwt) => {
+export const deleteCartProduct = async (jwt, productId ) => {
     try {
         const headers = createHeaders(jwt);
-      return await fetch(`${BASE_URL}/cart/${cartProductId}`, {
+      return await fetch(`${BASE_URL}/cart/${productId}`, {
         method: 'DELETE',
         headers,
     }).then(response => response.json());
@@ -202,7 +202,7 @@ export const addProductToCart = async (jwt, {productId, qty}) => {
     }
 };
 
-export const updateCartProduct = async ({id, qty }, jwt) => {
+export const updateCartProduct = async (jwt, id, qty) => {
     try {
             const response =  await fetch(`${BASE_URL}/cart/${id}`, {
             method: 'PATCH',

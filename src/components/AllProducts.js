@@ -3,7 +3,7 @@ import { addProductToCart, deleteProduct } from '../api';
 import { Card, ListGroup, Button, Tab, Tabs, Container, Row, Col, Modal, Alert} from 'react-bootstrap';
 import {EditProduct} from '../components'
 
-const ProductCard = ({ jwt , product, user}) => {
+const ProductCard = ({ jwt , product, user, navigate}) => {
 const { id, title, imageurl, description, price, author, genre } = product;
 console.log('THIS product', id)
 const [qty, setQty] = useState(1);
@@ -12,6 +12,7 @@ const [show, setShow] = useState(false);
 const handleClose = () => setShow(false);
 const [successMessage, setSuccessMessage] = useState('');
 const [errorMessage, setErrorMessage] = useState('');
+
 
 async function addToCart() {
   const newCartProduct = {
@@ -41,12 +42,6 @@ const handleShow = () => {
 
 const closeModal = () => {
   setShowModal(false);
-  setTitle('');
-  setImageurl(''); 
-  setDescription('');
-  setPrice('');
-  setAuthor('');
-  setGenre('');
 };
 
 return (
@@ -56,9 +51,9 @@ return (
     className='px-3 py-3 mx-3'>
     <Card.Text>
       <Container >
-      <h1 className='ms-1 pt-4 d-flex justify-content-start'>
+      <span className='ms-1 pt-4 d-flex justify-content-start' style={{ fontSize: '30px' }}>
       {title}
-      </h1>
+      </span>
       <span className='ms-1 pb-1 d-flex justify-content-start'>by {author}</span>
       <Row>
     <Col className='pt-2'xs lg="3">
@@ -119,8 +114,7 @@ return (
         <Button className='mx-2' variant="danger" 
         onClick={() => {
           if (confirm('Are you sure you want to delete?')) {
-            deleteProduct();
-            navigate('./products');
+            deleteProduct(jwt, id);
             console.log('delete button pressed')
             }
           }}>
@@ -139,7 +133,7 @@ return (
           <Modal.Title className='w-100 text-center'>Update Product</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <EditProduct product={product}/>
+          <EditProduct jwt={jwt} product={product}/>
         </Modal.Body>
         </Modal>
     </>

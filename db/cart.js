@@ -80,29 +80,16 @@ async function getCartProductById(id) { //tested working
   }
 }
 
-// async function deleteCartProduct(id) { //tested working
-//   try {
-//     const {
-//       rows: [cart_product],
-//     } = await client.query(`
-//         DELETE FROM cart_products
-//         WHERE id=${id} 
-//         RETURNING *;`);
 
-//     return cart_product;
-//   } catch (err) {
-//     console.error(err);
-//     throw err;
-//   }
-// }
 
-async function destroyCartProduct(id) {
+async function destroyCartProduct(userId, id) {
   try {
     const {
       rows: [cart_product],
     } = await client.query(`
       DELETE FROM cart_products
-      WHERE id=${id}
+      WHERE "productId"=${id}
+      and "cartId"=${userId}
       RETURNING *;`);
     return cart_product;
   } catch (err) {
@@ -112,7 +99,8 @@ async function destroyCartProduct(id) {
 }
 
 
-async function updateCartProduct({ id, ...fields }) { //tested working
+async function updateCartProduct(userId, { id, ...fields }) { 
+
   try {
     const indexString = Object.keys(fields).map((key, index) => {
       return `"${key}"=$${index + 1}`;
@@ -120,9 +108,10 @@ async function updateCartProduct({ id, ...fields }) { //tested working
     const {
       rows: [cart_product],
     } = await client.query(`
-      UPDATE products
+      UPDATE cart_products
       SET ${indexString}
-      WHERE id=${id}
+      WHERE "productId"=${id} 
+      and "cartId"=${userId}
       RETURNING *;`,
       Object.values(fields)
     );
