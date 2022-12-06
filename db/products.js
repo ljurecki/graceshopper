@@ -84,13 +84,14 @@ async function updateProduct({ id, ...fields }) { //tested working
   }
 }
 
-async function deleteProduct(id) { //Needs testing
+async function deleteProduct(productId) { //Needs testing
+ console.log('db reached!!! product!!')
   try {
     const {
       rows: [product],
     } = await client.query(
       `DELETE FROM products 
-      WHERE id=${id};`
+      WHERE id=${productId};`
     );
     return product;
   } catch (err) {

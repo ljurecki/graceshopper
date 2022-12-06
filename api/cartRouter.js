@@ -27,24 +27,24 @@ cartRouter.post('/', requireUser, async (req, res, next) => { //tested working
 
 /*delete item in cart*/
 cartRouter.delete("/:cartProductId", requireUser, async (req, res, next) => {
-    console.log('end delete route')
+
     const { cartProductId } = req.params;
     try {
         const _cartProduct = await getCartProductById(cartProductId);
         console.log(_cartProduct)
 
-        if (_cartProduct) {
+        if (!_cartProduct) {
             res.status(403).send({
                 error: 'UserCannotDeleteProduct',
                 name: 'User cannot delete product',
                 message,
             });
         } else {
-            const removeCartProduct = await destroyCartProduct(cartProductId);
-            next(removeCartProduct);
+            const removeCartProduct = await destroyCartProduct(req.user.id, cartProductId);
+            res.send(removeCartProduct);
         }
-    } catch ({ name, message }) {
-        next({ name, message });
+    } catch (err) {
+        next(err);
     }
 });
 
@@ -73,7 +73,7 @@ cartRouter.patch('/:cartProductId', requireUser, async (req, res, next) => {
           message: ProductNotFoundError(cartProductId),
         });
       } else {
-        const updateCartQty = await updateCartProduct(updateFields);
+        const updateCartQty = await updateCartProduct(req.user.id, updateFields);
         res.send(updateCartQty);
       }
     } catch (error) {

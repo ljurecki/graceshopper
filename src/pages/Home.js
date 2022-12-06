@@ -14,7 +14,7 @@ const Home = () => {
             background: "#6c757d"
 
           }} >  
-           <img src="https://fivebooks.com/app/uploads/2021/03/five-books-homepage-best-books-on-everything-share-image-8.jpg" class="img-fluid" alt="..."></img>
+           <img src="https://fivebooks.com/app/uploads/2021/03/five-books-homepage-best-books-on-everything-share-image-8.jpg"></img>
           
           </Container>
       </>

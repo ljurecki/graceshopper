@@ -16,6 +16,7 @@ console.log('This update id', id)
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
+  const [showModal, setShowModal] = useState(false);
 
   async function handleSubmit() {
     const updatedProduct = {
@@ -39,6 +40,12 @@ console.log('This update id', id)
       setErrorMessage(error);
     }
   };
+
+  
+const closeModal = () => {
+  setShowModal(false);
+};
+
 
   return (
     <>
