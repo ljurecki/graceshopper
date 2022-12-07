@@ -55,7 +55,7 @@ return (
     className='px-3 py-3 mx-3'>
     <Card.Text>
       <Container >
-      <span className='ms-1 pt-4 d-flex justify-content-start' style={{ fontSize: '30px' }}>
+      <span className='ms-1 pt-4 d-flex justify-content-start' style={{ fontSize: '30px', fontWeight: '300' }}>
       {title}
       </span>
       <span className='ms-1 pb-1 d-flex justify-content-start'>by {author}</span>

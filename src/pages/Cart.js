@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import { CartItemCard } from '../components/index';
 import { getCart } from '../api'
 
-const Cart = ({ jwt, products }) => {
+const Cart = ({ jwt, products, allProducts}) => {
+
+
   const [cartProducts, setCartProducts] = useState([]);
 
 
@@ -33,7 +35,7 @@ const Cart = ({ jwt, products }) => {
             <Col>
               {cartProducts ? (
                 cartProducts.map((product) => {
-                  return <CartItemCard jwt={jwt} products={products} product={product} key={product.id} />
+                  return <CartItemCard jwt={jwt} products={products} product={product} allProducts={allProducts} key={product.id} />
                 })
               ) : (
                 <span style={{ fontSize: '60px' }}>No Products Found!</span>
