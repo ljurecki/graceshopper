@@ -10,7 +10,7 @@ const Products = ({jwt, products, user, navigate, allProducts}) => {
       justify='true'
       variant='pills'
       className='bg-dark'
-      style={{ fontSize: '60px', fontWeight: '300' }}>
+      style={{ fontSize: '60px' }}>
       <Tab className='pb-1' eventKey='activities' title='Find the Best Books'></Tab>
     </Tabs>
 
