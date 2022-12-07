@@ -30,9 +30,9 @@ const Cart = ({ jwt, products, allProducts}) => {
         <Tab eventKey='activities' title='Great Book Finds!'></Tab>
       </Tabs>
       <Container>
-        <ListGroup variant='flush'>
+        <ListGroup variant='flush' >
           <Row>
-            <Col>
+            <Col id='cartbooks'>
               {cartProducts ? (
                 cartProducts.map((product) => {
                   return <CartItemCard jwt={jwt} products={products} product={product} allProducts={allProducts} key={product.id} />
