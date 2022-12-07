@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ListGroup, Tabs, Tab } from 'react-bootstrap';
+import { ListGroup, Tabs, Tab, Container, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { CartItemCard } from '../components/index';
 import { getCart } from '../api'
 
-const Cart = ({ jwt, products}) => {
+const Cart = ({ jwt, products }) => {
   const [cartProducts, setCartProducts] = useState([]);
 
 
@@ -27,18 +27,25 @@ const Cart = ({ jwt, products}) => {
         style={{ fontSize: '60px' }}>
         <Tab eventKey='activities' title='Great Book Finds!'></Tab>
       </Tabs>
-      <ListGroup variant='flush'>
-        <div id='outerCheckout'>
-          {cartProducts ? (
-            cartProducts.map((product) => {
-              return <CartItemCard products={products} product={product} key={product.id} />
-            })
-          ) : (
-            <h1>No Products Found!</h1>
-          )}
-        </div>
-      </ListGroup>
-      <Link to="/Checkout">Checkout</Link>
+      <Container>
+        <ListGroup variant='flush'>
+          <Row>
+            <Col>
+              {cartProducts ? (
+                cartProducts.map((product) => {
+                  return <CartItemCard jwt={jwt} products={products} product={product} key={product.id} />
+                })
+              ) : (
+                <h1>No Products Found!</h1>
+              )}
+            </Col>
+            <Col>
+              <Link to="/Checkout">Checkout</Link>
+
+            </Col>
+          </Row>
+        </ListGroup>
+      </Container>
     </>
   );
 };
