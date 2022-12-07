@@ -9,7 +9,7 @@ const Register = ({ navigate }) => {
         justify='true'
         variant='pills'
         className='bg-dark'
-        style={{ fontSize: '25px' }}>
+        style={{ fontSize: '60px' }}>
         <Tab eventKey="Register" title="Register!"></Tab>
       </Tabs>
     <Container>
