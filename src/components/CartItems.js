@@ -2,15 +2,11 @@ import React, { useState } from 'react';
 import { Card, ListGroup, Button } from 'react-bootstrap';
 import { deleteCartProduct, updateCartProduct } from '../api'
 
-const CartItemCard = ({ jwt, products, product }) => {
+const CartItemCard = ({ jwt, products, product, allProducts }) => {
     const { productId, qty } = product;
     const [newQty, setNewQty] = useState(qty);
 
-    function refreshPage(){
-        window.location.reload();
-      }
-      
-
+ 
     if (productId) {
         const [cart_Product] = products.filter((product) => product.id === productId);
         const { id, imageurl, price } = cart_Product;
@@ -22,21 +18,21 @@ const CartItemCard = ({ jwt, products, product }) => {
                 <Card.Text>
                     <img src={imageurl} />,
                     <Card.Text className='mt-3'>
-                        Price: {price}
+                        Price: ${price}
                     </Card.Text>
                     <Card.Text> Qty: <input id='input' min="1" max="100" type="number" placeholder={qty}
                         onChange={(event) => {
                             setNewQty(event.target.value);
                             updateCartProduct(jwt, productId, parseInt(newQty) + 1)
+                            
                         }}>
                     </input>
                         <Button className='mx-2' variant="outline-warning"
                             onClick={() => {
-                                if (confirm('Are you sure you want to delete?')) {
                                     deleteCartProduct(jwt, productId);
                                     console.log('delete cart button pressed')
-                                    refreshPage()
-                                }
+                                    allProducts()
+
                             }}>
                             Remove
                         </Button>

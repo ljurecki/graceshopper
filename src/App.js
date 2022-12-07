@@ -55,6 +55,7 @@ const App = () => {
     allProducts();
   }, []);
 
+
   return (
     <>
       <div className='sticky-top'>
@@ -72,7 +73,7 @@ const App = () => {
           />
           <Route
             path='/products'
-            element={<Products user={user} jwt={jwt} products={products} navigate={navigate} />}
+            element={<Products user={user} jwt={jwt} products={products} navigate={navigate} allProducts={allProducts} />}
           />
           <Route
             path='/register'

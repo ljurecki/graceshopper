@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { createProduct } from '../api';
 import { Button, Modal, Form, FloatingLabel, Alert } from 'react-bootstrap';
 
-const CreateProduct = ({ jwt, user }) => {
+const CreateProduct = ({ jwt, user, allProducts }) => {
   const [title, setTitle] = useState('');
   const [imageurl, setImageurl] = useState('');
   const [description, setDescription] = useState('');
@@ -46,6 +46,7 @@ const CreateProduct = ({ jwt, user }) => {
       setErrorMessage('');
       setTimeout(() => {
         closeModal();
+        allProducts()
       }, 1000);
     } else {
       console.error(error);
