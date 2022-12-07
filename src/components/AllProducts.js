@@ -138,7 +138,7 @@ return (
           <Modal.Title className='w-100 text-center'>Update Product</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <EditProduct jwt={jwt} product={product}/>
+          <EditProduct jwt={jwt} product={product} allProducts={allProducts}/>
         </Modal.Body>
         </Modal>
     </>

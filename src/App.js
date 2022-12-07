@@ -69,7 +69,7 @@ const App = () => {
           />
           <Route
             path='/cart'
-            element={<Cart user={user} jwt={jwt} navigate={navigate} products={products}/>}
+            element={<Cart user={user} jwt={jwt} navigate={navigate} products={products} allProducts={allProducts}/>}
           />
           <Route
             path='/products'

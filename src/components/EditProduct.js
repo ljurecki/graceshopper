@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { updateProduct } from '../api';
 import { Button, Form, FloatingLabel, Alert } from 'react-bootstrap';
 
-const EditProduct = ({ jwt, product }) => {
+const EditProduct = ({ jwt, product, allProducts }) => {
   const { id, title, imageurl, description, price, author, genre } = product;
 console.log('This update id', id)
 
@@ -39,6 +39,7 @@ console.log('This update id', id)
       setErrorMessage('');
       setTimeout(() => {
         closeModal();
+        allProducts()
       }, 1000);
     } else {
       console.error(error);
