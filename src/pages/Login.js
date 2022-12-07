@@ -10,7 +10,7 @@ const Login = ({ navigate, setJwt }) => {
         justify='true'
         variant='pills'
         className='bg-dark'
-        style={{ fontSize: '25px' }}>
+        style={{ fontSize: '60px' }}>
         <Tab eventKey="Login" title="Let's keep shopping, Log In!"></Tab>
       </Tabs>
       <Container>
