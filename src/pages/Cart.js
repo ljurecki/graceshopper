@@ -36,7 +36,7 @@ const Cart = ({ jwt, products }) => {
                   return <CartItemCard jwt={jwt} products={products} product={product} key={product.id} />
                 })
               ) : (
-                <h1>No Products Found!</h1>
+                <span style={{ fontSize: '60px' }}>No Products Found!</span>
               )}
             </Col>
             <Col>

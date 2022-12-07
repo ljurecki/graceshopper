@@ -2,12 +2,12 @@
   "name": "grace_shopper",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "react-scripts build",
-    "start-server": "nodemon app.js",
-    "start": "node app.js",
+    "start-server": "nodemon index.js",
+    "start": "node index.js",
     "seed": "node ./db/seed.js",
     "seed:dev": "nodemon ./db/seed.js",
     "client-start": "react-scripts start"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, Container, Button, Badge } from 'react-bootstrap';
+import { Navbar, Nav, Container } from 'react-bootstrap';
 
 const NavBar = ({ isLoggedIn, logOut, navigate }) => {
   return (

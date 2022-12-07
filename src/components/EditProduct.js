@@ -18,6 +18,11 @@ console.log('This update id', id)
 
   const [showModal, setShowModal] = useState(false);
 
+  function refreshPage(){
+    window.location.reload();
+  }
+  
+
   async function handleSubmit() {
     const updatedProduct = {
       id, 
@@ -44,6 +49,7 @@ console.log('This update id', id)
   
 const closeModal = () => {
   setShowModal(false);
+  refreshPage()
 };
 
 
