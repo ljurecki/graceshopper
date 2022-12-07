@@ -3,7 +3,7 @@ import { addProductToCart, deleteProduct } from '../api';
 import { Card, ListGroup, Button, Tab, Tabs, Container, Row, Col, Modal, Alert} from 'react-bootstrap';
 import {EditProduct} from '../components'
 
-const ProductCard = ({ jwt , product, user, navigate}) => {
+const ProductCard = ({ jwt , product, user}) => {
 const { id, title, imageurl, description, price, author, genre } = product;
 console.log('THIS product', id)
 const [qty, setQty] = useState(1);
@@ -12,6 +12,10 @@ const [show, setShow] = useState(false);
 const handleClose = () => setShow(false);
 const [successMessage, setSuccessMessage] = useState('');
 const [errorMessage, setErrorMessage] = useState('');
+
+function refreshPage(){
+  window.location.reload();
+}
 
 
 async function addToCart() {
@@ -116,6 +120,7 @@ return (
           if (confirm('Are you sure you want to delete?')) {
             deleteProduct(jwt, id);
             console.log('delete button pressed')
+            refreshPage()
             }
           }}>
         Delete
@@ -148,17 +153,4 @@ return (
 };
 
 export default ProductCard;
-
-
-
-// {user.isAdmin ? (
-//     <div>
-//      <input type="number" value={qty} onChange={(event) => setQty(event.target.value)}></input>
-//       <Button variant='info' onClick={async () => {
-//           const product = await addProductToCart(jwt, { productId: id, qty })
-//       }
-          
-//           }>Add to Cart</Button>
-//     </div>) : null
-//   }
 
