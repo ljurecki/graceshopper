@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, ListGroup, Button } from 'react-bootstrap';
 import { deleteCartProduct, updateCartProduct } from '../api'
 
-const CartItemCard = ({ jwt, products, product, allProducts }) => {
+const CartItemCard = ({ jwt, products, product }) => {
     const { productId, qty } = product;
     const [newQty, setNewQty] = useState(qty);
 
@@ -31,7 +31,6 @@ const CartItemCard = ({ jwt, products, product, allProducts }) => {
                             onClick={() => {
                                     deleteCartProduct(jwt, productId);
                                     console.log('delete cart button pressed')
-                                    allProducts()
 
                             }}>
                             Remove

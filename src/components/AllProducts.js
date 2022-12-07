@@ -3,7 +3,7 @@ import { addProductToCart, deleteProduct } from '../api';
 import { Card, ListGroup, Button, Tab, Tabs, Container, Row, Col, Modal, Alert} from 'react-bootstrap';
 import {EditProduct} from '../components'
 
-const ProductCard = ({ jwt , product, user}) => {
+const ProductCard = ({ jwt , product, user, allProducts}) => {
 const { id, title, imageurl, description, price, author, genre } = product;
 console.log('THIS product', id)
 const [qty, setQty] = useState(1);
