@@ -9,7 +9,7 @@ const {
   updateProduct,
   deleteProduct
 } = require(`../db`);
-const {requireUser} = require(`./utils`);
+const { requireUser } = require(`./utils`);
 
 const { ProductExistsError, ProductNotFoundError } = require(`../errors`);
 
@@ -17,12 +17,12 @@ const { ProductExistsError, ProductNotFoundError } = require(`../errors`);
 productsRouter.get('/', async (req, res, next) => { //tested working
   try {
     const products = await getAllProducts();
-    if(products){
+    if (products) {
       res.send(products);
-    }    
+    }
 
   } catch ({ title, message }) {
-      next({ title, message });
+    next({ title, message });
   }
 });
 
@@ -45,7 +45,7 @@ productsRouter.post('/', requireUser, async (req, res) => { //tested working
 });
 
 // PATCH /api/productId
-productsRouter.patch('/:productId', requireUser, async (req, res, next) => { 
+productsRouter.patch('/:productId', requireUser, async (req, res, next) => {
   const { productId } = req.params;
 
   try {
@@ -110,7 +110,6 @@ productsRouter.delete('/:productId', requireUser, async (req, res, next) => {
   const { productId } = req.params;
   try {
     const _product = await getProductById(productId);
-    console.log('product Id', _product)
     if (!_product) {
       res.status(403).send({
         error: 'UserCannotDeleteRoutine',
@@ -118,7 +117,6 @@ productsRouter.delete('/:productId', requireUser, async (req, res, next) => {
         message: UnauthorizedDeleteError(req.user.isAdmin, _product.title),
       });
     } else {
-      console.log('product route message!!!!', _product.id)
       const removeProduct = await deleteProduct(_product.id);
       res.send(removeProduct);
     }

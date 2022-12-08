@@ -1,7 +1,7 @@
 div#outer\ div\ element {
     display: grid;
     grid-template-columns: 2fr 2fr 2fr;
-    margin: 2% 5% 3% 5%;
+    margin: 1% 5% 3% 5%;
     justify-content: space-around;
 }
 
@@ -15,10 +15,17 @@ div#outer\ div\ element {
 #cartbooks {
     display: grid;
     grid-template-columns: 2fr 2fr 2fr 2fr;
-    margin: 2% 5% 3% 5%;
+    margin: 5% 5% 3% 5%;
     justify-content: space-around;
 }
 
+#checkoutcard {
+    background-color: #2258A1;
+    color: white;
+    margin-top: 5%;
+    margin-bottom: 10%;
+    font-size: 16px;
+}
 
 .list-group-item{
     border:none !important;
@@ -30,4 +37,8 @@ div#outer\ div\ element {
 }
 #addprodalert {
     width: 95%;
+}
+
+.nav-pills {
+    --bs-nav-pills-link-active-bg: #6666 !important;
 }

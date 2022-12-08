@@ -51,7 +51,6 @@ usersRouter.post('/login', async (req, res, next) => { //tested working
 
 
 // POST /api/users/register
-
 usersRouter.post('/register', async (req, res, next) => { //tested working
   const { username, password, isAdmin } = req.body;
 
@@ -98,17 +97,6 @@ usersRouter.get('/me', requireUser, async (req, res) => {
   res.send(req.user);
 });
 
-// usersRouter.get('/:username/products', async (req, res, next) => {
-//   try {
-//     const { username } = req.params;
-//     if (req.user && req.user.username === username) {
-//       const userProducts = await getAllProductsByUser({ username });
-//       res.send(userProducts);
-//     }
-//   } catch ({ name, message }) {
-//     next({ name, message });
-//   }
-// });
 
 
 module.exports = usersRouter;

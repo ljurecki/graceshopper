@@ -57,7 +57,7 @@ const CreateProduct = ({ jwt, user, allProducts }) => {
   return (
     <>
       <Button
-        variant='success'
+        variant='primary'
         className='position-fixed sticky-bottom rounded-pill shadow'
         size='lg'
         style={{ bottom: '25px', right: '25px' }}
@@ -152,7 +152,7 @@ const CreateProduct = ({ jwt, user, allProducts }) => {
 
 
           <Form.Group className='m-3 d-flex justify-content-end'>
-            <Button variant='success' type='submit'>
+            <Button variant='outline-primary' type='submit'>
               Create Product
             </Button>
           </Form.Group>
