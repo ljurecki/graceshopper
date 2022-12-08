@@ -10,7 +10,7 @@ const Register = ({ navigate }) => {
         variant='pills'
         className='bg-dark'
         style={{ fontSize: '60px' }}>
-        <Tab eventKey="Register" title="Register!"></Tab>
+        <Tab eventKey="Register" title="Start Shopping Best Books!"></Tab>
       </Tabs>
     <Container>
       <RegisterForm navigate={navigate} />

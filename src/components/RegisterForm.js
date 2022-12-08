@@ -15,7 +15,7 @@ const RegisterForm = ({ navigate }) => {
       setErrorMessage('');
       setTimeout(() => {
         navigate('/login');
-      }, 2000);
+      }, 1000);
     } else {
       console.error(results.error);
       setErrorMessage(results.error);
@@ -50,7 +50,7 @@ const RegisterForm = ({ navigate }) => {
       </Form.Group>
       <Form.Group style={{ margin: '2% 25% 0px 25%' }}>
         <Button
-          variant='success'
+          variant='primary'
           type='submit'
           className='mx-2 justify-self-end'>
           Submit

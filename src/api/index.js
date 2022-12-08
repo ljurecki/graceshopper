@@ -1,6 +1,6 @@
 
-const BASE_URL = 'https://best-books.onrender.com/api';
-// const BASE_URL ='http://localhost:3001/api';
+// const BASE_URL = 'https://best-books.onrender.com/api';
+const BASE_URL ='http://localhost:3001/api';
 
 const createHeaders = jwt => {
     return jwt
@@ -155,17 +155,22 @@ export const deleteProduct = async (jwt, productId) => {
 };
 
 
-export const deleteCartProduct = async (jwt, productId ) => {
+export const deleteCartProduct = async (jwt, productId) => {
     try {
-        const headers = createHeaders(jwt);
-      return await fetch(`${BASE_URL}/cart/${productId}`, {
-        method: 'DELETE',
-        headers,
-    }).then(response => response.json());
+        const response = await fetch(`${BASE_URL}/cart/${productId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`,
+            },
+        });
+        const result = await response.json();
+        return result;
     } catch (err) {
-        console.errror(err);
+        console.error(err);
     }
-  };
+};
+
 
   
 
