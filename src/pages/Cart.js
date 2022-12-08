@@ -79,7 +79,7 @@ const Cart = ({ jwt, products, navigate }) => {
                 </Row>
                 <Row className='me-5 mx-5 mt-4 mb-5'>
                   <Button variant="light"
-                    onClick={() => { navigate('/checkout') }}>
+                    onClick={(e) => { e.preventDefault(); navigate('/checkout') }}>
                     Checkout
                   </Button>
                 </Row>
