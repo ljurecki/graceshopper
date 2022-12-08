@@ -136,8 +136,10 @@ const ProductCard = ({ jwt, product, user, allProducts, navigate }) => {
                 <>
                   <Card.Text className='d-flex justify-content-end flex-wrap'>
                     <Button className='mx-2' variant="danger"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.preventDefault();
                         handleDelete();
+                        allProducts()
                       }
                       }>
                       Delete
