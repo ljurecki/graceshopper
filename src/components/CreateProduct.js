@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { createProduct } from '../api';
 import { Button, Modal, Form, FloatingLabel, Alert } from 'react-bootstrap';
 
-const CreateProduct = ({ jwt, user }) => {
+const CreateProduct = ({ jwt, user, allProducts }) => {
   const [title, setTitle] = useState('');
   const [imageurl, setImageurl] = useState('');
   const [description, setDescription] = useState('');
@@ -46,6 +46,7 @@ const CreateProduct = ({ jwt, user }) => {
       setErrorMessage('');
       setTimeout(() => {
         closeModal();
+        allProducts()
       }, 1000);
     } else {
       console.error(error);
@@ -56,7 +57,7 @@ const CreateProduct = ({ jwt, user }) => {
   return (
     <>
       <Button
-        variant='success'
+        variant='primary'
         className='position-fixed sticky-bottom rounded-pill shadow'
         size='lg'
         style={{ bottom: '25px', right: '25px' }}
@@ -151,7 +152,7 @@ const CreateProduct = ({ jwt, user }) => {
 
 
           <Form.Group className='m-3 d-flex justify-content-end'>
-            <Button variant='success' type='submit'>
+            <Button variant='outline-primary' type='submit'>
               Create Product
             </Button>
           </Form.Group>

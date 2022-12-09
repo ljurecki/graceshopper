@@ -14,7 +14,7 @@ const CheckoutCartItemCard = ({ products, product }) => {
                 key={id}
                 className='px-0 py-3 mx-3 d-flex flex-column'>
                 <Card.Text>
-                    <img src={imageurl} />
+                    <img src={imageurl} />,
                 </Card.Text>
             </ListGroup.Item>
         )

@@ -54,13 +54,13 @@ const LoginForm = ({ navigate, setJwt }) => {
       </Form.Group>
       <Form.Group style={{ margin: '2% 25% 0px 25%' }}>
         <Button
-          variant='success'
+          variant='primary'
           type='submit'
           className='mx-2 justify-self-end'>
           Submit
         </Button>
         <Button
-          variant='primary'
+          variant='outline-primary'
           className='mx-2 justify-self-end'
           onClick={() => navigate('/register')}>
           Register

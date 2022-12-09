@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
-import { getUserData, getAllProducts } from './api';
+import { getUserData, getAllProducts, getCart } from './api';
 import { Navbar } from './components';
 import {
   Cart,
@@ -46,6 +46,7 @@ const App = () => {
     persistLogin();
   }, [jwt]);
 
+
   async function allProducts() {
     setProducts(await getAllProducts());
   }
@@ -54,6 +55,7 @@ const App = () => {
   useEffect(() => {
     allProducts();
   }, []);
+
 
   return (
     <>
@@ -64,15 +66,15 @@ const App = () => {
         <Routes>
           <Route
             path='/'
-            element={<Home />}
+            element={<Home navigate={navigate} />}
           />
           <Route
             path='/cart'
-            element={<Cart user={user} jwt={jwt} navigate={navigate} products={products} />}
+            element={<Cart user={user} jwt={jwt} navigate={navigate} products={products}/>}
           />
           <Route
             path='/products'
-            element={<Products user={user} jwt={jwt} products={products} navigate={navigate} />}
+            element={<Products user={user} jwt={jwt} products={products} navigate={navigate} allProducts={allProducts} />}
           />
           <Route
             path='/register'

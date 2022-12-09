@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { updateProduct } from '../api';
 import { Button, Form, FloatingLabel, Alert } from 'react-bootstrap';
 
-const EditProduct = ({ jwt, product }) => {
+const EditProduct = ({ jwt, product, allProducts }) => {
   const { id, title, imageurl, description, price, author, genre } = product;
-console.log('This update id', id)
 
   const [newTitle, setNewTitle] = useState(title);
   const [newImageurl, setNewImageurl] = useState(imageurl);
@@ -16,7 +15,8 @@ console.log('This update id', id)
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState();
+
 
   async function handleSubmit() {
     const updatedProduct = {
@@ -34,6 +34,7 @@ console.log('This update id', id)
       setErrorMessage('');
       setTimeout(() => {
         closeModal();
+        allProducts()
       }, 1000);
     } else {
       console.error(error);
@@ -124,7 +125,7 @@ const closeModal = () => {
 
 
           <Form.Group className='m-3 d-flex justify-content-end'>
-            <Button variant='success' type='submit'>
+            <Button variant='outline-primary' type='submit'>
               Update Product
             </Button>
           </Form.Group>

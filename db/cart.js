@@ -7,7 +7,7 @@ async function getCart(userId) { //tested working
        SELECT *
        FROM cart_products
        WHERE "cartId"=$1;`, [userId]
-      );
+    );
 
     return product
   } catch (error) {
@@ -15,10 +15,6 @@ async function getCart(userId) { //tested working
     throw error;
   }
 }
-// SELECT cart_products.*, users.username AS "shopperName"
-// FROM cart_products
-// WHERE "cartId"=$1
-// JOIN users ON cart_products."cartId"=users.id
 
 async function createCartProduct({ //tested working
   productId,
@@ -99,7 +95,7 @@ async function destroyCartProduct(userId, id) {
 }
 
 
-async function updateCartProduct(userId, { id, ...fields }) { 
+async function updateCartProduct(userId, { id, ...fields }) {
 
   try {
     const indexString = Object.keys(fields).map((key, index) => {
