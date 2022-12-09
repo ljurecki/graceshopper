@@ -172,11 +172,6 @@ const ProductCard = ({ jwt, product, user, allProducts, navigate }) => {
               {errorMessage}
             </Alert>
           )}
-          {successMessage && (
-            <Alert variant='success' className='mt-3'>
-              {successMessage}
-            </Alert>
-          )}
         </Container>
       </Card.Text>
     </ListGroup.Item>
