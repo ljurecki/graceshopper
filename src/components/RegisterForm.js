@@ -52,7 +52,8 @@ const RegisterForm = ({ navigate }) => {
         <Button
           variant='primary'
           type='submit'
-          className='mx-2 justify-self-end'>
+          className='mx-2 justify-self-end'
+          onClick={() => registerUser()}>
           Submit
         </Button>
         <Button
