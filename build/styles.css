@@ -38,3 +38,7 @@ div#outer\ div\ element {
 #addprodalert {
     width: 95%;
 }
+
+.nav-pills {
+    --bs-nav-pills-link-active-bg: #6666 !important;
+}
